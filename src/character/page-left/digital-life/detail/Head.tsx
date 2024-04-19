@@ -1,17 +1,22 @@
-import classes from './head.module.scss'
+import {
+  DigitalLifeDetail,
+  useCurrentDigitalLifeId,
+  useDigitalLifeDetailList,
+} from '../DigitalLifeContext'
+import classes from './Head.module.scss'
 
-export type DigitalLifeHeadInfo = {
-  name: string
-  avatarUrl?: string
-}
+export type DigitalLifeHeadProps = {}
 
-export type DigitalLifeHeadProps = {
-  info?: DigitalLifeHeadInfo
-}
+export default function Head({}: DigitalLifeHeadProps) {
+  const digitalLifeDetailList = useDigitalLifeDetailList()
+  const currentDigitalLifeId = useCurrentDigitalLifeId()
 
-export default function Head({ info }: DigitalLifeHeadProps) {
-  const titleDesc = info ? '当前对话' : '请选择一个'
-  const { name, avatarUrl = '/imgs/default-avatar2.png' } = info ?? {
+  const lifeDetail: DigitalLifeDetail | undefined = digitalLifeDetailList.find(
+    (item) => item.id === currentDigitalLifeId
+  )
+
+  const titleDesc = lifeDetail ? '当前对话' : '请选择一个'
+  const { name, avatarUrl = '/imgs/default-avatar2.png' } = lifeDetail ?? {
     name: '数字生命',
   }
 

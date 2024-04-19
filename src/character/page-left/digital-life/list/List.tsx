@@ -1,19 +1,20 @@
-import classes from './list.module.scss'
-
-export type LifeDetail = {
-  id: number
-  name: string
-  avatarUrl?: string
-  desc: string
-  tags: string[]
-}
+import { useDigitalLifeDetailList, useSetCurrentDigitalLifeId } from '../DigitalLifeContext'
+import classes from './List.module.scss'
 
 export type ListProps = {
-  lifeDetailList?: LifeDetail[]
+  itemClicked?: (id: number) => void
 }
 
-export default function List({ lifeDetailList }: ListProps) {
-  const lifeElementItems = (lifeDetailList ?? []).map(function (life) {
+export default function List({ itemClicked }: ListProps) {
+  const lifeList = useDigitalLifeDetailList()
+  const setCurrent = useSetCurrentDigitalLifeId()
+
+  function onItemClicked(id: number) {
+    setCurrent(id)
+    itemClicked && itemClicked(id)
+  }
+
+  const lifeElementItems = lifeList.map(function (life) {
     const { id, name, avatarUrl = '/imgs/default-avatar3.png', desc, tags } = life
 
     // max length is 3
@@ -26,7 +27,11 @@ export default function List({ lifeDetailList }: ListProps) {
     })
 
     return (
-      <div key={id} className={`${classes['item']} cursor-pointer mt-2 flex flex-row`}>
+      <div
+        key={id}
+        onClick={(e) => onItemClicked(id)}
+        className={`${classes['item']} cursor-pointer mt-2 flex flex-row`}
+      >
         <div className={`${classes['avatar']} flex-none overflow-hidden`}>
           <img src={avatarUrl} className="w-full h-full" />
         </div>

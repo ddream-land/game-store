@@ -1,4 +1,9 @@
-import classes from './overview.module.scss'
+import {
+  DigitalLifeDetail,
+  useCurrentDigitalLifeId,
+  useDigitalLifeDetailList,
+} from '../DigitalLifeContext'
+import classes from './Overview.module.scss'
 
 function SelectADigitalLife() {
   return (
@@ -11,22 +16,14 @@ function SelectADigitalLife() {
   )
 }
 
-export type DigitalLifeInfo = {
-  name: string
-  desc: string
-  avatarUrl?: string
-}
-
-interface OverviewProps {
-  digitalLifeInfo?: DigitalLifeInfo
-}
+interface OverviewProps {}
 
 interface DigitalLifeInfoProps {
-  digitalLifeInfo: DigitalLifeInfo
+  lifeDetail: DigitalLifeDetail
 }
 
-function DigitalLifeInfo({ digitalLifeInfo }: DigitalLifeInfoProps) {
-  const { name, desc, avatarUrl = '/imgs/default-avatar.png' } = digitalLifeInfo
+function DigitalLifeInfo({ lifeDetail }: DigitalLifeInfoProps) {
+  const { name, desc, avatarUrl = '/imgs/default-avatar.png' } = lifeDetail
   return (
     <div className={`${classes.info} flex flex-row overflow-hidden`}>
       <div className={`${classes.avatar} flex-none flex justify-center items-center`}>
@@ -40,9 +37,16 @@ function DigitalLifeInfo({ digitalLifeInfo }: DigitalLifeInfoProps) {
   )
 }
 
-export default function Overview({ digitalLifeInfo }: OverviewProps) {
-  const content = digitalLifeInfo ? (
-    <DigitalLifeInfo digitalLifeInfo={digitalLifeInfo}></DigitalLifeInfo>
+export default function Overview({}: OverviewProps) {
+  const digitalLifeDetailList = useDigitalLifeDetailList()
+  const currentDigitalLifeId = useCurrentDigitalLifeId()
+
+  const lifeDetail: DigitalLifeDetail | undefined = digitalLifeDetailList.find(
+    (item) => item.id === currentDigitalLifeId
+  )
+
+  const content = lifeDetail ? (
+    <DigitalLifeInfo lifeDetail={lifeDetail}></DigitalLifeInfo>
   ) : (
     <SelectADigitalLife></SelectADigitalLife>
   )
