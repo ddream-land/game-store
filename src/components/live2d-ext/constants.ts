@@ -1,4 +1,3 @@
-'use client'
 export { DEBUG_PREFIX, CANVAS_ID }
 export type { ModelId }
 
