@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <>
       <div className={`${classes.main} w-full h-full flex flex-row box-border`}>
-        <Live2dExt></Live2dExt>
+        {/* <Live2dExt></Live2dExt> */}
         <Layout left={<PageLeft></PageLeft>} right={<PageRight></PageRight>}></Layout>
       </div>
     </>

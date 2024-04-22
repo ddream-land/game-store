@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-export function usePageOp(pageMinified: boolean) {
+export function usePageOp() {
   const [open, setOpen] = useState(false)
 
-  return { open: open && !pageMinified, setOpen }
+  return { open: open, setOpen }
 }

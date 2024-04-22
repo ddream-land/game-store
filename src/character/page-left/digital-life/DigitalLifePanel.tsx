@@ -24,7 +24,7 @@ function LockDialog({ lock, switchLock }: { lock: boolean; switchLock: (to: bool
 export default function DigitalLifePanel() {
   const { mouseOnPanel, mouseOutofPanel, minify, showLockDialog } = useMouseHoverOp()
   const { lockForNotMinify, switchLock } = useLockDialogOp()
-  const { open: lifeDetailPageOpen, setOpen: setLifeDetailPageOpen } = usePageOp(minify)
+  const { open: lifeDetailPageOpen, setOpen: setLifeDetailPageOpen } = usePageOp()
   // const { open: bgImgPageOpen, setOpen: setBgImgPageOpen } = usePageOp()
 
   const showDetail = lockForNotMinify || !minify
@@ -50,8 +50,8 @@ export default function DigitalLifePanel() {
           </div>
         </div>
 
-        {lifeDetailPageOpen && (
-          <div className={`${classes.page} animate ${classes['over-page']} absolute inset-0`}>
+        {showDetail && lifeDetailPageOpen && (
+          <div className={`${classes.page} ${classes['over-page']} absolute inset-0`}>
             <LifeDetail onCloseClicked={() => setLifeDetailPageOpen(false)}></LifeDetail>
           </div>
         )}
