@@ -1,4 +1,5 @@
 import classes from './Character.module.scss'
+import { CharacterContextProvider } from './context/CharacterContextProvider'
 import PageLeft from './page-left/PageLeft'
 import PageRight from './page-right/PageRight'
 import Live2dExt from '@/components/live2d-ext/Live2dExt'
@@ -25,8 +26,10 @@ export default function Home() {
   return (
     <>
       <div className={`${classes.main} w-full h-full flex flex-row box-border`}>
-        {/* <Live2dExt></Live2dExt> */}
-        <Layout left={<PageLeft></PageLeft>} right={<PageRight></PageRight>}></Layout>
+        <CharacterContextProvider>
+          {/* <Live2dExt></Live2dExt> */}
+          <Layout left={<PageLeft></PageLeft>} right={<PageRight></PageRight>}></Layout>
+        </CharacterContextProvider>
       </div>
     </>
   )

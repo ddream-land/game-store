@@ -1,65 +1,13 @@
+import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 import { createContext, useContext, useEffect, useState } from 'react'
-
-export type DigitalLifeDetail = {
-  /**
-   * 唯一id，后端给
-   */
-  id: number
-
-  /**
-   * 名字
-   */
-  name: string
-
-  /**
-   * 头像 / 角色背景图
-   */
-  avatarUrl?: string
-
-  /**
-   * 描述文本
-   */
-  desc: string
-
-  /**
-   * 标签，最多三个
-   */
-  tags: string[]
-
-  /**
-   * 创作者注释
-   */
-  creatorNote?: string
-
-  /**
-   * 个性摘要
-   */
-  personalitySummary?: string
-
-  /**
-   * 角色描述
-   */
-  rolDesc?: string
-
-  /**
-   * 首条消息
-   */
-  firstMsg?: string
-}
 
 const DigitalLifeDetailListContext = createContext<DigitalLifeDetail[]>([])
 const SetDigitalLifeDetailListContext = createContext<
   React.Dispatch<React.SetStateAction<DigitalLifeDetail[]>>
 >(function () {})
 
-const CurrentDigitalLifeIdContext = createContext<number | undefined>(undefined)
-const SetCurrentDigitalLifeIdContext = createContext<
-  React.Dispatch<React.SetStateAction<number | undefined>>
->(function () {})
-
-export function DigitalLifeContextProvider({ children }: { children: JSX.Element }) {
+export function DigitalLifeDetailListContextProvider({ children }: { children: JSX.Element }) {
   const [digitalLifeDetailList, setDigitalLifeDetailList] = useState<DigitalLifeDetail[]>([])
-  const [currentDigitalLifeId, setCurrentDigitalLifeId] = useState<number | undefined>(undefined)
 
   useEffect(function () {
     setTimeout(() => {
@@ -131,17 +79,13 @@ export function DigitalLifeContextProvider({ children }: { children: JSX.Element
           tags: ['Cyberwife', 'Cyber', 'wife'],
         },
       ])
-    }, 1000)
+    }, 800)
   }, [])
 
   return (
     <DigitalLifeDetailListContext.Provider value={digitalLifeDetailList}>
       <SetDigitalLifeDetailListContext.Provider value={setDigitalLifeDetailList}>
-        <CurrentDigitalLifeIdContext.Provider value={currentDigitalLifeId}>
-          <SetCurrentDigitalLifeIdContext.Provider value={setCurrentDigitalLifeId}>
-            {children}
-          </SetCurrentDigitalLifeIdContext.Provider>
-        </CurrentDigitalLifeIdContext.Provider>
+        {children}
       </SetDigitalLifeDetailListContext.Provider>
     </DigitalLifeDetailListContext.Provider>
   )
@@ -153,12 +97,4 @@ export function useDigitalLifeDetailList() {
 
 export function useSetDigitalLifeDetailList() {
   return useContext(SetDigitalLifeDetailListContext)
-}
-
-export function useCurrentDigitalLifeId() {
-  return useContext(CurrentDigitalLifeIdContext)
-}
-
-export function useSetCurrentDigitalLifeId() {
-  return useContext(SetCurrentDigitalLifeIdContext)
 }

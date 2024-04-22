@@ -1,10 +1,8 @@
 import { MouseEvent, useEffect, useState } from 'react'
-import {
-  DigitalLifeDetail,
-  useCurrentDigitalLifeId,
-  useDigitalLifeDetailList,
-} from '../DigitalLifeContext'
 import classes from './LifeInfo.module.scss'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
+import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
+import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export default function LifeInfo() {
   const digitalLifeDetailList = useDigitalLifeDetailList()

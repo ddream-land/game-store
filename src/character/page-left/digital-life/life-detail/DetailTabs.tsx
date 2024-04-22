@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import {
-  DigitalLifeDetail,
-  useCurrentDigitalLifeId,
-  useDigitalLifeDetailList,
-} from '../DigitalLifeContext'
 import classes from './DetailTabs.module.scss'
 import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
+import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
+import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export default function DetailTabs() {
   const digitalLifeDetailList = useDigitalLifeDetailList()

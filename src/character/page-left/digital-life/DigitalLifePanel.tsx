@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import classes from './DigitalLifePanel.module.scss'
 import Overview from './overview/Overview'
 import Detail from './detail/Detail'
-import { DigitalLifeContextProvider } from './DigitalLifeContext'
 import { useMouseHoverOp } from './useMouseHoverOp'
 import { useLockDialogOp } from './useLockDialogOp'
 import { usePageOp } from './usePageOp'
@@ -30,32 +29,30 @@ export default function DigitalLifePanel() {
   const showDetail = lockForNotMinify || !minify
 
   return (
-    <DigitalLifeContextProvider>
-      <div
-        className={`${classes.dlp} ${
-          showDetail ? '' : `${classes['minify']}`
-        } relative pointer-events-auto`}
-        onMouseEnter={mouseOnPanel}
-        onMouseOver={mouseOnPanel}
-        onMouseLeave={mouseOutofPanel}
-      >
-        <div className={`${classes.page} ${classes['base-page']} w-full h-full`}>
-          {showDetail ? (
-            <Detail itemClicked={() => setLifeDetailPageOpen(true)}></Detail>
-          ) : (
-            <Overview></Overview>
-          )}
-          <div className={`${showLockDialog ? '' : 'hidden'}`}>
-            <LockDialog lock={lockForNotMinify} switchLock={switchLock}></LockDialog>
-          </div>
-        </div>
-
-        {showDetail && lifeDetailPageOpen && (
-          <div className={`${classes.page} ${classes['over-page']} absolute inset-0`}>
-            <LifeDetail onCloseClicked={() => setLifeDetailPageOpen(false)}></LifeDetail>
-          </div>
+    <div
+      className={`${classes.dlp} ${
+        showDetail ? '' : `${classes['minify']}`
+      } relative pointer-events-auto`}
+      onMouseEnter={mouseOnPanel}
+      onMouseOver={mouseOnPanel}
+      onMouseLeave={mouseOutofPanel}
+    >
+      <div className={`${classes.page} ${classes['base-page']} w-full h-full`}>
+        {showDetail ? (
+          <Detail itemClicked={() => setLifeDetailPageOpen(true)}></Detail>
+        ) : (
+          <Overview></Overview>
         )}
+        <div className={`${showLockDialog ? '' : 'hidden'}`}>
+          <LockDialog lock={lockForNotMinify} switchLock={switchLock}></LockDialog>
+        </div>
       </div>
-    </DigitalLifeContextProvider>
+
+      {showDetail && lifeDetailPageOpen && (
+        <div className={`${classes.page} ${classes['over-page']} absolute inset-0`}>
+          <LifeDetail onCloseClicked={() => setLifeDetailPageOpen(false)}></LifeDetail>
+        </div>
+      )}
+    </div>
   )
 }

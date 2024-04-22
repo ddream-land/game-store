@@ -1,5 +1,6 @@
-import { useDigitalLifeDetailList, useSetCurrentDigitalLifeId } from '../DigitalLifeContext'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
 import classes from './List.module.scss'
+import { useSetCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
 
 export type ListProps = {
   itemClicked?: (id: number) => void

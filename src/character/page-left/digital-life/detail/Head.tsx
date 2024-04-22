@@ -1,9 +1,7 @@
-import {
-  DigitalLifeDetail,
-  useCurrentDigitalLifeId,
-  useDigitalLifeDetailList,
-} from '../DigitalLifeContext'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
 import classes from './Head.module.scss'
+import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
+import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export type DigitalLifeHeadProps = {}
 

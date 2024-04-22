@@ -1,12 +1,10 @@
 import { MouseEvent, WheelEvent, useState } from 'react'
-import {
-  DigitalLifeDetail,
-  useCurrentDigitalLifeId,
-  useDigitalLifeDetailList,
-} from '../DigitalLifeContext'
 import classes from './LifeDetail.module.scss'
 import LifeInfo from './LifeInfo'
 import DetailTabs from './DetailTabs'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
+import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
+import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export type LifeDetailProps = {
   onCloseClicked?: (e: MouseEvent<HTMLDivElement> | undefined) => void

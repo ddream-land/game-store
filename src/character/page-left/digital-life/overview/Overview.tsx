@@ -1,9 +1,7 @@
-import {
-  DigitalLifeDetail,
-  useCurrentDigitalLifeId,
-  useDigitalLifeDetailList,
-} from '../DigitalLifeContext'
+import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 import classes from './Overview.module.scss'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
+import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
 
 function SelectADigitalLife() {
   return (
