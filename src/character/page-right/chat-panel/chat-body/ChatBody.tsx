@@ -60,9 +60,9 @@ export default function ChatBody() {
   return (
     <div
       ref={chatContainer}
-      className={`${classes.cb} w-full h-full overflow-y-auto scrollbar-override transition-all flex items-end`}
+      className={`${classes.cb} w-full h-full overflow-y-auto scrollbar-override transition-all flex`}
     >
-      <div className={`${classes.msgs} w-full`}>
+      <div className={`${classes.msgs} w-full mt-auto`}>
         {elements}
       </div>
     </div>
