@@ -6,8 +6,15 @@ import { useMouseHoverOp } from './useMouseHoverOp'
 import { useLockDialogOp } from './useLockDialogOp'
 import { usePageOp } from './usePageOp'
 import LifeDetail from './life-detail/LifeDetail'
+import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
 
-function LockDialog({ lock, switchLock }: { lock: boolean; switchLock: (to: boolean) => void }) {
+function LockDialog({
+  lock,
+  switchLock,
+}: {
+  lock: boolean
+  switchLock: (to: boolean) => void
+}) {
   return (
     <div
       onClick={function () {
@@ -21,12 +28,39 @@ function LockDialog({ lock, switchLock }: { lock: boolean; switchLock: (to: bool
 }
 
 export default function DigitalLifePanel() {
-  const { mouseOnPanel, mouseOutofPanel, minify, showLockDialog } = useMouseHoverOp()
+  const {
+    mouseOnPanel,
+    mouseOutofPanel,
+    minify,
+    showLockDialog,
+  } = useMouseHoverOp()
   const { lockForNotMinify, switchLock } = useLockDialogOp()
-  const { open: lifeDetailPageOpen, setOpen: setLifeDetailPageOpen } = usePageOp()
+  const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const {
+    open: lifeDetailPageOpen,
+    setOpen: setLifeDetailPageOpen,
+  } = usePageOp()
   // const { open: bgImgPageOpen, setOpen: setBgImgPageOpen } = usePageOp()
 
   const showDetail = lockForNotMinify || !minify
+
+  useEffect(
+    function () {
+      if (!showDetail) {
+        setLifeDetailPageOpen(false)
+      }
+    },
+    [minify]
+  )
+
+  useEffect(
+    function () {
+      if (!currentDigitalLifeId) {
+        setLifeDetailPageOpen(false)
+      }
+    },
+    [currentDigitalLifeId]
+  )
 
   return (
     <div
@@ -37,20 +71,35 @@ export default function DigitalLifePanel() {
       onMouseOver={mouseOnPanel}
       onMouseLeave={mouseOutofPanel}
     >
-      <div className={`${classes.page} ${classes['base-page']} w-full h-full`}>
+      <div
+        className={`${classes.page} ${classes['base-page']} w-full h-full`}
+      >
         {showDetail ? (
-          <Detail itemClicked={() => setLifeDetailPageOpen(true)}></Detail>
+          <Detail
+            itemClicked={() => setLifeDetailPageOpen(true)}
+          ></Detail>
         ) : (
           <Overview></Overview>
         )}
-        <div className={`${showLockDialog ? '' : 'hidden'}`}>
-          <LockDialog lock={lockForNotMinify} switchLock={switchLock}></LockDialog>
+        <div
+          className={`${showLockDialog ? '' : 'hidden'}`}
+        >
+          <LockDialog
+            lock={lockForNotMinify}
+            switchLock={switchLock}
+          ></LockDialog>
         </div>
       </div>
 
       {showDetail && lifeDetailPageOpen && (
-        <div className={`${classes.page} ${classes['over-page']} absolute inset-0`}>
-          <LifeDetail onCloseClicked={() => setLifeDetailPageOpen(false)}></LifeDetail>
+        <div
+          className={`${classes.page} ${classes['over-page']} absolute inset-0`}
+        >
+          <LifeDetail
+            onCloseClicked={() =>
+              setLifeDetailPageOpen(false)
+            }
+          ></LifeDetail>
         </div>
       )}
     </div>

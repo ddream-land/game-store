@@ -7,19 +7,25 @@ import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeI
 import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export type LifeDetailProps = {
-  onCloseClicked?: (e: MouseEvent<HTMLDivElement> | undefined) => void
+  onCloseClicked?: (
+    e: MouseEvent<HTMLDivElement> | undefined
+  ) => void
 }
 
-export default function LifeDetail({ onCloseClicked }: LifeDetailProps) {
+export default function LifeDetail({
+  onCloseClicked,
+}: LifeDetailProps) {
   const digitalLifeDetailList = useDigitalLifeDetailList()
   const currentDigitalLifeId = useCurrentDigitalLifeId()
-  const lifeDetail: DigitalLifeDetail | undefined = digitalLifeDetailList.find(
-    (item) => item.id === currentDigitalLifeId
-  )
+  const lifeDetail: DigitalLifeDetail | undefined =
+    digitalLifeDetailList.find(
+      (item) => item.id === currentDigitalLifeId
+    )
   if (!lifeDetail) {
-    throw new Error(`Runtime error.`)
+    return
   }
-  const { avatarUrl = '/imgs/default-avatar3.png' } = lifeDetail
+  const { avatarUrl = '/imgs/default-avatar3.png' } =
+    lifeDetail
 
   const [fullDetail, setFullDetail] = useState(false)
 
@@ -32,7 +38,10 @@ export default function LifeDetail({ onCloseClicked }: LifeDetailProps) {
   }
 
   return (
-    <div onWheel={wheel} className={`${classes.ld} w-full h-full relative`}>
+    <div
+      onWheel={wheel}
+      className={`${classes.ld} w-full h-full relative`}
+    >
       <div
         className={`${classes['life-img']} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
@@ -55,7 +64,10 @@ export default function LifeDetail({ onCloseClicked }: LifeDetailProps) {
         </div>
       </div>
 
-      <div onClick={onCloseClicked} className={`${classes.back} absolute cursor-pointer`}></div>
+      <div
+        onClick={onCloseClicked}
+        className={`${classes.back} absolute cursor-pointer`}
+      ></div>
     </div>
   )
 }
