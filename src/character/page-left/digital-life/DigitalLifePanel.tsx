@@ -55,7 +55,7 @@ export default function DigitalLifePanel() {
 
   useEffect(
     function () {
-      if (!currentDigitalLifeId) {
+      if (currentDigitalLifeId === undefined) {
         setLifeDetailPageOpen(false)
       }
     },
