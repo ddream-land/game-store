@@ -2,9 +2,11 @@ import { MouseEvent, WheelEvent, useState } from 'react'
 import classes from './LifeDetail.module.scss'
 import LifeInfo from './LifeInfo'
 import DetailTabs from './DetailTabs'
-import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
+import {
+  CharacterCardDetail,
+  useDigitalLifeDetailList,
+} from '@/character/context/DigitalLifeDetailListContextProvider'
 import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
-import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export type LifeDetailProps = {
   onCloseClicked?: (
@@ -17,15 +19,16 @@ export default function LifeDetail({
 }: LifeDetailProps) {
   const digitalLifeDetailList = useDigitalLifeDetailList()
   const currentDigitalLifeId = useCurrentDigitalLifeId()
-  const lifeDetail: DigitalLifeDetail | undefined =
+  const lifeDetail: CharacterCardDetail | undefined =
     digitalLifeDetailList.find(
       (item) => item.id === currentDigitalLifeId
     )
   if (!lifeDetail) {
     return
   }
-  const { avatarUrl = '/imgs/default-avatar3.png' } =
-    lifeDetail
+
+  const avatarUrl =
+    lifeDetail.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
 
@@ -59,7 +62,7 @@ export default function LifeDetail({
         <div className={`${classes.info} flex-none z-0`}>
           <LifeInfo></LifeInfo>
         </div>
-        <div className={`${classes.tabs} flex-1 z-0`}>
+        <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
           <DetailTabs></DetailTabs>
         </div>
       </div>

@@ -4,10 +4,14 @@ import ChatBody from './chat-body/ChatBody'
 import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
 import { useEffect, useState } from 'react'
 import { useSetChatMessage } from '@/character/context/ChatMessagesContextProvider'
+import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContextProvider'
+import { ChatRole } from '@/libs/ChatRole'
+import { msgMacrosReplace } from '@/libs/promptMessageGenerator'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
   const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const digitalLifeDetailList = useDigitalLifeDetailList()
   const setChatMsg = useSetChatMessage()
 
   function clearChatMsgs() {
@@ -22,6 +26,26 @@ export default function ChatPanel() {
         return
       }
 
+      const lifeDetail = digitalLifeDetailList.find(
+        (x) => x.id === currentDigitalLifeId
+      )
+
+      if (!lifeDetail) {
+        throw new Error(`Runtime error.`)
+      }
+
+      setChatMsg([
+        {
+          role: ChatRole.Assistant,
+          content: msgMacrosReplace(
+            lifeDetail.card.data.first_mes,
+            lifeDetail.card
+          ),
+          id: Date.now(),
+          date: new Date(),
+        },
+      ])
+
       setVisible(true)
     },
     [currentDigitalLifeId]
@@ -34,13 +58,13 @@ export default function ChatPanel() {
       } w-full h-full flex flex-col pointer-events-auto`}
     >
       <div className="flex-1 min-h-0">
-        <ChatBody></ChatBody>
+        {visible && <ChatBody></ChatBody>}
       </div>
       <div
         className="flex-none"
         style={{ marginTop: '18px' }}
       >
-        <InputPanel></InputPanel>
+        {visible && <InputPanel></InputPanel>}
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
 import { useChatMessages } from '@/character/context/ChatMessagesContextProvider'
 import classes from './ChatBody.module.scss'
-import { ChatMessage } from '@/libs/ChatMessage'
 import { ChatRole } from '@/libs/ChatRole'
 import { useEffect, useRef } from 'react'
 
@@ -25,26 +24,30 @@ export default function ChatBody() {
     }
   }
 
-  const elements = chatMsgs.map(function (msg) {
-    return (
-      <div
-        key={msg.id}
-        className={`${classes.msg} w-full flex ${
-          msg.role === ChatRole.User
-            ? 'flex-row-reverse'
-            : 'flex-row'
-        }`}
-      >
+  const elements = chatMsgs
+    .filter(function (msg) {
+      return msg.role !== ChatRole.System
+    })
+    .map(function (msg) {
+      return (
         <div
-          className={`${classes.content} ${roleClass(
-            msg.role
-          )} w-full`}
+          key={msg.id}
+          className={`${classes.msg} w-full flex ${
+            msg.role === ChatRole.User
+              ? 'flex-row-reverse'
+              : 'flex-row'
+          }`}
         >
-          {msg.content}
+          <div
+            className={`${classes.content} ${roleClass(
+              msg.role
+            )} w-full`}
+          >
+            {msg.content}
+          </div>
         </div>
-      </div>
-    )
-  })
+      )
+    })
 
   useEffect(
     function () {

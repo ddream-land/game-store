@@ -1,26 +1,34 @@
 import { useState } from 'react'
 import classes from './DetailTabs.module.scss'
-import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
-import { useDigitalLifeDetailList } from '@/character/context/DigitalLifeDetailListContext'
+import {
+  isArray,
+  isKey,
+  isNumber,
+  isString,
+} from '@/libs/isTypes'
+import {
+  CharacterCardDetail,
+  useDigitalLifeDetailList,
+} from '@/character/context/DigitalLifeDetailListContextProvider'
 import { useCurrentDigitalLifeId } from '@/character/context/CurrentDigitalLifeIdContextProvider'
-import { DigitalLifeDetail } from '@/libs/DigitalLifeDetail'
 
 export default function DetailTabs() {
   const digitalLifeDetailList = useDigitalLifeDetailList()
   const currentDigitalLifeId = useCurrentDigitalLifeId()
-  const lifeDetail: DigitalLifeDetail | undefined = digitalLifeDetailList.find(
-    (item) => item.id === currentDigitalLifeId
-  )
+  const lifeDetail: CharacterCardDetail | undefined =
+    digitalLifeDetailList.find(
+      (item) => item.id === currentDigitalLifeId
+    )
   if (!lifeDetail) {
     throw new Error(`Runtime error.`)
   }
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
   const [tabs] = useState([
-    { prop: 'creatorNote', txt: '创作者注释' },
-    { prop: 'personalitySummary', txt: '个性摘要' },
-    { prop: 'rolDesc', txt: '角色描述' },
-    { prop: 'firstMsg', txt: '首条消息' },
+    { prop: 'creator_notes', txt: '创作者注释' },
+    { prop: 'personality', txt: '个性摘要' },
+    { prop: 'description', txt: '角色描述' },
+    { prop: 'first_mes', txt: '首条消息' },
     { prop: 'tags', txt: '标签' },
   ])
   const tabsElement = tabs.map(function (tab, index) {
@@ -39,9 +47,10 @@ export default function DetailTabs() {
 
   function getContent() {
     const prop = tabs[currentTabIndex].prop
+    const data = lifeDetail?.card.data
     let content = '无'
-    if (lifeDetail && isKey(lifeDetail, prop)) {
-      const val = lifeDetail[prop]
+    if (data && isKey(data, prop)) {
+      const val = data[prop]
       if (isString(val)) {
         content = val
       } else if (isNumber(val)) {
@@ -57,11 +66,17 @@ export default function DetailTabs() {
     <div
       className={`${classes.dtabs} w-full h-full box-border flex flex-col justify-center items-center`}
     >
-      <div className={`${classes.tabs} w-full flex flex-row justify-between flex-none`}>
+      <div
+        className={`${classes.tabs} w-full flex flex-row justify-between flex-none`}
+      >
         {tabsElement}
       </div>
       <div className={`${classes.line} flex-none`}></div>
-      <div className={`${classes.content} w-full flex-1`}>{getContent()}</div>
+      <div
+        className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}
+      >
+        {getContent()}
+      </div>
     </div>
   )
 }

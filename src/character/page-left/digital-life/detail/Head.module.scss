@@ -28,7 +28,6 @@
         img {
           width: 55px;
           height: 55px;
-          object-fit: contain;
         }
       }
     }
@@ -47,7 +46,7 @@
         background-repeat: no-repeat;
         background-position: center;
       }
-      .edit {
+      .import {
         width: 57px;
         height: 44px;
         border-radius: 20px;
@@ -71,11 +70,11 @@
           letter-spacing: 0.01em;
           color: rgba(6, 6, 6, 1);
         }
+
         img {
           margin-left: 18px;
           width: 13px;
           height: 25px;
-          object-fit: contain;
         }
       }
     }
