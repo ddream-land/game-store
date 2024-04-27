@@ -80,7 +80,7 @@ export default function InputPanel() {
             content: userMsg,
           },
         ],
-        model: 'claude-2.1',
+        model: 'claude-2.0',
         temperature: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
