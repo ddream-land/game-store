@@ -25,11 +25,11 @@ export default function DetailTabs() {
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
   const [tabs] = useState([
-    { prop: 'creator_notes', txt: '创作者注释' },
-    { prop: 'personality', txt: '个性摘要' },
-    { prop: 'description', txt: '角色描述' },
-    { prop: 'first_mes', txt: '首条消息' },
-    { prop: 'tags', txt: '标签' },
+    { prop: 'creator_notes', txt: "Creator's Note" },
+    { prop: 'personality', txt: 'Personality' },
+    { prop: 'description', txt: 'Basic Info' },
+    { prop: 'first_mes', txt: 'Greeting Message' },
+    { prop: 'tags', txt: 'Tags' },
   ])
   const tabsElement = tabs.map(function (tab, index) {
     return (
@@ -38,7 +38,7 @@ export default function DetailTabs() {
         onClick={() => setCurrentTabIndex(index)}
         className={`${classes.tab} ${
           index === currentTabIndex ? classes.current : ''
-        } cursor-pointer`}
+        } cursor-pointer flex justify-end items-center`}
       >
         {tab.txt}
       </div>

@@ -46,24 +46,26 @@ export default function LifeInfo() {
       <div className={`${classes.name} truncate max-w-72`}>
         {name}
       </div>
-      <div className={`${classes.desc} text-ellipsis overflow-hidden`}>
+      <div
+        className={`${classes.desc} text-ellipsis overflow-hidden`}
+      >
         {desc}
       </div>
       <div className={`${classes.op} flex flex-row gap-5`}>
         <div
           className={`${classes.btn} flex-none cursor-pointer flex flex-row justify-center items-center`}
         >
-          修改<br></br>背景
+          Edit<br></br>Cover
         </div>
         <div
           className={`${classes.btn} flex-none cursor-pointer flex flex-row justify-center items-center`}
         >
-          更改<br></br>形象
+          Edit<br></br>Avatar
         </div>
         <div
           className={`${classes.btn} flex-none cursor-pointer flex flex-row justify-center items-center`}
         >
-          修改<br></br>设定
+          Edit<br></br>Prompt
         </div>
       </div>
 
@@ -88,25 +90,25 @@ function Menu() {
       <div
         className={`${classes.btn} cursor-pointer flex-1 flex justify-center items-center`}
       >
-        重命名
+        Re-name
       </div>
       <div className={`${classes.line} flex-none`}></div>
       <div
         className={`${classes.btn} cursor-pointer flex-1 flex justify-center items-center`}
       >
-        链接到世界书
+        Link to World Book
       </div>
       <div className={`${classes.line} flex-none`}></div>
       <div
         className={`${classes.btn} cursor-pointer flex-1 flex justify-center items-center`}
       >
-        导出下载
+        Export
       </div>
       <div className={`${classes.line} flex-none`}></div>
       <div
         className={`${classes.btn} cursor-pointer flex-1 flex justify-center items-center`}
       >
-        删除
+        Delete
       </div>
     </div>
   )

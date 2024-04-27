@@ -37,7 +37,7 @@
     margin-top: 25px;
 
     .btn {
-      width: 55px;
+      width: 72px;
       height: 44px;
       border-radius: 20px;
       background: rgba(0, 0, 0, 0.43);
@@ -47,15 +47,15 @@
       font-weight: 500;
       line-height: 14px;
       letter-spacing: 0.01em;
-      text-align: left;
+      text-align: center;
     }
   }
 }
 
 .menu {
-  width: 96px;
+  width: 136px;
   // -width - 11px
-  right: -107px;
+  right: -147px;
   height: 201px;
   border-radius: 10px;
   border: 0.5px solid rgba(255, 255, 255, 0.16);
@@ -71,6 +71,6 @@
 
   .line {
     border: 0.5px solid rgba(255, 255, 255, 0.16);
-    width: 78px;
+    width: 118px;
   }
 }

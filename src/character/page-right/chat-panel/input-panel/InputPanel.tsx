@@ -104,7 +104,7 @@ export default function InputPanel() {
       setChatMsg((msgs) => [...msgs, newAssistantMsg])
 
       fetchEventSource(
-        `http://47.236.229.54/api/backends/chat-completions/generate`,
+        `https://st.nirvanaworld.cn/api/backends/chat-completions/generate`,
         {
           body: JSON.stringify(reqDto),
           headers: {
@@ -272,24 +272,24 @@ export default function InputPanel() {
             <div
               className={`${classes.re} ${classes.btn} cursor-pointer`}
             >
-              重新生成 &nbsp;
+              Re-generate &nbsp;
             </div>
             <div
               onClick={dialogNewChatBtnClicked}
               className={`${classes.new} ${classes.btn} cursor-pointer`}
             >
-              开始新聊天 &nbsp;
+              New Conversation &nbsp;
             </div>
             <div
               className={`${classes.con} ${classes.btn} cursor-pointer`}
             >
-              继续 &nbsp;
+              Continue &nbsp;
             </div>
             <div
               onClick={dialogCloseChatBtnClicked}
               className={`${classes.clo} ${classes.btn} cursor-pointer`}
             >
-              关闭聊天 &nbsp;
+              Hide Conversation &nbsp;
             </div>
           </div>
         </div>

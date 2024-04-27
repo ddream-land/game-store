@@ -29,9 +29,12 @@ export default function Head({}: DigitalLifeHeadProps) {
       (item) => item.id === currentDigitalLifeId
     )
 
-  const titleDesc = lifeDetail ? '当前对话' : '请选择一个'
+  const titleDesc = lifeDetail
+    ? 'Conversation with'
+    : 'Select'
 
-  const name = lifeDetail?.card?.data.name ?? '数字生命'
+  const name =
+    lifeDetail?.card?.data.name ?? 'Digital lives'
   const avatarUrl =
     lifeDetail?.pngUrlOrBase64 ??
     '/imgs/default-avatar2.png'
@@ -39,6 +42,10 @@ export default function Head({}: DigitalLifeHeadProps) {
   const pngInputEl = useRef<HTMLInputElement>(null)
   function importPngBtnClicked() {
     pngInputEl.current?.click()
+  }
+
+  function gotoCreateNuwaClicked() {
+    window.location.href = `https://create.nuwalabs.org/`
   }
 
   async function pngImport(
@@ -96,8 +103,11 @@ export default function Head({}: DigitalLifeHeadProps) {
       <div
         className={`${classes.op} flex flex-row justify-between`}
       >
-        <div className={`${classes.l} flex flex-row`}>
+        <div
+          className={`${classes.l} flex flex-row flex-none`}
+        >
           <div
+            onClick={gotoCreateNuwaClicked}
             className={`${classes.add} cursor-pointer`}
           ></div>
           <div
@@ -113,14 +123,18 @@ export default function Head({}: DigitalLifeHeadProps) {
             multiple={false}
           />
         </div>
-        <div className={`${classes.r}`}>
+        <div
+          className={`${classes.r} flex-1 flex justify-end`}
+        >
           <div
-            className={`${classes['digital-plaza']} cursor-pointer flex flex-row justify-center items-center`}
+            className={`${classes['digital-plaza']} cursor-pointer flex flex-row justify-center items-center px-4`}
           >
             <div className={`${classes.txt}`}>
-              数字生命广场
+              More digital lives on DDream.Land
             </div>
-            <img src="/imgs/default-avatar.png" />
+            <div className="flex-none">
+              <img src="/imgs/default-avatar.png" />
+            </div>
           </div>
         </div>
       </div>

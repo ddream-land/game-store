@@ -18,7 +18,7 @@ function SelectADigitalLife() {
       <div
         className={`${classes.txt} flex justify-center items-center`}
       >
-        选择一个数字生命
+        Select a digital life to chat
       </div>
     </div>
   )
@@ -43,14 +43,19 @@ function DigitalLifeInfo({
       className={`${classes.info} flex flex-row overflow-hidden`}
     >
       <div
-        className={`${classes.avatar} flex-none flex justify-center items-center`}
+        className={`${classes.avatar} flex-none flex justify-center items-center overflow-hidden`}
       >
-        <img src={avatarUrl} />
+        <img
+          src={avatarUrl}
+          className="w-full h-full object-cover"
+        />
       </div>
       <div
-        className={`${classes.detail} flex-1 flex flex-col justify-center`}
+        className={`${classes.detail} flex-1 flex flex-col justify-center overflow-hidden`}
       >
-        <div className={`${classes.name}`}>{name}</div>
+        <div className={`${classes.name} truncate`}>
+          {name}
+        </div>
         <div className={`${classes.desc} truncate`}>
           {desc}
         </div>
@@ -78,7 +83,7 @@ export default function Overview({}: OverviewProps) {
 
   return (
     <div
-      className={`${classes['o']} w-full h-full flex flex-row overflow-hidden`}
+      className={`${classes['o']} w-full h-full flex flex-row justify-between overflow-hidden`}
     >
       <div
         className={`${classes.content} flex-1 overflow-hidden`}
