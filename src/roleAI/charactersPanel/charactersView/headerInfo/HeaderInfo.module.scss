@@ -1,0 +1,91 @@
+.headerInfo {
+  height: 183px;
+  padding: 24px 20px 0;
+
+  .title {
+    .info {
+      .desc {
+        height: 31px;
+        font-size: 26px;
+        font-weight: 500;
+        line-height: 31.47px;
+        text-align: left;
+        color: rgba(0, 0, 0, 0.67);
+      }
+      .name {
+        height: 48px;
+        font-size: 40px;
+        font-weight: 600;
+        line-height: 48.41px;
+        text-align: left;
+        color: rgba(12, 12, 12, 1);
+      }
+    }
+    .avatar-area {
+      .avatar {
+        border-radius: 18px;
+        background-color: rgba(255, 255, 255, 1);
+        img {
+          width: 55px;
+          height: 55px;
+        }
+      }
+    }
+  }
+
+  .op {
+    margin-top: 13px;
+
+    .l {
+      .add {
+        width: 57px;
+        height: 44px;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.32);
+        background-image: url('/imgs/add.png');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .import {
+        width: 57px;
+        height: 44px;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.32);
+        background-image: url('/imgs/edit.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-left: 8px;
+      }
+    }
+    .r {
+      .digital-plaza {
+        max-width: 200px;
+        height: 44px;
+        border-radius: 18px;
+        background-color: rgba(255, 255, 255, 0.32);
+        .txt {
+          line-break: anywhere;
+          width: 90px;
+          font-size: 10px;
+          font-weight: 500;
+          line-height: 18.12px;
+          letter-spacing: 0.01em;
+          color: rgba(6, 6, 6, 1);
+        }
+
+        img {
+          margin-left: 12px;
+          width: 13px;
+          height: 25px;
+        }
+      }
+    }
+  }
+
+  .line {
+    margin-top: 20px;
+    width: 382px;
+    height: 0px;
+    border: 0.5px solid rgba(0, 0, 0, 1);
+  }
+}

@@ -1,10 +1,10 @@
 import './App.scss'
-import Character from './character/Character'
+import RoleAI from './roleAI/RoleAI'
 
 function App() {
   return (
     <>
-      <Character></Character>
+      <RoleAI></RoleAI>
     </>
   )
 }

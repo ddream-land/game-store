@@ -1,0 +1,47 @@
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import { useLocalStorage } from '@/libs/useLocalStorage'
+import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+
+export const LOCAL_STORAGE_CARD_KEY = 'files'
+
+const CharacterCardInfoListLocalStorageContext = createContext<
+  CharacterCardInfo[]
+>([])
+const SetCharacterCardInfoListContext = createContext<
+  React.Dispatch<React.SetStateAction<CharacterCardInfo[]>>
+>(function () {})
+
+export function CharacterCardInfoListContextProvider({
+  children,
+}: {
+  children: JSX.Element
+}) {
+  const localStorageCards: CharacterCardInfo[] = []
+  const [cards, setCards] = useLocalStorage(
+    LOCAL_STORAGE_CARD_KEY,
+    localStorageCards
+  )
+
+  return (
+    <CharacterCardInfoListLocalStorageContext.Provider value={cards}>
+      <SetCharacterCardInfoListContext.Provider
+        value={setCards}
+      >
+        {children}
+      </SetCharacterCardInfoListContext.Provider>
+    </CharacterCardInfoListLocalStorageContext.Provider>
+  )
+}
+
+export function useCardInfos() {
+  return useContext(CharacterCardInfoListLocalStorageContext)
+}
+
+export function useSetCardInfos() {
+  return useContext(SetCharacterCardInfoListContext)
+}

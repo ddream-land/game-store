@@ -1,4 +1,4 @@
-import { ChatRole } from '@/libs/ChatRole'
+import { ChatRole } from '@/core/ChatRole'
 
 export type ChatCompletionReqDto = {
   messages: { role: ChatRole; content: string }[]
@@ -8,7 +8,7 @@ export type ChatCompletionReqDto = {
   presence_penalty: number
   top_p: number
   max_tokens: number
-  stream: boolean
+  // stream: boolean
   logit_bias: any
   chat_completion_source: string
   user_name: string
