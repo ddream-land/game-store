@@ -1,8 +1,4 @@
-export const HTTP_BASEURL =
-  import.meta.env.VITE_APP_API_BASEURL ?? ''
-export const HTTP_TIMEOUT = Number(
-  import.meta.env.VITE_APP_HTTP_TIMEOUT ?? 10000
-)
+import { HTTP_BASEURL } from '@/constant/env'
 
 export function getFullUrl(url: string) {
   const u = url.toLowerCase()

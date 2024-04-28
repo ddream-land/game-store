@@ -1,0 +1,20 @@
+{
+  "selectADigitalLifeToChat": "选择一个数字生命",
+  "digitalLifePlaza": "数字生命广场",
+  "creatorNote": "创作者注释",
+  "personality": "个性摘要",
+  "basicInfo": "角色描述",
+  "greetingMsg": "首条消息",
+  "tags": "标签",
+  "rename": "重命名",
+  "linkToWorldBook": "链接到世界书",
+  "export": "导出下载",
+  "cover": "背景",
+  "avatar": "形象",
+  "prompt": "设定",
+  "regenerate": "重新生成",
+  "newConversation": "新聊天",
+  "hideConversation": "关闭聊天",
+  "conversationWith": "当前对话",
+  "digitalLives": "数字生命"
+}

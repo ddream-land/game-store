@@ -3,7 +3,8 @@ import {
   EventSourceMessage,
   fetchEventSource,
 } from '@microsoft/fetch-event-source'
-import { HTTP_TIMEOUT, getFullUrl } from '../constants'
+import { getFullUrl } from '../constants'
+import { HTTP_TIMEOUT } from '@/constant/env'
 
 export async function chatCompletionStream(
   dto: ChatCompletionReqDto,

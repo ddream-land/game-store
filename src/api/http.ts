@@ -1,12 +1,11 @@
+import { HTTP_TIMEOUT } from '@/constant/env'
 import axios from 'axios'
 
 axios.defaults.headers['Content-Type'] =
   'application/json;charset=utf-8'
 
 function getTimeout() {
-  let timeout = Number(
-    import.meta.env.VITE_APP_HTTP_TIMEOUT ?? 10000
-  )
+  let timeout = Number(HTTP_TIMEOUT ?? 10000)
   if (!timeout) {
     timeout = 10000
   }

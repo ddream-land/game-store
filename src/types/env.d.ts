@@ -3,4 +3,5 @@
 interface ImportMetaEnv {
   readonly VITE_APP_HTTP_TIMEOUT: string
   readonly VITE_APP_API_BASEURL?: string
+  readonly VITE_APP_DEFAULT_LANGUAGE?: string
 }
