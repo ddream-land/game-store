@@ -6,18 +6,14 @@ import classes from './InputArea.module.scss'
 import { KeyboardEvent, useRef, useState } from 'react'
 import { ChatMessage } from '@/core/ChatMessage'
 import { ChatRole } from '@/core/ChatRole'
-import {
-  useCurrentDigitalLifeId,
-  useSetCurrentDigitalLifeId,
-} from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
-import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
+import { useSetCurrentCharacterCardInfoId } from '@/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
 import {
   msgMacrosReplace,
   preMsgGenerator,
 } from '@/core/promptMessageGenerator'
 import { ChatCompletionReqDto } from '@/api/chatCompletion/reqDto'
-import { fetchEventSource } from '@microsoft/fetch-event-source'
 import { chatCompletionStream } from '@/api/chatCompletion/chatCompletion'
+import { useCurrentCharacterCardInfo } from '@/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 let uid = 1
 
@@ -28,20 +24,15 @@ export default function InputArea() {
   const [inputDisable, setInputDisable] = useState(false)
   const [newDialogVisible, setNewDialogVisible] =
     useState(false)
-  const setCurrentDigitalLifeId =
-    useSetCurrentDigitalLifeId()
-  const digitalLifeDetailList = useCharacterCardInfoList()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const setCurrentCharacterCardInfoId =
+    useSetCurrentCharacterCardInfoId()
 
-  const lifeDetail = digitalLifeDetailList.find(
-    (x) => x.id === currentDigitalLifeId
-  )
-
-  if (!lifeDetail) {
+  const currentCharaCardInfo = useCurrentCharacterCardInfo()
+  if (!currentCharaCardInfo) {
     return
   }
 
-  const preMsg = preMsgGenerator(lifeDetail.card)
+  const preMsg = preMsgGenerator(currentCharaCardInfo.card)
 
   async function sendChat(userMsg?: string) {
     if (!userMsg || inputDisable) {
@@ -178,13 +169,13 @@ export default function InputArea() {
   }
 
   function dialogNewChatBtnClicked() {
-    if (lifeDetail) {
+    if (currentCharaCardInfo) {
       setChatMsg([
         {
           role: ChatRole.Assistant,
           content: msgMacrosReplace(
-            lifeDetail.card.data.first_mes,
-            lifeDetail.card
+            currentCharaCardInfo.card.data.first_mes,
+            currentCharaCardInfo.card
           ),
           id: Date.now(),
           date: new Date(),
@@ -197,7 +188,7 @@ export default function InputArea() {
 
   function dialogCloseChatBtnClicked() {
     setChatMsg([])
-    setCurrentDigitalLifeId(undefined)
+    setCurrentCharacterCardInfoId(undefined)
     dialogCloseBtnClicked()
   }
 

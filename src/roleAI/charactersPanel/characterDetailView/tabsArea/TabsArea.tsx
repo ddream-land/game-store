@@ -6,20 +6,13 @@ import {
   isNumber,
   isString,
 } from '@/libs/isTypes'
-import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
-import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { useCurrentCharacterCardInfo } from '@/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 export default TabsArea
 
 function TabsArea() {
-  const digitalLifeDetailList = useCharacterCardInfoList()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
-  const lifeDetail: CharacterCardInfo | undefined =
-    digitalLifeDetailList.find(
-      (item) => item.id === currentDigitalLifeId
-    )
-  if (!lifeDetail) {
+  const currentCharaCardInfo = useCurrentCharacterCardInfo()
+  if (!currentCharaCardInfo) {
     throw new Error(`Runtime error.`)
   }
 
@@ -47,7 +40,7 @@ function TabsArea() {
 
   function getContent() {
     const prop = tabs[currentTabIndex].prop
-    const data = lifeDetail?.card.data
+    const data = currentCharaCardInfo?.card.data
     let content = '无'
     if (data && isKey(data, prop)) {
       const val = data[prop]

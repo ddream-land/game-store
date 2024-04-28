@@ -1,24 +1,16 @@
 import classes from './MinimizedOverview.module.scss'
-import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
 import SelectPrompt from './selectPrompt/SelectPrompt'
 import CharacterOverview from './characterOverview/CharacterOverview'
-import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { useCurrentCharacterCardInfo } from '@/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 export interface MinimizedOverviewProps {}
 
 export default function MinimizedOverview({}: MinimizedOverviewProps) {
-  const digitalLifeDetailList = useCharacterCardInfoList()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const currentCharaCardInfo = useCurrentCharacterCardInfo()
 
-  const lifeDetail: CharacterCardInfo | undefined =
-    digitalLifeDetailList.find(
-      (item) => item.id === currentDigitalLifeId
-    )
-
-  const content = lifeDetail ? (
+  const content = currentCharaCardInfo ? (
     <CharacterOverview
-      lifeDetail={lifeDetail}
+      charaCardInfo={currentCharaCardInfo}
     ></CharacterOverview>
   ) : (
     <SelectPrompt></SelectPrompt>

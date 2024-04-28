@@ -29,14 +29,12 @@ export function isCharacterCard(
   return [false, undefined]
 }
 
-export type Character = any
-
 export function readCharacterCardFromChunks(
   chunks: {
     name: string
     data: Uint8Array
   }[]
-): Character | undefined {
+): CharacterCardV2 | undefined {
   const tEXtChunks = chunks.filter(
     (chunk: { name: string }) =>
       chunk.name === TEXT_CHUNK_NAME
@@ -52,12 +50,39 @@ export function readCharacterCardFromChunks(
   }
   const base64JSON = data.text
 
+  let mayCard: any = undefined
   try {
     const jsonString = atob(base64JSON)
-    return JSON.parse(jsonString)
+    mayCard = JSON.parse(jsonString)
   } catch (err) {
-    return
+    console.error(err)
+    mayCard = undefined
   }
+
+  let card: CharacterCardV2 | undefined
+
+  const [isCard, ver] = isCharacterCard(mayCard)
+  if (isCard) {
+    switch (ver) {
+      case CharacterCardVersion.v1: {
+        card = v1Tov2(mayCard)
+        break
+      }
+      case CharacterCardVersion.v2: {
+        card = mayCard
+        break
+      }
+      default: {
+        console.error(
+          `Unknown character card version. ${ver}`
+        )
+        card = undefined
+        break
+      }
+    }
+  }
+
+  return card
 }
 
 function writeCharacterCardToChunks(
@@ -65,7 +90,7 @@ function writeCharacterCardToChunks(
     name: string
     data: Uint8Array
   }[],
-  character: Character
+  character: CharacterCardV2
 ): any | undefined {
   const tEXtChunks = chunks.filter(
     (chunk: { name: string }) =>

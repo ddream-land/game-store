@@ -1,25 +1,18 @@
 import classes from './CharacterInfo.module.scss'
-import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
 import { useMenuDialog } from './useMenuDialog'
 import MenuDialog from './MenuDialog/MenuDialog'
-import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { useCurrentCharacterCardInfo } from '@/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 export default CharacterInfo
 
 function CharacterInfo() {
-  const digitalLifeDetailList = useCharacterCardInfoList()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
-  const lifeDetail: CharacterCardInfo | undefined =
-    digitalLifeDetailList.find(
-      (item) => item.id === currentDigitalLifeId
-    )
-  if (!lifeDetail) {
+  const currentCharaCardInfo = useCurrentCharacterCardInfo()
+  if (!currentCharaCardInfo) {
     throw new Error(`Runtime error.`)
   }
 
-  const name = lifeDetail.card.data.name
-  const desc = lifeDetail.card.data.description
+  const name = currentCharaCardInfo.card.data.name
+  const desc = currentCharaCardInfo.card.data.description
 
   const { menuDialogOpened, openMenuDialog } =
     useMenuDialog()

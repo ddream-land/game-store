@@ -1,5 +1,6 @@
 import { CharacterCardInfoListContextProvider } from './CharacterCardInfoListContextProvider'
-import { CurrentDigitalLifeIdContextProvider } from './CurrentDigitalLifeIdContextProvider'
+import { CurrentCharacterCardInfoIdContextProvider } from './CurrentCharacterCardInfoIdContextProvider'
+import { CurrentCharacterCardInfoContextProvider } from './CurrentCharacterCardInfoContextProvider'
 import { ChatHistoryContextProvider } from './ChatHistoryContextProvider'
 
 export function RoleAIContextProvider({
@@ -9,11 +10,13 @@ export function RoleAIContextProvider({
 }) {
   return (
     <CharacterCardInfoListContextProvider>
-      <CurrentDigitalLifeIdContextProvider>
-        <ChatHistoryContextProvider>
-          {children}
-        </ChatHistoryContextProvider>
-      </CurrentDigitalLifeIdContextProvider>
+      <CurrentCharacterCardInfoIdContextProvider>
+        <CurrentCharacterCardInfoContextProvider>
+          <ChatHistoryContextProvider>
+            {children}
+          </ChatHistoryContextProvider>
+        </CurrentCharacterCardInfoContextProvider>
+      </CurrentCharacterCardInfoIdContextProvider>
     </CharacterCardInfoListContextProvider>
   )
 }

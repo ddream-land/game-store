@@ -2,18 +2,19 @@ import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import classes from './CharacterOverview.module.scss'
 
 interface CharacterOverviewProps {
-  lifeDetail: CharacterCardInfo
+  charaCardInfo: CharacterCardInfo
 }
 
 export default CharacterOverview
 
 function CharacterOverview({
-  lifeDetail,
+  charaCardInfo,
 }: CharacterOverviewProps) {
-  const name = lifeDetail.card.data.name
-  const desc = lifeDetail.card.data.description
+  const name = charaCardInfo.card.data.name
+  const desc = charaCardInfo.card.data.description
   const avatarUrl =
-    lifeDetail.pngUrlOrBase64 ?? '/imgs/default-avatar.png'
+    charaCardInfo.pngUrlOrBase64 ??
+    '/imgs/default-avatar.png'
 
   return (
     <div

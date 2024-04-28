@@ -4,7 +4,7 @@ import { useMouseHoverOp } from './useMouseHoverOp'
 import { useLockPanelDialogOp } from './useLockPanelDialogOp'
 import { usePageOp } from './usePageOp'
 import CharacterDetailView from './characterDetailView/CharacterDetailView'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
+import { useCurrentCharacterCardInfoId } from '@/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
 import LockPanelDialog from './lockPanelDialog/LockPanelDialog'
 import CharactersView from './charactersView/CharactersView'
 import MinimizedOverview from './minimizedOverview/MinimizedOverview'
@@ -20,7 +20,7 @@ function CharactersPanel() {
   } = useMouseHoverOp()
   const { lockPanelForNotMinimize, switchPanelLock } =
     useLockPanelDialogOp()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const currentDigitalLifeId = useCurrentCharacterCardInfoId()
   const {
     open: lifeDetailPageOpen,
     setOpen: setLifeDetailPageOpen,

@@ -1,6 +1,6 @@
 import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
 import classes from './CharacterList.module.scss'
-import { useSetCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
+import { useSetCurrentCharacterCardInfoId } from '@/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
 
 export type CharacterListProps = {
   characterSelected?: (id: number) => void
@@ -12,7 +12,7 @@ function CharacterList({
   characterSelected,
 }: CharacterListProps) {
   const lifeList = useCharacterCardInfoList()
-  const setCurrent = useSetCurrentDigitalLifeId()
+  const setCurrent = useSetCurrentCharacterCardInfoId()
 
   function onItemClicked(id: number) {
     setCurrent(id)

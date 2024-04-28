@@ -2,9 +2,8 @@ import { MouseEvent, WheelEvent, useState } from 'react'
 import classes from './CharacterDetailView.module.scss'
 import LifeInfo from './characterInfo/CharacterInfo'
 import DetailTabs from './tabsArea/TabsArea'
-import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { useCurrentCharacterCardInfo } from '@/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 export type CharacterDetailViewProps = {
   onViewCloseClicked?: (
@@ -16,18 +15,14 @@ export default CharacterDetailView
 function CharacterDetailView({
   onViewCloseClicked,
 }: CharacterDetailViewProps) {
-  const digitalLifeDetailList = useCharacterCardInfoList()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
-  const lifeDetail: CharacterCardInfo | undefined =
-    digitalLifeDetailList.find(
-      (item) => item.id === currentDigitalLifeId
-    )
-  if (!lifeDetail) {
+  const currentCharaCardInfo = useCurrentCharacterCardInfo()
+  if (!currentCharaCardInfo) {
     return
   }
 
   const avatarUrl =
-    lifeDetail.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
+    currentCharaCardInfo.pngUrlOrBase64 ??
+    '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
 

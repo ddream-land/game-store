@@ -3,12 +3,12 @@ import {
   useSetCharacterCardInfoList,
 } from '@/roleAI/context/CharacterCardInfoListContextProvider'
 import classes from './HeaderInfo.module.scss'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
 import { useRef, ChangeEvent } from 'react'
 import { extractChunks } from '@/libs/pngChunks'
 import { readCharacterCardFromChunks } from '@/core/characterCard/characterCard'
 import { toBase64 } from '@/libs/fileBase64Encode'
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { useCurrentCharacterCardInfo } from '@/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 export type HeaderInfoProps = {}
 export default HeaderInfo
@@ -19,21 +19,16 @@ function HeaderInfo({}: HeaderInfoProps) {
   const characterCardInfoList = useCharacterCardInfoList()
   const setCharacterCardInfoList =
     useSetCharacterCardInfoList()
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const currentCharaCardInfo = useCurrentCharacterCardInfo()
 
-  const lifeDetail: CharacterCardInfo | undefined =
-    characterCardInfoList.find(
-      (item) => item.id === currentDigitalLifeId
-    )
-
-  const titleDesc = lifeDetail
+  const titleDesc = currentCharaCardInfo
     ? 'Conversation with'
     : 'Select'
 
   const name =
-    lifeDetail?.card?.data.name ?? 'Digital lives'
+    currentCharaCardInfo?.card?.data.name ?? 'Digital lives'
   const avatarUrl =
-    lifeDetail?.pngUrlOrBase64 ??
+    currentCharaCardInfo?.pngUrlOrBase64 ??
     '/imgs/default-avatar2.png'
 
   const pngInputEl = useRef<HTMLInputElement>(null)
@@ -55,13 +50,18 @@ function HeaderInfo({}: HeaderInfoProps) {
     const file = pngInputEl.current.files[0]
     try {
       const pngBase64 = await toBase64(file)
-      const char = readCharacterCardFromChunks(
+      const characterCard = readCharacterCardFromChunks(
         await extractChunks(file)
       )
 
+      if (!characterCard) {
+        alert(`Unsupport card.`)
+        return
+      }
+
       const cardInfo: CharacterCardInfo = {
         pngUrlOrBase64: pngBase64,
-        card: char,
+        card: characterCard,
         id: uid++,
       }
 

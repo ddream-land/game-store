@@ -30,29 +30,6 @@ export function CharacterCardInfoListContextProvider({
       []
     )
 
-  // const cardInfos = useCardInfos()
-
-  // function localStorageCardsToList() {
-  //   const list: CharacterCardInfo[] = []
-  //   for (let i = 0; i < cardInfos.length; i++) {
-  //     const cardInfo = cardInfos[i]
-  //     const item: CharacterCardInfo = {
-  //       ...cardInfo,
-  //     }
-
-  //     list.push(item)
-  //   }
-
-  //   setCharacterCardInfoList(list)
-  // }
-
-  // useEffect(
-  //   function () {
-  //     localStorageCardsToList()
-  //   },
-  //   [cardInfos]
-  // )
-
   return (
     <CharacterCardInfoListContext.Provider
       value={characterCardInfoList}

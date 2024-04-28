@@ -1,5 +1,5 @@
 import classes from './ChatPanel.module.scss'
-import { useCurrentDigitalLifeId } from '@/roleAI/context/CurrentDigitalLifeIdContextProvider'
+import { useCurrentCharacterCardInfoId } from '@/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
 import { useEffect, useState } from 'react'
 import { useSetChatHistory } from '@/roleAI/context/ChatHistoryContextProvider'
 import { useCharacterCardInfoList } from '@/roleAI/context/CharacterCardInfoListContextProvider'
@@ -10,7 +10,7 @@ import ChatHistory from './chatHistory/ChatHistory'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
-  const currentDigitalLifeId = useCurrentDigitalLifeId()
+  const currentDigitalLifeId = useCurrentCharacterCardInfoId()
   const digitalLifeDetailList = useCharacterCardInfoList()
   const setChatMsg = useSetChatHistory()
 
