@@ -13,7 +13,7 @@ export default function RoleAI() {
       >
         <RoleAIContextProvider>
           <>
-            <Live2dExt></Live2dExt>
+            {/* <Live2dExt></Live2dExt> */}
             <RoleAILayout
               charactersArea={
                 <CharactersPanel></CharactersPanel>

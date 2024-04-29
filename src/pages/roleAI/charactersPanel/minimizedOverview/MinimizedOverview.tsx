@@ -6,12 +6,10 @@ import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentChara
 export interface MinimizedOverviewProps {}
 
 export default function MinimizedOverview({}: MinimizedOverviewProps) {
-  const currentCharaCardInfo = useCurrentCharacterCardInfo()
+  const { charaCardInfo } = useCurrentCharacterCardInfo()
 
-  const content = currentCharaCardInfo ? (
-    <CharacterOverview
-      charaCardInfo={currentCharaCardInfo}
-    ></CharacterOverview>
+  const content = charaCardInfo ? (
+    <CharacterOverview charaCardInfo={charaCardInfo}></CharacterOverview>
   ) : (
     <SelectPrompt></SelectPrompt>
   )
@@ -20,11 +18,7 @@ export default function MinimizedOverview({}: MinimizedOverviewProps) {
     <div
       className={`${classes.miniOverview} w-full h-full flex flex-row justify-between overflow-hidden`}
     >
-      <div
-        className={`${classes.content} flex-1 overflow-hidden`}
-      >
-        {content}
-      </div>
+      <div className={`${classes.content} flex-1 overflow-hidden`}>{content}</div>
       <div className={`${classes.icon} flex-none`}>
         <img src="/imgs/digitalLifeIcon.png" />
       </div>

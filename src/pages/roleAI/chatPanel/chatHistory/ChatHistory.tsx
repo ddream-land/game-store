@@ -4,7 +4,7 @@ import { ChatRole } from '@/core/ChatRole'
 import { useEffect, useRef } from 'react'
 
 export default function ChatHistory() {
-  const chatMsgs = useChatHistory()
+  const { chatHistory } = useChatHistory()
   const chatContainer = useRef<HTMLDivElement>(null)
 
   function msgRoleClassName(role: ChatRole) {
@@ -24,7 +24,7 @@ export default function ChatHistory() {
     }
   }
 
-  const elements = chatMsgs
+  const elements = chatHistory
     .filter(function (msg) {
       return msg.role !== ChatRole.System
     })
@@ -33,16 +33,10 @@ export default function ChatHistory() {
         <div
           key={msg.id}
           className={`${classes.msg} w-full flex ${
-            msg.role === ChatRole.User
-              ? 'flex-row-reverse'
-              : 'flex-row'
+            msg.role === ChatRole.User ? 'flex-row-reverse' : 'flex-row'
           }`}
         >
-          <div
-            className={`${
-              classes.content
-            } ${msgRoleClassName(msg.role)} w-full`}
-          >
+          <div className={`${classes.content} ${msgRoleClassName(msg.role)} w-full`}>
             {msg.content}
           </div>
         </div>
@@ -57,7 +51,7 @@ export default function ChatHistory() {
       }
       divEl.scrollTop = divEl.scrollHeight
     },
-    [chatMsgs]
+    [chatHistory]
   )
 
   return (
@@ -65,9 +59,7 @@ export default function ChatHistory() {
       ref={chatContainer}
       className={`${classes.chatHistory} w-full h-full overflow-y-auto scrollbar-override transition-all flex`}
     >
-      <div className={`${classes.msgs} w-full mt-auto`}>
-        {elements}
-      </div>
+      <div className={`${classes.msgs} w-full mt-auto`}>{elements}</div>
     </div>
   )
 }

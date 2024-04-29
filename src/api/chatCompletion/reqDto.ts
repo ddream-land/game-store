@@ -1,3 +1,4 @@
+import { AIChatMessage } from '@/core/ChatMessage'
 import { ChatRole } from '@/core/ChatRole'
 
 export type ChatCompletionReqDto = {
@@ -13,4 +14,33 @@ export type ChatCompletionReqDto = {
   chat_completion_source: string
   user_name: string
   char_name: string
+}
+
+export function chatCompletionReqDto(
+  userMsg: string,
+  last9Msg: AIChatMessage[],
+  preMsg?: AIChatMessage[]
+) {
+  const reqDto: ChatCompletionReqDto = {
+    messages: [
+      ...(preMsg ?? []),
+      ...last9Msg,
+      {
+        role: ChatRole.User,
+        content: userMsg,
+      },
+    ],
+    model: 'claude-2.0',
+    temperature: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+    top_p: 1,
+    max_tokens: 300,
+    logit_bias: {},
+    chat_completion_source: 'claude',
+    user_name: 'User',
+    char_name: 'Flux the Cat',
+  }
+
+  return reqDto
 }

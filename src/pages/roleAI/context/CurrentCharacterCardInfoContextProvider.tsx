@@ -1,36 +1,42 @@
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import { useCharacterCardInfoList } from './CharacterCardInfoListContextProvider'
 import { useCurrentCharacterCardInfoId } from './CurrentCharacterCardInfoIdContextProvider'
+import { preMsgGenerator } from '@/core/promptMessageGenerator'
+import { AIChatMessage } from '@/core/ChatMessage'
 
-const CurrentCharacterCardInfoContext = createContext<
-  CharacterCardInfo | undefined
->(undefined)
+const CurrentCharacterCardInfoContext = createContext<CharacterCardInfo | undefined>(undefined)
 
-export function CurrentCharacterCardInfoContextProvider({
-  children,
-}: {
-  children: JSX.Element
-}) {
+export function CurrentCharacterCardInfoContextProvider({ children }: { children: JSX.Element }) {
   const characterCardInfoList = useCharacterCardInfoList()
-  const currentCharacterCardInfoId =
-    useCurrentCharacterCardInfoId()
+  const currentCharacterCardInfoId = useCurrentCharacterCardInfoId()
 
-  const currentCharacterCardInfo:
-    | CharacterCardInfo
-    | undefined = characterCardInfoList.find(
+  const currentCharacterCardInfo: CharacterCardInfo | undefined = characterCardInfoList.find(
     (item) => item.id === currentCharacterCardInfoId
   )
 
   return (
-    <CurrentCharacterCardInfoContext.Provider
-      value={currentCharacterCardInfo}
-    >
+    <CurrentCharacterCardInfoContext.Provider value={currentCharacterCardInfo}>
       {children}
     </CurrentCharacterCardInfoContext.Provider>
   )
 }
 
 export function useCurrentCharacterCardInfo() {
-  return useContext(CurrentCharacterCardInfoContext)
+  const charaCardInfo = useContext(CurrentCharacterCardInfoContext)
+
+  const charaPreMsg: AIChatMessage[] | undefined = useMemo(
+    function () {
+      if (!charaCardInfo) {
+        return
+      }
+      return preMsgGenerator(charaCardInfo.card)
+    },
+    [charaCardInfo]
+  )
+
+  return {
+    charaCardInfo: charaCardInfo,
+    charaPreMsg,
+  }
 }

@@ -2,27 +2,20 @@ import { MouseEvent, WheelEvent, useState } from 'react'
 import classes from './CharacterDetailView.module.scss'
 import LifeInfo from './characterInfo/CharacterInfo'
 import DetailTabs from './tabsArea/TabsArea'
-import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 
 export type CharacterDetailViewProps = {
-  onViewCloseClicked?: (
-    e: MouseEvent<HTMLDivElement> | undefined
-  ) => void
+  onViewCloseClicked?: (e: MouseEvent<HTMLDivElement> | undefined) => void
 }
 export default CharacterDetailView
 
-function CharacterDetailView({
-  onViewCloseClicked,
-}: CharacterDetailViewProps) {
-  const currentCharaCardInfo = useCurrentCharacterCardInfo()
-  if (!currentCharaCardInfo) {
+function CharacterDetailView({ onViewCloseClicked }: CharacterDetailViewProps) {
+  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  if (!charaCardInfo) {
     return
   }
 
-  const avatarUrl =
-    currentCharaCardInfo.pngUrlOrBase64 ??
-    '/imgs/default-avatar3.png'
+  const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
 
@@ -35,10 +28,7 @@ function CharacterDetailView({
   }
 
   return (
-    <div
-      onWheel={wheel}
-      className={`${classes.characterDetailView} w-full h-full relative`}
-    >
+    <div onWheel={wheel} className={`${classes.characterDetailView} w-full h-full relative`}>
       <div
         className={`${classes['life-img']} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
@@ -56,17 +46,12 @@ function CharacterDetailView({
         <div className={`${classes.info} flex-none z-0`}>
           <LifeInfo></LifeInfo>
         </div>
-        <div
-          className={`${classes.tabs} flex-1 z-0 overflow-hidden`}
-        >
+        <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
           <DetailTabs></DetailTabs>
         </div>
       </div>
 
-      <div
-        onClick={onViewCloseClicked}
-        className={`${classes.back} absolute cursor-pointer`}
-      ></div>
+      <div onClick={onViewCloseClicked} className={`${classes.back} absolute cursor-pointer`}></div>
     </div>
   )
 }

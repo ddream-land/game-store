@@ -1,0 +1,63 @@
+.controlDialog {
+  width: 330px;
+  height: 263px;
+  bottom: 0px;
+  right: 0px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.95);
+
+  .header {
+    padding: 15px;
+
+    .close {
+      width: 55px;
+      height: 44px;
+      border-radius: 20px;
+      background-color: rgba(0, 0, 0, 1);
+      background-image: url('/imgs/close.png');
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .content {
+    gap: 15px;
+    .btn {
+      width: 132px;
+      height: 64px;
+      border-radius: 25px;
+      padding: 0px 12px;
+      background: rgba(219, 219, 220, 1);
+      color: rgba(0, 0, 0, 1);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      --acolor: rgba(0, 0, 0, 1);
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 12px;
+        border-width: 4px;
+        border-style: solid;
+        border-color: transparent transparent transparent var(--acolor);
+      }
+
+      &.re {
+      }
+      &.new {
+      }
+      &.con {
+      }
+      &.clo {
+        background-color: rgba(0, 0, 0, 1);
+        color: rgba(255, 255, 255, 1);
+        --acolor: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+}

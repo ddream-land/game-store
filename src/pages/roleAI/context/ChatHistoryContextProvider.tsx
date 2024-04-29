@@ -1,25 +1,17 @@
-import { ChatMessage } from '@/core/ChatMessage'
-import { createContext, useContext, useState } from 'react'
+import { AIChatMessage, ChatMessage } from '@/core/ChatMessage'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 const ChatHistoryContext = createContext<ChatMessage[]>([])
-const SetChatHistoryContext = createContext<
-  React.Dispatch<React.SetStateAction<ChatMessage[]>>
->(function () {})
+const SetChatHistoryContext = createContext<React.Dispatch<React.SetStateAction<ChatMessage[]>>>(
+  function () {}
+)
 
-export function ChatHistoryContextProvider({
-  children,
-}: {
-  children: JSX.Element
-}) {
-  const [chatHistory, setChatHistory] = useState<
-    ChatMessage[]
-  >([])
+export function ChatHistoryContextProvider({ children }: { children: JSX.Element }) {
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([])
 
   return (
     <ChatHistoryContext.Provider value={chatHistory}>
-      <SetChatHistoryContext.Provider
-        value={setChatHistory}
-      >
+      <SetChatHistoryContext.Provider value={setChatHistory}>
         {children}
       </SetChatHistoryContext.Provider>
     </ChatHistoryContext.Provider>
@@ -27,7 +19,21 @@ export function ChatHistoryContextProvider({
 }
 
 export function useChatHistory() {
-  return useContext(ChatHistoryContext)
+  const chatHistory = useContext(ChatHistoryContext)
+
+  const last9Msg: AIChatMessage[] = useMemo(
+    function () {
+      return chatHistory.slice(Math.max(chatHistory.length - 9, 0)).map(function (x) {
+        return {
+          role: x.role,
+          content: x.content,
+        }
+      })
+    },
+    [chatHistory]
+  )
+
+  return { chatHistory, last9Msg }
 }
 
 export function useSetChatHistory() {

@@ -1,19 +1,14 @@
 import { useState } from 'react'
 import classes from './TabsArea.module.scss'
-import {
-  isArray,
-  isKey,
-  isNumber,
-  isString,
-} from '@/libs/isTypes'
+import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 
 export default TabsArea
 
 function TabsArea() {
-  const currentCharaCardInfo = useCurrentCharacterCardInfo()
-  if (!currentCharaCardInfo) {
+  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  if (!charaCardInfo) {
     throw new Error(`Runtime error.`)
   }
 
@@ -43,7 +38,7 @@ function TabsArea() {
 
   function getContent() {
     const prop = tabs[currentTabIndex].prop
-    const data = currentCharaCardInfo?.card.data
+    const data = charaCardInfo?.card.data
     let content = '无'
     if (data && isKey(data, prop)) {
       const val = data[prop]
@@ -62,15 +57,11 @@ function TabsArea() {
     <div
       className={`${classes.tabsArea} w-full h-full box-border flex flex-col justify-center items-center`}
     >
-      <div
-        className={`${classes.tabs} w-full flex flex-row justify-between flex-none`}
-      >
+      <div className={`${classes.tabs} w-full flex flex-row justify-between flex-none`}>
         {tabsElement}
       </div>
       <div className={`${classes.line} flex-none`}></div>
-      <div
-        className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}
-      >
+      <div className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}>
         {getContent()}
       </div>
     </div>
