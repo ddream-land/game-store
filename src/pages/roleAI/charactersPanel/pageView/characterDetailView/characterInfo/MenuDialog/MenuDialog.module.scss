@@ -1,0 +1,22 @@
+.menuDialog {
+  width: 136px;
+  // -width - 11px
+  right: -147px;
+  height: 201px;
+  border-radius: 10px;
+  border: 0.5px solid rgba(255, 255, 255, 0.16);
+  background: rgba(13, 13, 13, 1);
+  color: rgba(255, 255, 255, 0.87);
+
+  .btn {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+  }
+
+  .line {
+    border: 0.5px solid rgba(255, 255, 255, 0.16);
+    width: 118px;
+  }
+}

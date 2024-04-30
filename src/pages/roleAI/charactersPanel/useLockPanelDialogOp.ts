@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
 export function useLockPanelDialogOp() {
-  const [lockPanelForNotMinimize , setLockPanelForNotMinimize ] = useState(false)
+  const [
+    lockPanelForNotMinimize,
+    setLockPanelForNotMinimize,
+  ] = useState(true)
 
   function switchPanelLock(to: boolean) {
     setLockPanelForNotMinimize(to)

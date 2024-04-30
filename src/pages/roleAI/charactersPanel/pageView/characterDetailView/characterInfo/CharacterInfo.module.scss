@@ -1,0 +1,43 @@
+.characterInfo {
+  padding: 0 26px;
+  color: rgba(255, 255, 255, 1);
+
+  .menu-btn {
+    top: 13px;
+    right: 26px;
+  }
+
+  .name {
+    height: 36px;
+    box-sizing: content-box;
+    padding-top: 29px;
+    font-family: Inter;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 36px;
+  }
+
+  .desc {
+    height: 60px;
+    margin-top: 18px;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: left;
+  }
+
+  .op {
+    margin-top: 25px;
+
+    .btn {
+      background: rgba(0, 0, 0, 0.43) !important;
+      color: rgba(255, 255, 255, 1) !important;
+      font-family: Inter;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      line-height: 14px !important;
+      letter-spacing: 0.01em !important;
+    }
+  }
+}

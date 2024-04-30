@@ -1,6 +1,6 @@
 import classes from './RoleAI.module.scss'
 import { RoleAIContextProvider } from './context/RoleAIContextProvider'
-import Live2dExt from '@/components/live2dExtension/Live2dExtension'
+import Live2dExtension from '@/components/live2dExtension/Live2dExtension'
 import RoleAILayout from './layout/RoleAILayout'
 import ChatPanel from './chatPanel/ChatPanel'
 import CharactersPanel from './charactersPanel/CharactersPanel'
@@ -13,7 +13,7 @@ export default function RoleAI() {
       >
         <RoleAIContextProvider>
           <>
-            {/* <Live2dExt></Live2dExt> */}
+            {/* <Live2dExtension></Live2dExtension> */}
             <RoleAILayout
               charactersArea={
                 <CharactersPanel></CharactersPanel>

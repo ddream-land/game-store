@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
 import classes from './CharactersPanel.module.scss'
 import { useMouseHoverOp } from './useMouseHoverOp'
 import { useLockPanelDialogOp } from './useLockPanelDialogOp'
-import { usePageOp } from './usePageOp'
-import CharacterDetailView from './characterDetailView/CharacterDetailView'
-import { useCurrentCharacterCardInfoId } from '@/pages/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
+import { useSetCurrentCharacterCardInfoId } from '@/pages/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
 import LockPanelDialog from './lockPanelDialog/LockPanelDialog'
 import CharactersView from './charactersView/CharactersView'
 import MinimizedOverview from './minimizedOverview/MinimizedOverview'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 export default CharactersPanel
 
 function CharactersPanel() {
+  const navigate = useNavigate()
   const {
     mouseOnPanel,
     mouseOutofPanel,
@@ -20,37 +19,20 @@ function CharactersPanel() {
   } = useMouseHoverOp()
   const { lockPanelForNotMinimize, switchPanelLock } =
     useLockPanelDialogOp()
-  const currentDigitalLifeId = useCurrentCharacterCardInfoId()
-  const {
-    open: lifeDetailPageOpen,
-    setOpen: setLifeDetailPageOpen,
-  } = usePageOp()
-  // const { open: bgImgPageOpen, setOpen: setBgImgPageOpen } = usePageOp()
 
-  const showDetail = lockPanelForNotMinimize || !minify
+  const setCurrent = useSetCurrentCharacterCardInfoId()
 
-  useEffect(
-    function () {
-      if (!showDetail) {
-        setLifeDetailPageOpen(false)
-      }
-    },
-    [minify]
-  )
+  const showLargePanel = lockPanelForNotMinimize || !minify
 
-  useEffect(
-    function () {
-      if (currentDigitalLifeId === undefined) {
-        setLifeDetailPageOpen(false)
-      }
-    },
-    [currentDigitalLifeId]
-  )
+  function onCharaSelected(id: number) {
+    setCurrent(id)
+    navigate(`detail`)
+  }
 
   return (
     <div
       className={`${classes.charactersPanel} ${
-        showDetail ? '' : `${classes.minify}`
+        showLargePanel ? '' : `${classes.minify}`
       } relative pointer-events-auto`}
       onMouseEnter={mouseOnPanel}
       onMouseOver={mouseOnPanel}
@@ -59,11 +41,9 @@ function CharactersPanel() {
       <div
         className={`${classes.page} ${classes['base-page']} w-full h-full`}
       >
-        {showDetail ? (
+        {showLargePanel ? (
           <CharactersView
-            characterSelected={() =>
-              setLifeDetailPageOpen(true)
-            }
+            characterSelected={onCharaSelected}
           ></CharactersView>
         ) : (
           <MinimizedOverview></MinimizedOverview>
@@ -78,17 +58,7 @@ function CharactersPanel() {
         </div>
       </div>
 
-      {showDetail && lifeDetailPageOpen && (
-        <div
-          className={`${classes.page} ${classes['over-page']} absolute inset-0`}
-        >
-          <CharacterDetailView
-            onViewCloseClicked={() =>
-              setLifeDetailPageOpen(false)
-            }
-          ></CharacterDetailView>
-        </div>
-      )}
+      {showLargePanel && <Outlet></Outlet>}
     </div>
   )
 }

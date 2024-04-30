@@ -1,23 +1,45 @@
-import { MouseEvent, WheelEvent, useState } from 'react'
+import {
+  MouseEvent,
+  WheelEvent,
+  useEffect,
+  useState,
+} from 'react'
 import classes from './CharacterDetailView.module.scss'
-import LifeInfo from './characterInfo/CharacterInfo'
-import DetailTabs from './tabsArea/TabsArea'
+import CharacterInfo from './characterInfo/CharacterInfo'
+import TabsArea from './tabsArea/TabsArea'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import BackButton from '@/components/backButton/BackButton'
+import { Outlet, useNavigate } from 'react-router-dom'
 
-export type CharacterDetailViewProps = {
-  onViewCloseClicked?: (e: MouseEvent<HTMLDivElement> | undefined) => void
-}
 export default CharacterDetailView
 
-function CharacterDetailView({ onViewCloseClicked }: CharacterDetailViewProps) {
+function CharacterDetailView() {
+  const navigate = useNavigate()
   const { charaCardInfo } = useCurrentCharacterCardInfo()
+
+  useEffect(function () {
+    if (!charaCardInfo) {
+      navigate(`/`)
+    }
+  }, [])
+
   if (!charaCardInfo) {
     return
   }
 
-  const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
+  const avatarUrl =
+    charaCardInfo.pngUrlOrBase64 ??
+    '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
+
+  function backClicked() {
+    navigate(-1)
+  }
+
+  function editPromptClicked() {
+    navigate(`edit`)
+  }
 
   function wheel(e: WheelEvent<HTMLDivElement>) {
     if (e.deltaY > 0) {
@@ -28,7 +50,10 @@ function CharacterDetailView({ onViewCloseClicked }: CharacterDetailViewProps) {
   }
 
   return (
-    <div onWheel={wheel} className={`${classes.characterDetailView} w-full h-full relative`}>
+    <div
+      onWheel={wheel}
+      className={`${classes.characterDetailView} w-full h-full relative`}
+    >
       <div
         className={`${classes['life-img']} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
@@ -44,14 +69,20 @@ function CharacterDetailView({ onViewCloseClicked }: CharacterDetailViewProps) {
         } absolute bottom-0 w-full flex flex-col`}
       >
         <div className={`${classes.info} flex-none z-0`}>
-          <LifeInfo></LifeInfo>
+          <CharacterInfo
+            editPromptClicked={editPromptClicked}
+          ></CharacterInfo>
         </div>
-        <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
-          <DetailTabs></DetailTabs>
+        <div
+          className={`${classes.tabs} flex-1 z-0 overflow-hidden`}
+        >
+          <TabsArea></TabsArea>
         </div>
       </div>
 
-      <div onClick={onViewCloseClicked} className={`${classes.back} absolute cursor-pointer`}></div>
+      <BackButton onClick={backClicked}></BackButton>
+
+      <Outlet></Outlet>
     </div>
   )
 }
