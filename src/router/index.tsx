@@ -1,12 +1,10 @@
-import {
-  Navigate,
-  createBrowserRouter,
-} from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 import App from '@/App'
 import RoleAI from '@/pages/roleAI/RoleAI'
 import PageView from '@/pages/roleAI/charactersPanel/pageView/PageView'
 import CharacterDetailView from '@/pages/roleAI/charactersPanel/pageView/characterDetailView/CharacterDetailView'
 import CharacterDetailEditView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditView/CharacterDetailEditView'
+import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +36,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '/vp-test',
+    Component: OnlyLive2D,
   },
   {
     path: '*',

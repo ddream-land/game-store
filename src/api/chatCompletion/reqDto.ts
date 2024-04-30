@@ -12,6 +12,7 @@ export type ChatCompletionReqDto = {
   // stream: boolean
   logit_bias: any
   chat_completion_source: string
+  claude_use_sysprompt: boolean
   user_name: string
   char_name: string
 }
@@ -38,6 +39,7 @@ export function chatCompletionReqDto(
     max_tokens: 300,
     logit_bias: {},
     chat_completion_source: 'claude',
+    claude_use_sysprompt: true,
     user_name: 'User',
     char_name: 'Flux the Cat',
   }
