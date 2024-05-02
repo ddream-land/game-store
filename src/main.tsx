@@ -11,7 +11,7 @@ ReactDOM.createRoot(
 ).render(
   <React.StrictMode>
     <Suspense fallback={<div>Loading...</div>}>
-      <NextUIProvider className="w-full h-full">
+      <NextUIProvider className="w-full h-full bg-transparent">
         <RouterProvider router={router} />
       </NextUIProvider>
     </Suspense>

@@ -18,19 +18,12 @@ function Live2dExtension({}: Live2dExtensionProps) {
     manager.current = new Live2dExtensionModel(canvasRef.current)
     //@ts-ignore
     window.lmn = manager.current
-    manager.current.addModel(
-      '/assets/live2d/Haru/Haru.model3.json'
-    )
+    manager.current.addModel('/assets/live2d/Haru/Haru.model3.json')
   }, [])
 
   return (
-    <div
-      className={`${classes.live2dExtension} absolute inset-0`}
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0"
-      ></canvas>
+    <div className={`${classes.live2dExtension} absolute inset-0 bg-transparent`}>
+      <canvas ref={canvasRef} className="absolute inset-0  bg-transparent"></canvas>
     </div>
   )
 }
