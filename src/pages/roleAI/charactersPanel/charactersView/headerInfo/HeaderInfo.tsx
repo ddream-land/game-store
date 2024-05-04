@@ -60,6 +60,7 @@ function HeaderInfo({}: HeaderInfoProps) {
         pngUrlOrBase64: pngBase64,
         card: characterCard,
         id: (uid++).toString(),
+        avatar: file.name,
       }
 
       setCharacterCardInfoList([...characterCardInfoList, cardInfo])
