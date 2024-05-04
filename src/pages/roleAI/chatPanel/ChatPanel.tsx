@@ -7,12 +7,14 @@ import { ChatRole } from '@/core/ChatRole'
 import { msgMacrosReplace } from '@/core/promptMessageGenerator'
 import InputArea from './inputArea/InputArea'
 import ChatHistory from './chatHistory/ChatHistory'
+import { useSetTTSText } from '../context/TTSContextProvider'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
   const currentDigitalLifeId = useCurrentCharacterCardInfoId()
   const digitalLifeDetailList = useCharacterCardInfoList()
   const setChatMsg = useSetChatHistory()
+  const setTTSText = useSetTTSText()
 
   function clearChatMsgs() {
     setChatMsg([])
@@ -26,21 +28,20 @@ export default function ChatPanel() {
         return
       }
 
-      const lifeDetail = digitalLifeDetailList.find(
-        (x) => x.id === currentDigitalLifeId
-      )
+      const lifeDetail = digitalLifeDetailList.find((x) => x.id === currentDigitalLifeId)
 
       if (!lifeDetail) {
         throw new Error(`Runtime error.`)
       }
 
+      const firstMsg = msgMacrosReplace(lifeDetail.card.data.first_mes, lifeDetail.card)
+
+      setTTSText(firstMsg)
+
       setChatMsg([
         {
           role: ChatRole.Assistant,
-          content: msgMacrosReplace(
-            lifeDetail.card.data.first_mes,
-            lifeDetail.card
-          ),
+          content: firstMsg,
           id: Date.now(),
           date: new Date(),
         },
@@ -57,13 +58,8 @@ export default function ChatPanel() {
         visible ? '' : 'hidden'
       } w-full h-full flex flex-col pointer-events-auto`}
     >
-      <div className="flex-1 min-h-0">
-        {visible && <ChatHistory></ChatHistory>}
-      </div>
-      <div
-        className="flex-none"
-        style={{ marginTop: '18px' }}
-      >
+      <div className="flex-1 min-h-0">{visible && <ChatHistory></ChatHistory>}</div>
+      <div className="flex-none" style={{ marginTop: '18px' }}>
         {visible && <InputArea></InputArea>}
       </div>
     </div>

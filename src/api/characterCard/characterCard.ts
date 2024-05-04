@@ -23,7 +23,5 @@ export async function getAllCards() {
     method: 'post',
   })
 
-  console.log(res)
-
   return res
 }
