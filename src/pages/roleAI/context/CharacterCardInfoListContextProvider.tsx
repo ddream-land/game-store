@@ -12,18 +12,17 @@ const SetCharacterCardInfoListContext = createContext<
 >(function () {})
 
 export function CharacterCardInfoListContextProvider({ children }: { children: JSX.Element }) {
-  // const [characterCardInfoList, setCharacterCardInfoList] = useState<CharacterCardInfo[]>([])
+  const [characterCardInfoList, setCharacterCardInfoList] = useState<CharacterCardInfo[]>([])
 
-  const [characterCardInfoList, setCharacterCardInfoList] = useLocalStorage<CharacterCardInfo[]>(
-    LOCAL_STORAGE_CARD_KEY,
-    []
-  )
+  // const [characterCardInfoList, setCharacterCardInfoList] = useLocalStorage<CharacterCardInfo[]>(
+  //   LOCAL_STORAGE_CARD_KEY,
+  //   []
+  // )
 
   useEffect(function () {
     ;(async function () {
       const cards = await getAllCards()
-
-      console.log('cards', cards)
+      setCharacterCardInfoList(cards)
     })()
   }, [])
 

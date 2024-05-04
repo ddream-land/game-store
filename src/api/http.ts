@@ -63,8 +63,6 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   function (res) {
-    console.log(9999, res)
-
     const code = res.data.code || 200
     if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
       return res.data
