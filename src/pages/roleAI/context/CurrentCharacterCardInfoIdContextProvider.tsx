@@ -1,11 +1,11 @@
 import { createContext, useContext, useState } from 'react'
 
 const CurrentCharacterCardInfoIdContext = createContext<
-  number | undefined
+  string | undefined
 >(undefined)
 
 const SetCurrentCharacterCardInfoIdContext = createContext<
-  React.Dispatch<React.SetStateAction<number | undefined>>
+  React.Dispatch<React.SetStateAction<string | undefined>>
 >(function () {})
 
 export function CurrentCharacterCardInfoIdContextProvider({
@@ -16,7 +16,7 @@ export function CurrentCharacterCardInfoIdContextProvider({
   const [
     currentCharacterCardInfoId,
     setCurrentCharacterCardInfoId,
-  ] = useState<number | undefined>(undefined)
+  ] = useState<string | undefined>(undefined)
 
   return (
     <CurrentCharacterCardInfoIdContext.Provider

@@ -2,7 +2,7 @@ import { useCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardIn
 import classes from './CharacterList.module.scss'
 
 export type CharacterListProps = {
-  characterSelected?: (id: number) => void
+  characterSelected?: (id: string) => void
 }
 
 export default CharacterList
@@ -12,7 +12,7 @@ function CharacterList({
 }: CharacterListProps) {
   const lifeList = useCharacterCardInfoList()
 
-  function onItemClicked(id: number) {
+  function onItemClicked(id: string) {
     characterSelected && characterSelected(id)
   }
 

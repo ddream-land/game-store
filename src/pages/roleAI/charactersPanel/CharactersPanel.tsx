@@ -24,7 +24,7 @@ function CharactersPanel() {
 
   const showLargePanel = lockPanelForNotMinimize || !minify
 
-  function onCharaSelected(id: number) {
+  function onCharaSelected(id: string) {
     setCurrent(id)
     navigate(`detail`)
   }

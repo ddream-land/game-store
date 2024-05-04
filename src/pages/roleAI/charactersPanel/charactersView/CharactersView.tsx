@@ -4,7 +4,7 @@ import HeaderInfo from './headerInfo/HeaderInfo'
 import CharacterList from './characterList/CharacterList'
 
 export type CharactersViewProps = {
-  characterSelected?: (id: number) => void
+  characterSelected?: (id: string) => void
 }
 
 export default CharactersView
