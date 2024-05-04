@@ -13,25 +13,33 @@ export function TTSContextProvider({ children }: { children: JSX.Element }) {
 
   useEffect(
     function () {
+      if (ttsText) {
+        setTTSSrc(ttsGetUrl(ttsText))
+      } else {
+        setTTSSrc('')
+      }
+    },
+    [ttsText]
+  )
+
+  useEffect(
+    function () {
       const audio = audioEl.current
       if (!audio) {
         return
       }
-
       if (!audio.paused) {
         audio.pause()
       }
 
-      if (!ttsText) {
+      if (!ttsSrc) {
         return
       }
-
-      setTTSSrc(ttsGetUrl(ttsText))
 
       audio.load()
       audio.play()
     },
-    [ttsText]
+    [ttsSrc]
   )
 
   return (

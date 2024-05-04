@@ -1,46 +1,37 @@
 import { ChatCompletionReqDto } from './reqDto'
-import {
-  EventSourceMessage,
-  fetchEventSource,
-} from '@microsoft/fetch-event-source'
 import { getFullUrl } from '../constants'
-import { HTTP_TIMEOUT } from '@/constant/env'
+import { requestStream } from '../requestStream'
 
 export async function chatCompletionStream(
   dto: ChatCompletionReqDto,
-  {
-    onOpen,
-    onMessage,
-    onClose,
-    onError,
-  }: {
+  events: {
     onOpen: (response: Response) => Promise<void>
-    onMessage: (ev: EventSourceMessage) => void
+    onMessage: (msg: string) => void
     onClose: () => void
+    onEnd: () => void
     onError: (err: any) => number | null | undefined | void
   }
 ) {
-  const url = getFullUrl(
-    `/backends/chat-completions/generate`
-  )
-  fetchEventSource(url, {
-    body: JSON.stringify({ ...dto, stream: true }),
-    headers: {
-      'Content-Type': 'application/json',
+  const url = getFullUrl(`/backends/chat-completions/generate`)
+
+  await requestStream(url, dto, {
+    async onOpen(response) {
+      await events.onOpen(response)
     },
-    method: 'POST',
-    signal: AbortSignal.timeout(HTTP_TIMEOUT),
-    async onopen(response) {
-      await onOpen(response)
+    onMessage(contentIndex, msg) {
+      if (contentIndex !== 0) {
+        throw new Error(`Multi msg not fit.`)
+      }
+      events.onMessage(msg)
     },
-    onmessage(eventSourceMsg) {
-      onMessage(eventSourceMsg)
+    onClose() {
+      events.onClose()
     },
-    onclose() {
-      onClose()
+    onEnd() {
+      events.onEnd()
     },
-    onerror(err) {
-      onError(err)
+    onError(err) {
+      events.onError(err)
     },
   })
 }

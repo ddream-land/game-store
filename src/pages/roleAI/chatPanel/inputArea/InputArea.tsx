@@ -13,7 +13,6 @@ import { chatCompletionStream } from '@/api/chatCompletion/chatCompletion'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 import ControlDialog from './controlDialog/ControlDialog'
-import { streamResponseMsgDecode } from '@/api/chatCompletion/resDto'
 import { useNavigate } from 'react-router-dom'
 import { useSetTTSText } from '../../context/TTSContextProvider'
 
@@ -45,6 +44,8 @@ export default function InputArea() {
 
       const lastMsg = chatHistory[chatHistory.length - 1]
       if (lastMsg.role === ChatRole.Assistant) {
+        console.log('play tts')
+
         setTTSText(lastMsg.content)
       }
     },
@@ -65,20 +66,20 @@ export default function InputArea() {
     setChatMsg((msgs) => [...msgs, newUserMsg])
     textareaEl.current && (textareaEl.current.value = '')
 
+    const reqDto: ChatCompletionReqDto = chatCompletionReqDto(userMsg, last9Msg, charaPreMsg)
+    const newAssistantMsg: ChatMessage = chatMessage('', ChatRole.Assistant)
+    setChatMsg((msgs) => [...msgs, newAssistantMsg])
+
     try {
-      const reqDto: ChatCompletionReqDto = chatCompletionReqDto(userMsg, last9Msg, charaPreMsg)
-      const newAssistantMsg: ChatMessage = chatMessage('', ChatRole.Assistant)
-
-      setChatMsg((msgs) => [...msgs, newAssistantMsg])
-
-      chatCompletionStream(reqDto, {
+      await chatCompletionStream(reqDto, {
         async onOpen(response) {
-          // console.log(response)
-          // auth
           setIsChatMsgResponsing(true)
         },
-        onMessage(eventSourceMsg) {
-          const msg = streamResponseMsgDecode(eventSourceMsg)
+        onEnd() {
+          setInputDisable(false)
+          setIsChatMsgResponsing(false)
+        },
+        onMessage(msg) {
           setChatMsg(function (msgs) {
             return msgs.map(function (m) {
               return m.id === newAssistantMsg.id
@@ -95,12 +96,16 @@ export default function InputArea() {
           setIsChatMsgResponsing(false)
         },
         onError(err) {
-          console.log('error')
+          console.log('error', err)
           setInputDisable(false)
           setIsChatMsgResponsing(false)
         },
       })
-    } catch {}
+    } catch (err) {
+      console.log('error', err)
+      setInputDisable(false)
+      setIsChatMsgResponsing(false)
+    }
   }
 
   async function sendBtnClicked() {
