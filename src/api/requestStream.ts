@@ -25,6 +25,10 @@ export async function requestStream(
   body: Record<string, any> | null | undefined,
   { onOpen, onMessage, onClose, onEnd, onError, onContentEnd }: RequestStreamEvent
 ) {
+  setTimeout(function () {
+    onEnd && onEnd()
+  }, HTTP_TIMEOUT * 2)
+
   await fetchEventSource(url, {
     body: JSON.stringify({ ...(body ?? {}), stream: true }),
     headers: {
@@ -36,6 +40,8 @@ export async function requestStream(
       onOpen && (await onOpen(response))
     },
     onmessage(eventSourceMsg) {
+      console.log(eventSourceMsg)
+
       switch (eventSourceMsg.event) {
         case ClaudeStreamingMessageEventType.Stop: {
           onEnd && onEnd()

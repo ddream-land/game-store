@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { useLocalStorage } from '@/libs/useLocalStorage'
 import { getAllCards } from '@/api/characterCard/characterCard'
+import { GetAllCardsRes } from '@/api/characterCard/resDto'
 
 export const LOCAL_STORAGE_CARD_KEY = 'files'
 
@@ -21,7 +22,8 @@ export function CharacterCardInfoListContextProvider({ children }: { children: J
   useEffect(function () {
     ;(async function () {
       const cards = await getAllCards()
-      console.log(cards)
+
+      console.log('cards', cards)
     })()
   }, [])
 
