@@ -22,19 +22,8 @@ function Live2dExtension({}: Live2dExtensionProps) {
   }, [])
 
   return (
-    <div
-      className={`${classes.live2dExtension} absolute inset-0`}
-      style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0"
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        }}
-      ></canvas>
+    <div className={`${classes.live2dExtension} absolute inset-0 bg-transparent`}>
+      <canvas ref={canvasRef} className="absolute inset-0 bg-transparent"></canvas>
     </div>
   )
 }

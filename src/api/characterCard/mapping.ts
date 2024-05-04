@@ -28,6 +28,7 @@ export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCar
       id: index,
       card: cardV2,
       pngUrlOrBase64: avatarUrl,
+      avatar: stCard.avatar,
     }
 
     return charaCardInfo

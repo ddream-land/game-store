@@ -12,7 +12,7 @@ export async function createCard(file: File) {
   return await request<{
     file_name: string
   }>({
-    url: `https://st.nirvanaworld.cn/api/characters/import`,
+    url: `/api/characters/import`,
     method: 'post',
     data: formData,
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -21,7 +21,7 @@ export async function createCard(file: File) {
 
 export async function getAllCards() {
   const res = await request<GetAllCardsRes>({
-    url: `https://st.nirvanaworld.cn/api/characters/all`,
+    url: `/api/characters/all`,
     headers: {
       Accept: '*/*',
       'Content-Type': 'text/html; charset=utf-8',

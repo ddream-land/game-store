@@ -12,7 +12,7 @@ export async function chatCompletionStream(
     onError: (err: any) => number | null | undefined | void
   }
 ) {
-  const url = getFullUrl(`/backends/chat-completions/generate`)
+  const url = getFullUrl(`/api/backends/chat-completions/generate`)
 
   await requestStream(url, dto, {
     async onOpen(response) {

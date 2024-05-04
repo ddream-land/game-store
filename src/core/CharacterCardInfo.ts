@@ -4,4 +4,7 @@ export type CharacterCardInfo = {
   id: string
   card: CharacterCardV2
   pngUrlOrBase64: string
+
+  // for ST compatible
+  avatar: string
 }
