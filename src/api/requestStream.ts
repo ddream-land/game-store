@@ -27,7 +27,7 @@ export async function requestStream(
 ) {
   setTimeout(function () {
     onEnd && onEnd()
-  }, HTTP_TIMEOUT * 2)
+  }, HTTP_TIMEOUT * 5)
 
   await fetchEventSource(url, {
     body: JSON.stringify({ ...(body ?? {}), stream: true }),
@@ -81,9 +81,13 @@ export async function requestStream(
       }
     },
     onclose() {
+      console.log('close')
+
       onClose && onClose()
     },
     onerror(err) {
+      console.log('error')
+
       onError && onError(err)
     },
   })
