@@ -1,4 +1,5 @@
 import { ttsGetUrl } from '@/api/tts/textTTS'
+import { DEFAULT_OPEN_TTS } from '@/constant/env'
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 const TTSTextContext = createContext<string | undefined>(undefined)
@@ -8,6 +9,7 @@ const SetTTSTextContext = createContext<React.Dispatch<React.SetStateAction<stri
 
 export function TTSContextProvider({ children }: { children: JSX.Element }) {
   const audioEl = useRef<HTMLAudioElement>(null)
+  const [ttsEnable, setTTSEnable] = useState(DEFAULT_OPEN_TTS)
   const [ttsText, setTTSText] = useState<string | undefined>()
   const [ttsSrc, setTTSSrc] = useState('')
 
@@ -46,9 +48,11 @@ export function TTSContextProvider({ children }: { children: JSX.Element }) {
     <TTSTextContext.Provider value={ttsText}>
       <SetTTSTextContext.Provider value={setTTSText}>
         {children}
-        <audio ref={audioEl} autoPlay={true} className="hidden">
-          <source src={ttsSrc}></source>
-        </audio>
+        {ttsEnable && (
+          <audio ref={audioEl} autoPlay={true} className="hidden">
+            <source src={ttsSrc}></source>
+          </audio>
+        )}
       </SetTTSTextContext.Provider>
     </TTSTextContext.Provider>
   )

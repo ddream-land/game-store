@@ -34,6 +34,10 @@ function CharacterDetailView() {
     navigate(`editPrompt`)
   }
 
+  function editAvatartClicked() {
+    navigate(`editAvatar`)
+  }
+
   function wheel(e: WheelEvent<HTMLDivElement>) {
     if (e.deltaY > 0) {
       setFullDetail(true)
@@ -59,7 +63,10 @@ function CharacterDetailView() {
         } absolute bottom-0 w-full flex flex-col`}
       >
         <div className={`${classes.info} flex-none z-0`}>
-          <CharacterInfo editPromptClicked={editPromptClicked}></CharacterInfo>
+          <CharacterInfo
+            editPromptClicked={editPromptClicked}
+            editAvatarClicked={editAvatartClicked}
+          ></CharacterInfo>
         </div>
         <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
           <TabsArea></TabsArea>

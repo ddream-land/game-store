@@ -4,6 +4,8 @@ import RoleAI from '@/pages/roleAI/RoleAI'
 import PageView from '@/pages/roleAI/charactersPanel/pageView/PageView'
 import CharacterDetailView from '@/pages/roleAI/charactersPanel/pageView/characterDetailView/CharacterDetailView'
 import CharacterDetailEditPromptView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditPromptView/CharacterDetailEditPromptView'
+import CharacterDetailEditAvatarView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditAvatarView/CharacterDetailEditAvatarView'
+
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 
 const router = createBrowserRouter([
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
                 element: (
                   <PageView>
                     <CharacterDetailEditPromptView></CharacterDetailEditPromptView>
+                  </PageView>
+                ),
+              },
+              {
+                path: '/:language/detail/editAvatar',
+                element: (
+                  <PageView>
+                    <CharacterDetailEditAvatarView></CharacterDetailEditAvatarView>
                   </PageView>
                 ),
               },

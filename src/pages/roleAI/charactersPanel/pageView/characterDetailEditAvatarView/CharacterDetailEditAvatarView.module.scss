@@ -1,0 +1,57 @@
+.characterDetailEditAvatarView {
+  border-radius: 40px;
+  background-color: rgba(234, 234, 234, 0.9);
+
+  .op {
+    .editBtn {
+      top: 24px;
+      right: 24px;
+      background-color: rgba(0, 0, 0, 1);
+      font-family: Inter;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 16.52px;
+      letter-spacing: 0.01em;
+      text-align: center;
+      background-image: url('/imgs/edit2.png');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
+  .content {
+    .panel {
+      .header {
+        .title {
+          color: rgba(0, 0, 0, 1);
+          font-family: Inter;
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 23.6px;
+          letter-spacing: 0.01em;
+          text-align: left;
+        }
+        .add {
+          color: rgba(0, 0, 0, 1);
+          background-color: rgba(255, 255, 255, 1);
+          font-family: Inter;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 16.52px;
+          letter-spacing: 0.01em;
+          text-align: center;
+        }
+      }
+      .listArea {
+        min-height: 173px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.6);
+
+        .list {
+          .item {
+          }
+        }
+      }
+    }
+  }
+}

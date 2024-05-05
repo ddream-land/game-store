@@ -1,9 +1,10 @@
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext, useEffect, useMemo } from 'react'
 import { useCharacterCardInfoList } from './CharacterCardInfoListContextProvider'
 import { useCurrentCharacterCardInfoId } from './CurrentCharacterCardInfoIdContextProvider'
 import { preMsgGenerator } from '@/core/promptMessageGenerator'
 import { AIChatMessage } from '@/core/ChatMessage'
+import { useNavigate } from 'react-router-dom'
 
 const CurrentCharacterCardInfoContext = createContext<CharacterCardInfo | undefined>(undefined)
 

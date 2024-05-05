@@ -7,24 +7,15 @@ import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
 
 export default CharacterDetailEditView
 
 function CharacterDetailEditView() {
   const navigate = useNavigate()
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
-
-  useEffect(function () {
-    if (!charaCardInfo) {
-      navigate(`/`)
-    }
-  }, [])
+  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
 
   const { t: tCommon } = useTranslation('common')
-
-  if (!charaCardInfo) {
-    return
-  }
 
   function backClicked() {
     navigate(-1)

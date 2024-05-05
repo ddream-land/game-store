@@ -1,7 +1,6 @@
 .pageView {
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  background-color: rgba(255, 255, 255, 1);
+  border-radius: 40px;
+  // background-color: rgba(255, 255, 255, 1);
 
   &.animate {
     @keyframes open-animate {
