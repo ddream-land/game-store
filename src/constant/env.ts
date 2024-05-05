@@ -8,3 +8,6 @@ export const DEFAULT_LOCK_PANEL =
   import.meta.env.VITE_APP_DEFAULT_LOCK_PANEL === 'true' ? true : false
 
 export const DEFAULT_OPEN_TTS = import.meta.env.VITE_APP_DEFAULT_OPEN_TTS === 'false' ? false : true
+
+export const DEFAULT_OPEN_LIVE2D =
+  import.meta.env.VITE_APP_DEFAULT_OPEN_LIVE2D === 'false' ? false : true
