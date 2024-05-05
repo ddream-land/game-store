@@ -1,10 +1,5 @@
-import {
-  MouseEvent,
-  WheelEvent,
-  useEffect,
-  useState,
-} from 'react'
-import classes from './CharacterDetailEditView.module.scss'
+import { MouseEvent, WheelEvent, useEffect, useState } from 'react'
+import classes from './CharacterDetailEditPromptView.module.scss'
 import LifeInfo from './characterInfo/CharacterInfo'
 import DetailTabs from './tabsArea/TabsArea'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
@@ -35,14 +30,10 @@ function CharacterDetailEditView() {
     navigate(-1)
   }
 
-  const avatarUrl =
-    charaCardInfo.pngUrlOrBase64 ??
-    '/imgs/default-avatar3.png'
+  const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
 
   return (
-    <div
-      className={`${classes.characterDetailEditView} w-full h-full relative`}
-    >
+    <div className={`${classes.characterDetailEditPromptView} w-full h-full relative`}>
       <div
         className={`${classes.charaImg} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
@@ -50,32 +41,20 @@ function CharacterDetailEditView() {
         }}
       ></div>
 
-      <div
-        className={`${classes.detail}  absolute bottom-0 w-full flex flex-col`}
-      >
-        <div className={`${classes.info} flex-none z-0`}>
-          {/* <LifeInfo></LifeInfo> */}
-        </div>
-        <div
-          className={`${classes.tabs} flex-1 z-0 overflow-hidden`}
-        >
+      <div className={`${classes.detail}  absolute bottom-0 w-full flex flex-col`}>
+        <div className={`${classes.info} flex-none z-0`}>{/* <LifeInfo></LifeInfo> */}</div>
+        <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
           {/* <DetailTabs></DetailTabs> */}
         </div>
       </div>
 
       <BackButton onClick={backClicked}></BackButton>
 
-      <NormalButton
-        className={`${classes.save} absolute`}
-        size={`small`}
-      >
+      <NormalButton className={`${classes.save} absolute`} size={`small`}>
         {tCommon('save')}
       </NormalButton>
 
-      <NormalButton
-        className={`${classes.upload} absolute`}
-        size={`small`}
-      ></NormalButton>
+      <NormalButton className={`${classes.upload} absolute`} size={`small`}></NormalButton>
     </div>
   )
 }

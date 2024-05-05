@@ -1,9 +1,4 @@
-import {
-  MouseEvent,
-  WheelEvent,
-  useEffect,
-  useState,
-} from 'react'
+import { MouseEvent, WheelEvent, useEffect, useState } from 'react'
 import classes from './CharacterDetailView.module.scss'
 import CharacterInfo from './characterInfo/CharacterInfo'
 import TabsArea from './tabsArea/TabsArea'
@@ -27,9 +22,7 @@ function CharacterDetailView() {
     return
   }
 
-  const avatarUrl =
-    charaCardInfo.pngUrlOrBase64 ??
-    '/imgs/default-avatar3.png'
+  const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
 
@@ -38,7 +31,7 @@ function CharacterDetailView() {
   }
 
   function editPromptClicked() {
-    navigate(`edit`)
+    navigate(`editPrompt`)
   }
 
   function wheel(e: WheelEvent<HTMLDivElement>) {
@@ -50,14 +43,11 @@ function CharacterDetailView() {
   }
 
   return (
-    <div
-      onWheel={wheel}
-      className={`${classes.characterDetailView} w-full h-full relative`}
-    >
+    <div onWheel={wheel} className={`${classes.characterDetailView} w-full h-full relative`}>
       <div
         className={`${classes['life-img']} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
-          backgroundImage: `url(${avatarUrl})`,
+          backgroundImage: `url('${avatarUrl}')`,
         }}
       >
         {/* <img src={avatarUrl} className="w-full h-full" /> */}
@@ -69,13 +59,9 @@ function CharacterDetailView() {
         } absolute bottom-0 w-full flex flex-col`}
       >
         <div className={`${classes.info} flex-none z-0`}>
-          <CharacterInfo
-            editPromptClicked={editPromptClicked}
-          ></CharacterInfo>
+          <CharacterInfo editPromptClicked={editPromptClicked}></CharacterInfo>
         </div>
-        <div
-          className={`${classes.tabs} flex-1 z-0 overflow-hidden`}
-        >
+        <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
           <TabsArea></TabsArea>
         </div>
       </div>

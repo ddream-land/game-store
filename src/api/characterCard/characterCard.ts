@@ -1,7 +1,6 @@
 import { request, requestList } from '../request'
 import { stCardToCharacterCardInfo } from './mapping'
 import { GetAllCardsRes } from './resDto'
-import axios from 'axios'
 
 export async function createCard(file: File) {
   const formData = new FormData()
@@ -33,4 +32,15 @@ export async function getAllCards() {
   })
 
   return stCardToCharacterCardInfo(res)
+}
+
+export async function deleteCard(avatar: string, deleteChats: boolean = true) {
+  return await request<string>({
+    url: `/api/characters/delete`,
+    method: 'post',
+    data: {
+      avatar_url: avatar,
+      delete_chats: deleteChats,
+    },
+  })
 }

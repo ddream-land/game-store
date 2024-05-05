@@ -6,8 +6,13 @@ import { CharacterCardV2, v1Tov2 } from '@/core/characterCard/characterCardV2'
 import { CharacterCardV1 } from '@/core/characterCard/characterCardV1'
 
 export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCardInfo[] {
+  const result: CharacterCardInfo[] = []
+
   const indexes = Reflect.ownKeys(stCards) as string[]
-  return indexes.map(function (index) {
+  const len = indexes.length
+
+  for (let i = len - 1; i >= 0; i--) {
+    const index = indexes[i]
     const stCard = stCards[index]
 
     const [isCharaCard, ver] = isCharacterCard(stCard)
@@ -31,6 +36,8 @@ export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCar
       avatar: stCard.avatar,
     }
 
-    return charaCardInfo
-  })
+    result.push(charaCardInfo)
+  }
+
+  return result
 }

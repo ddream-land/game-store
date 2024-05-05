@@ -75,6 +75,10 @@ service.interceptors.response.use(
     //   return Promise.resolve(res.data)
     // }
 
+    if (code !== 200) {
+      throw new Error(`Response error.`)
+    }
+
     return Promise.resolve(res.data)
   },
   (error) => {

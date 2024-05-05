@@ -3,7 +3,7 @@ import App from '@/App'
 import RoleAI from '@/pages/roleAI/RoleAI'
 import PageView from '@/pages/roleAI/charactersPanel/pageView/PageView'
 import CharacterDetailView from '@/pages/roleAI/charactersPanel/pageView/characterDetailView/CharacterDetailView'
-import CharacterDetailEditView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditView/CharacterDetailEditView'
+import CharacterDetailEditPromptView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditPromptView/CharacterDetailEditPromptView'
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 
 const router = createBrowserRouter([
@@ -24,10 +24,10 @@ const router = createBrowserRouter([
             ),
             children: [
               {
-                path: '/:language/detail/edit',
+                path: '/:language/detail/editPrompt',
                 element: (
                   <PageView>
-                    <CharacterDetailEditView></CharacterDetailEditView>
+                    <CharacterDetailEditPromptView></CharacterDetailEditPromptView>
                   </PageView>
                 ),
               },

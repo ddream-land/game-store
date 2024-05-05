@@ -21,7 +21,7 @@ function HeaderInfo({}: HeaderInfoProps) {
   const { t } = useTranslation('roleAI')
   const { t: tCommon } = useTranslation('common')
   const characterCardInfoList = useCharacterCardInfoList()
-  const setCharacterCardInfoList = useSetCharacterCardInfoList()
+  const { setCharacterCardInfoList, refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
   const { charaCardInfo } = useCurrentCharacterCardInfo()
 
   const titleDesc = charaCardInfo ? t('conversationWith') : tCommon('select')
@@ -38,18 +38,10 @@ function HeaderInfo({}: HeaderInfoProps) {
     window.location.href = `https://create.nuwalabs.org/`
   }
 
-  async function pngImport(img: ChangeEvent<HTMLInputElement>) {
-    if (!pngInputEl.current || !pngInputEl.current.files) {
-      return
-    }
-
-    const file = pngInputEl.current.files[0]
-
+  async function localCreateCard(file: File) {
     try {
       const pngBase64 = await toBase64(file)
       const characterCard = readCharacterCardFromChunks(await extractChunks(file))
-
-      createCard(file)
 
       if (!characterCard) {
         alert(`Unsupport card.`)
@@ -65,6 +57,20 @@ function HeaderInfo({}: HeaderInfoProps) {
 
       setCharacterCardInfoList([...characterCardInfoList, cardInfo])
     } catch {}
+  }
+
+  async function pngImport(img: ChangeEvent<HTMLInputElement>) {
+    if (!pngInputEl.current || !pngInputEl.current.files) {
+      return
+    }
+
+    const file = pngInputEl.current.files[0]
+    const res = await createCard(file)
+    await refreshCharacterCardInfoList()
+
+    // try {
+    //   await localCreateCard(file)
+    // } catch {}
   }
 
   return (

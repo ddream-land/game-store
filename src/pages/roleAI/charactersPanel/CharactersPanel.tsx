@@ -3,7 +3,7 @@ import { useMouseHoverOp } from './useMouseHoverOp'
 import { useLockPanelDialogOp } from './useLockPanelDialogOp'
 import { useSetCurrentCharacterCardInfoId } from '@/pages/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
 import LockPanelDialog from './lockPanelDialog/LockPanelDialog'
-import CharactersView from './charactersView/CharactersView'
+import Characters from './characters/Characters'
 import MinimizedOverview from './minimizedOverview/MinimizedOverview'
 import { Outlet, useNavigate } from 'react-router-dom'
 
@@ -11,14 +11,8 @@ export default CharactersPanel
 
 function CharactersPanel() {
   const navigate = useNavigate()
-  const {
-    mouseOnPanel,
-    mouseOutofPanel,
-    minify,
-    showLockDialog,
-  } = useMouseHoverOp()
-  const { lockPanelForNotMinimize, switchPanelLock } =
-    useLockPanelDialogOp()
+  const { mouseOnPanel, mouseOutofPanel, minify, showLockDialog } = useMouseHoverOp()
+  const { lockPanelForNotMinimize, switchPanelLock } = useLockPanelDialogOp()
 
   const setCurrent = useSetCurrentCharacterCardInfoId()
 
@@ -38,19 +32,13 @@ function CharactersPanel() {
       onMouseOver={mouseOnPanel}
       onMouseLeave={mouseOutofPanel}
     >
-      <div
-        className={`${classes.page} ${classes['base-page']} w-full h-full`}
-      >
+      <div className={`${classes.page} ${classes['base-page']} w-full h-full`}>
         {showLargePanel ? (
-          <CharactersView
-            characterSelected={onCharaSelected}
-          ></CharactersView>
+          <Characters characterSelected={onCharaSelected}></Characters>
         ) : (
           <MinimizedOverview></MinimizedOverview>
         )}
-        <div
-          className={`${showLockDialog ? '' : 'hidden'}`}
-        >
+        <div className={`${showLockDialog ? '' : 'hidden'}`}>
           <LockPanelDialog
             lock={lockPanelForNotMinimize}
             switchLock={switchPanelLock}

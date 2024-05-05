@@ -40,5 +40,15 @@ export function useCharacterCardInfoList() {
 }
 
 export function useSetCharacterCardInfoList() {
-  return useContext(SetCharacterCardInfoListContext)
+  const setCharacterCardInfoList = useContext(SetCharacterCardInfoListContext)
+
+  async function refreshCharacterCardInfoList() {
+    const cards = await getAllCards()
+    setCharacterCardInfoList(cards)
+  }
+
+  return {
+    setCharacterCardInfoList,
+    refreshCharacterCardInfoList,
+  }
 }

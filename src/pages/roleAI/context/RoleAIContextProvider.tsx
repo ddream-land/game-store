@@ -7,13 +7,13 @@ import { TTSContextProvider } from './TTSContextProvider'
 export function RoleAIContextProvider({ children }: { children: JSX.Element }) {
   return (
     <CharacterCardInfoListContextProvider>
-      <TTSContextProvider>
-        <CurrentCharacterCardInfoIdContextProvider>
-          <CurrentCharacterCardInfoContextProvider>
-            <ChatHistoryContextProvider>{children}</ChatHistoryContextProvider>
-          </CurrentCharacterCardInfoContextProvider>
-        </CurrentCharacterCardInfoIdContextProvider>
-      </TTSContextProvider>
+      <CurrentCharacterCardInfoIdContextProvider>
+        <CurrentCharacterCardInfoContextProvider>
+          <ChatHistoryContextProvider>
+            <TTSContextProvider>{children}</TTSContextProvider>
+          </ChatHistoryContextProvider>
+        </CurrentCharacterCardInfoContextProvider>
+      </CurrentCharacterCardInfoIdContextProvider>
     </CharacterCardInfoListContextProvider>
   )
 }
