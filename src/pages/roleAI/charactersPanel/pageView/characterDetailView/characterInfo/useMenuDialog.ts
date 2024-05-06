@@ -2,6 +2,8 @@ import { deleteCard } from '@/api/characterCard/characterCard'
 import { useSetCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useEffect, useState, MouseEvent } from 'react'
+import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 export function useMenuDialog() {
@@ -9,6 +11,7 @@ export function useMenuDialog() {
   const { charaCardInfo } = useCurrentCharacterCardInfo()
   const { refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
   const navigate = useNavigate()
+  const { t: tCommon } = useTranslation('common')
 
   function openMenuDialog(e: MouseEvent<HTMLDivElement>) {
     e.stopPropagation()
@@ -29,10 +32,20 @@ export function useMenuDialog() {
     if (!charaCardInfo) {
       return
     }
+
+    const id = toast.loading(tCommon('deleting'))
+
     const res = await deleteCard(charaCardInfo.avatar)
     if (res === 'OK') {
+      toast.success(tCommon('deleted'), {
+        id: id,
+      })
       navigate('/')
       await refreshCharacterCardInfoList()
+    } else {
+      toast(tCommon('opFailed'), {
+        id: id,
+      })
     }
   }
 

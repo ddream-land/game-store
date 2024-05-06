@@ -4,8 +4,9 @@ import Live2dExtension from '@/components/live2dExtension/Live2dExtension'
 import RoleAILayout from './layout/RoleAILayout'
 import ChatPanel from './chatPanel/ChatPanel'
 import CharactersPanel from './charactersPanel/CharactersPanel'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DEFAULT_OPEN_LIVE2D } from '@/constant/env'
+import Notifications from './notifications/Notifications'
 
 export default function RoleAI() {
   const [live2dExtensionEnable, setLive2dExtensionEnable] = useState(DEFAULT_OPEN_LIVE2D)
@@ -23,6 +24,7 @@ export default function RoleAI() {
           </>
         </RoleAIContextProvider>
       </div>
+      <Notifications></Notifications>
     </>
   )
 }
