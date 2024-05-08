@@ -1,5 +1,6 @@
 import http from './http'
 import { DataDto, ListDto } from './dtoBase'
+import { ResponseType } from 'axios'
 
 export function requestData<T = any>({
   url,
@@ -58,6 +59,7 @@ export function request<T = any>({
   params,
   headers,
   timeout,
+  responseType,
 }: {
   url: string
   method?: string
@@ -65,6 +67,7 @@ export function request<T = any>({
   params?: any
   headers?: Record<string, string | number | boolean>
   timeout?: number
+  responseType?: ResponseType
 }): Promise<T> {
   return http.request<any, T, any>({
     url,
@@ -73,5 +76,6 @@ export function request<T = any>({
     params,
     headers,
     timeout,
+    responseType,
   })
 }

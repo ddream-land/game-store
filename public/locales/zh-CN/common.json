@@ -6,5 +6,8 @@
   "save": "保存",
   "deleting": "删除中",
   "deleted": "删除成功",
-  "opFailed": "操作失败"
+  "opFailed": "操作失败",
+  "img": "图片",
+  "uploading": "上传中",
+  "uploaded": "上传成功"
 }

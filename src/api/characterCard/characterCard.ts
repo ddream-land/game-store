@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 import { request, requestList } from '../request'
 import { stCardToCharacterCardInfo } from './mapping'
 import { GetAllCardsRes } from './resDto'
@@ -43,4 +44,31 @@ export async function deleteCard(avatar: string, deleteChats: boolean = true) {
       delete_chats: deleteChats,
     },
   })
+}
+
+export async function exportCardPNG(avatar: string) {
+  return await request<AxiosResponse<Blob, any>>({
+    url: `/api/characters/export`,
+    method: 'post',
+    responseType: 'blob',
+    data: {
+      avatar_url: avatar,
+      format: 'png',
+    },
+  })
+}
+
+export async function exportCardJSON(avatar: string) {
+  return await request<any>({
+    url: `/api/characters/export`,
+    method: 'post',
+    data: {
+      avatar_url: avatar,
+      format: 'json',
+    },
+  })
+}
+
+export function avatarUrl(avatar: string) {
+  return `https://st.nirvanaworld.cn/thumbnail?type=avatar&file=${avatar}`
 }

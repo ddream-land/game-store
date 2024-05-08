@@ -5,6 +5,7 @@ import PageView from '@/pages/roleAI/charactersPanel/pageView/PageView'
 import CharacterDetailView from '@/pages/roleAI/charactersPanel/pageView/characterDetailView/CharacterDetailView'
 import CharacterDetailEditPromptView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditPromptView/CharacterDetailEditPromptView'
 import CharacterDetailEditAvatarView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditAvatarView/CharacterDetailEditAvatarView'
+import CharacterDetailEditCoverView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditCoverView/CharacterDetailEditCoverView'
 
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
                 element: (
                   <PageView>
                     <CharacterDetailEditAvatarView></CharacterDetailEditAvatarView>
+                  </PageView>
+                ),
+              },
+              {
+                path: '/:language/detail/editCover',
+                element: (
+                  <PageView>
+                    <CharacterDetailEditCoverView></CharacterDetailEditCoverView>
                   </PageView>
                 ),
               },

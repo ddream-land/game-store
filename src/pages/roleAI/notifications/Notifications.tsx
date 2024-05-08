@@ -6,9 +6,26 @@ export default Notifications
 
 function Notifications() {
   const { toasts, handlers } = useToaster()
-  const { startPause, endPause, calculateOffset, updateHeight } = handlers
+  const { calculateOffset, updateHeight } = handlers
 
-  //   return <Toaster></Toaster>
+  // return <Toaster></Toaster>
+
+  function iconClass(type: ToastType) {
+    switch (type) {
+      case 'success': {
+        return classes.success
+      }
+      case 'loading': {
+        return classes.loading
+      }
+      case 'error': {
+        return classes.error
+      }
+      default: {
+        return ''
+      }
+    }
+  }
 
   return (
     <div className={`${classes.notifications} fixed z-50 inset-4 pointer-events-none`}>
@@ -27,20 +44,6 @@ function Notifications() {
             }
           }
 
-          const iconClass = (type: ToastType) => {
-            switch (type) {
-              case 'success': {
-                return classes.success
-              }
-              case 'loading': {
-                return classes.loading
-              }
-              default: {
-                return ''
-              }
-            }
-          }
-
           return (
             <div
               key={toast.id}
@@ -55,10 +58,10 @@ function Notifications() {
               <div
                 className={`${classes.notification} flex flex-row justify-between items-center px-3`}
               >
-                <div className={`${classes.msg}`}>
+                <div className={`${classes.msg} flex-1`}>
                   {isFunction(toast.message) ? toast.message(toast) : toast.message}
                 </div>
-                <div className={`${classes.icon} ${iconClass(toast.type)}`}></div>
+                <div className={`${classes.icon} ${iconClass(toast.type)} flex-none`}></div>
               </div>
             </div>
           )

@@ -5,6 +5,7 @@ import TabsArea from './tabsArea/TabsArea'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import BackButton from '@/components/backButton/BackButton'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigateBack } from '@/router/useNavigateBack'
 
 export default CharacterDetailView
 
@@ -26,9 +27,7 @@ function CharacterDetailView() {
 
   const [fullDetail, setFullDetail] = useState(false)
 
-  function backClicked() {
-    navigate(-1)
-  }
+  const { back } = useNavigateBack()
 
   function editPromptClicked() {
     navigate(`editPrompt`)
@@ -36,6 +35,10 @@ function CharacterDetailView() {
 
   function editAvatartClicked() {
     navigate(`editAvatar`)
+  }
+
+  function editCoverClicked() {
+    navigate(`editCover`)
   }
 
   function wheel(e: WheelEvent<HTMLDivElement>) {
@@ -64,6 +67,7 @@ function CharacterDetailView() {
       >
         <div className={`${classes.info} flex-none z-0`}>
           <CharacterInfo
+            editCoverClicked={editCoverClicked}
             editPromptClicked={editPromptClicked}
             editAvatarClicked={editAvatartClicked}
           ></CharacterInfo>
@@ -73,7 +77,7 @@ function CharacterDetailView() {
         </div>
       </div>
 
-      <BackButton onClick={backClicked}></BackButton>
+      <BackButton onClick={back}></BackButton>
 
       <Outlet></Outlet>
     </div>

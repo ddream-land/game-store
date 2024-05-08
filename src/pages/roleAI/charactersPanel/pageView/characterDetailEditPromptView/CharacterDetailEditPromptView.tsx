@@ -8,18 +8,16 @@ import NormalButton from '@/components/NormalButton/NormalButton'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useNavigateBack } from '@/router/useNavigateBack'
 
 export default CharacterDetailEditView
 
 function CharacterDetailEditView() {
-  const navigate = useNavigate()
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
 
   const { t: tCommon } = useTranslation('common')
 
-  function backClicked() {
-    navigate(-1)
-  }
+  const { back } = useNavigateBack()
 
   const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
 
@@ -39,7 +37,7 @@ function CharacterDetailEditView() {
         </div>
       </div>
 
-      <BackButton onClick={backClicked}></BackButton>
+      <BackButton onClick={back}></BackButton>
 
       <NormalButton className={`${classes.save} absolute`} size={`small`}>
         {tCommon('save')}

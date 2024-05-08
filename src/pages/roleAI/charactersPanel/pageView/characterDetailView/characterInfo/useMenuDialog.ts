@@ -1,4 +1,5 @@
-import { deleteCard } from '@/api/characterCard/characterCard'
+import { deleteCard, exportCardPNG } from '@/api/characterCard/characterCard'
+import { saveBlob } from '@/libs/saveBlob'
 import { useSetCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useEffect, useState, MouseEvent } from 'react'
@@ -26,7 +27,18 @@ export function useMenuDialog() {
 
   async function linkToWorldBookClicked() {}
 
-  async function exportClicked() {}
+  async function exportClicked() {
+    if (!charaCardInfo) {
+      return
+    }
+
+    try {
+      const res = await exportCardPNG(charaCardInfo.avatar)
+      saveBlob(res.data, `${charaCardInfo.card.data.name}.png`)
+    } catch {
+      toast.error(tCommon('opFailed'))
+    }
+  }
 
   async function deleteClicked() {
     if (!charaCardInfo) {

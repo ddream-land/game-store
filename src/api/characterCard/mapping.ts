@@ -4,6 +4,7 @@ import { isCharacterCard } from '@/core/characterCard/characterCard'
 import { CharacterCardVersion } from '@/core/characterCard/CharacterCardVersion'
 import { CharacterCardV2, v1Tov2 } from '@/core/characterCard/characterCardV2'
 import { CharacterCardV1 } from '@/core/characterCard/characterCardV1'
+import { avatarUrl } from './characterCard'
 
 export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCardInfo[] {
   const result: CharacterCardInfo[] = []
@@ -27,12 +28,12 @@ export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCar
       cardV2 = v1Tov2(stCard as CharacterCardV1)!
     }
 
-    const avatarUrl = `https://st.nirvanaworld.cn/thumbnail?type=avatar&file=${stCard.avatar}`
+    const url = avatarUrl(stCard.avatar)
 
     const charaCardInfo: CharacterCardInfo = {
       id: index,
       card: cardV2,
-      pngUrlOrBase64: avatarUrl,
+      pngUrlOrBase64: url,
       avatar: stCard.avatar,
     }
 

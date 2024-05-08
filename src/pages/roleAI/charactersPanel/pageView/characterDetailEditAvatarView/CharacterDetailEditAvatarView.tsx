@@ -5,35 +5,19 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
 import { useState } from 'react'
+import { CharacterAvatarType, CharacterAvatarTypeContents } from '@/core/CharacterAvatar'
+import { useNavigateBack } from '@/router/useNavigateBack'
 
 export default CharacterDetailEditAvatarView
-
-type Avatar = {
-  name: string
-  url: string
-}
-
-enum AvatarType {
-  Live2D = 'Live2D',
-  VRM = 'VRM',
-  Img = 'Img',
-}
-
-type AvatarTypeContents = {
-  type: AvatarType
-  typeName: string
-  contents: Avatar[]
-}
 
 function CharacterDetailEditAvatarView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
 
-  const navigate = useNavigate()
   const { t: tCommon } = useTranslation('common')
 
-  const [avatars, setAvatars] = useState<AvatarTypeContents[]>([
+  const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([
     {
-      type: AvatarType.Live2D,
+      type: CharacterAvatarType.Live2D,
       typeName: 'Live2D',
       contents: [
         {
@@ -48,7 +32,7 @@ function CharacterDetailEditAvatarView() {
     },
 
     {
-      type: AvatarType.VRM,
+      type: CharacterAvatarType.VRM,
       typeName: 'VRM',
       contents: [
         {
@@ -79,7 +63,7 @@ function CharacterDetailEditAvatarView() {
     },
 
     {
-      type: AvatarType.Img,
+      type: CharacterAvatarType.Img,
       typeName: '图片',
       contents: [
         {
@@ -126,15 +110,13 @@ function CharacterDetailEditAvatarView() {
     },
   ])
   const [currentAvarar, setCurrentAvatar] = useState({
-    type: AvatarType.Live2D,
+    type: CharacterAvatarType.Live2D,
     index: 1,
   })
 
-  function backClicked() {
-    navigate(-1)
-  }
+  const { back } = useNavigateBack()
 
-  function onAddClicked(type: AvatarType) {
+  function onAddClicked(type: CharacterAvatarType) {
     console.log('add', type)
   }
 
@@ -158,21 +140,21 @@ function CharacterDetailEditAvatarView() {
 
           <div
             className={`${classes.listArea} ${
-              avatar.type === AvatarType.Img ? classes.noBg : 'p-6'
+              avatar.type === CharacterAvatarType.Img ? classes.noBg : 'p-6'
             } mt-2`}
           >
             <div
               className={`${classes.list} w-full flex ${
-                avatar.type === AvatarType.Img
+                avatar.type === CharacterAvatarType.Img
                   ? 'flex-row flex-wrap justify-between gap-3'
                   : 'flex-col'
               }`}
             >
               {avatar.contents.map(function (item, i) {
-                if (avatar.type === AvatarType.Img) {
+                if (avatar.type === CharacterAvatarType.Img) {
                   return (
                     <div key={i} className={`${classes.imgItem} overflow-hidden cursor-pointer`}>
-                      <img src={item.url} alt={item.name} />
+                      <img src={item.url} alt={item.name} className="w-full h-full" />
                     </div>
                   )
                 } else {
@@ -207,7 +189,7 @@ function CharacterDetailEditAvatarView() {
         <BackButton
           color={`rgba(0,0,0,1)`}
           bgColor={`rgba(255,255,255,1)`}
-          onClick={backClicked}
+          onClick={back}
         ></BackButton>
 
         <NormalButton className={`${classes.editBtn} absolute`} size={`small`}></NormalButton>

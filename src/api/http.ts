@@ -65,7 +65,7 @@ service.interceptors.response.use(
   function (res) {
     const code = res.data.code || 200
     if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
-      return res.data
+      return res
     }
     // if (code === 401) {
     // } else if (code === 500) {
