@@ -1,12 +1,12 @@
 export type CharacterAvatar = {
-  name: string
+  name?: string
   url: string
 }
 
 export enum CharacterAvatarType {
-  Live2D = 'Live2D',
+  Live2D = 'LIVE2D',
   VRM = 'VRM',
-  Img = 'Img',
+  Img = 'IMAGE',
 }
 
 export type CharacterAvatarTypeContents = {

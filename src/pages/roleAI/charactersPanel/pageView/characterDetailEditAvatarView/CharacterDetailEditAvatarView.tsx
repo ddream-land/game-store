@@ -30,7 +30,6 @@ function CharacterDetailEditAvatarView() {
         },
       ],
     },
-
     {
       type: CharacterAvatarType.VRM,
       typeName: 'VRM',
@@ -61,7 +60,6 @@ function CharacterDetailEditAvatarView() {
         },
       ],
     },
-
     {
       type: CharacterAvatarType.Img,
       typeName: '图片',

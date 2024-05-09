@@ -35,11 +35,18 @@ function CharacterDetailEditCoverView() {
       const file = imgInputEl.current.files[0]
       const res = await uploadBackground(file)
       await refreshImgs()
-      toast.success(tCommon('uploaded'), {
-        id: id,
-      })
+
+      if (res.code) {
+        toast.error(res.msg, {
+          id: id,
+        })
+      } else {
+        toast.success(tCommon('uploaded'), {
+          id: id,
+        })
+      }
     } catch (err) {
-      toast(tCommon('opFailed'), {
+      toast.error(tCommon('opFailed'), {
         id: id,
       })
     }
@@ -107,12 +114,12 @@ function CharacterDetailEditCoverView() {
 
             <div className={`${classes.listArea} flex-1 overflow-hidden mt-8`}>
               <div
-                className={`${classes.list} w-full h-full overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between gap-3`}
+                className={`${classes.list} w-full h-full overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between content-start gap-3`}
               >
                 {imgs.map(function (img) {
                   return (
                     <div
-                      key={img.name}
+                      key={img.id}
                       className={`${classes.item} overflow-hidden cursor-pointer relative`}
                     >
                       <img src={img.url} alt={img.name} className="w-full h-full" />

@@ -1,4 +1,5 @@
 import { HTTP_TIMEOUT } from '@/constant/env'
+import { isObject } from '@/libs/isTypes'
 import axios from 'axios'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
@@ -40,8 +41,8 @@ const service = axios.create({
 
 service.interceptors.request.use(
   function (config) {
-    const isToken = (config.headers || {}).isToken === false
-    const isRepeatSubmit = (config.headers || {}).repeatSubmit === false
+    // const isToken = (config.headers || {}).isToken === false
+    // const isRepeatSubmit = (config.headers || {}).repeatSubmit === false
     // if (getToken() && !isToken) {
     //   config.headers['Authorization'] = 'Bearer ' + getToken()
     // }
@@ -52,6 +53,11 @@ service.interceptors.request.use(
       config.params = {}
       config.url = url
     }
+
+    config.url = config.url?.includes('?')
+      ? `${config.url}&session=fa320f34949b01d64c04b1559faa23b9b86e&uid=8497928`
+      : `${config.url}?session=fa320f34949b01d64c04b1559faa23b9b86e&uid=8497928`
+
     return config
   },
   function (error) {
@@ -63,7 +69,7 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   function (res) {
-    const code = res.data.code || 200
+    const code = res.status
     if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
       return res
     }
@@ -77,6 +83,12 @@ service.interceptors.response.use(
 
     if (code !== 200) {
       throw new Error(`Response error.`)
+    }
+
+    if (isObject(res.data) && 'code' in res.data) {
+      if (res.data.code === 604) {
+        alert('登录过期')
+      }
     }
 
     return Promise.resolve(res.data)

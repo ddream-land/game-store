@@ -54,6 +54,7 @@ function CharacterDetailView() {
       <div
         className={`${classes['life-img']} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
+          backgroundColor: `rgba(120, 120, 120, 1)`,
           backgroundImage: `url('${avatarUrl}')`,
         }}
       >

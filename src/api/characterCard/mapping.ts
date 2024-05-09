@@ -28,7 +28,8 @@ export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCar
       cardV2 = v1Tov2(stCard as CharacterCardV1)!
     }
 
-    const url = avatarUrl(stCard.avatar)
+    // const url = avatarUrl(stCard.avatar)
+    const url = stCard.avatar
 
     const charaCardInfo: CharacterCardInfo = {
       id: index,
