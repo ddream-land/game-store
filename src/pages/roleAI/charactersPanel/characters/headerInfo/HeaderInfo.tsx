@@ -11,6 +11,8 @@ import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 import { createCard } from '@/api/characterCard/characterCard'
+import toast from 'react-hot-toast'
+import { isString } from '@/libs/isTypes'
 
 export type HeaderInfoProps = {}
 export default HeaderInfo
@@ -64,9 +66,23 @@ function HeaderInfo({}: HeaderInfoProps) {
       return
     }
 
-    const file = pngInputEl.current.files[0]
-    const res = await createCard(file)
-    await refreshCharacterCardInfoList()
+    const id = toast.loading(tCommon('uploading'))
+    try {
+      const file = pngInputEl.current.files[0]
+      const res = await createCard(file)
+      if (res.code === 0) {
+        toast.success(tCommon('uploaded'), {
+          id: id,
+        })
+        await refreshCharacterCardInfoList()
+      } else {
+        throw new Error(res.msg)
+      }
+    } catch (err) {
+      toast.error(isString(err) ? err : tCommon('opFailed'), {
+        id: id,
+      })
+    }
 
     // try {
     //   await localCreateCard(file)

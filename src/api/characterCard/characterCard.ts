@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios'
 import { request, requestList } from '../request'
 import { stCardToCharacterCardInfo } from './mapping'
 import { GetAllCardsRes } from './resDto'
+import { DtoBase } from '../dtoBase'
 
 export async function createCard(file: File) {
   const formData = new FormData()
@@ -9,9 +10,7 @@ export async function createCard(file: File) {
   formData.append('preserve_file_name', 'false')
   formData.append('avatar', file)
 
-  return await request<{
-    file_name: string
-  }>({
+  return await request<DtoBase>({
     url: `/api/characters/import`,
     method: 'post',
     data: formData,
@@ -36,7 +35,7 @@ export async function getAllCards() {
 }
 
 export async function deleteCard(avatar: string, deleteChats: boolean = true) {
-  return await request<string>({
+  return await request<DtoBase>({
     url: `/api/characters/delete`,
     method: 'post',
     data: {
@@ -48,6 +47,8 @@ export async function deleteCard(avatar: string, deleteChats: boolean = true) {
 
 export async function exportCardPNG(avatar: string) {
   return await request<AxiosResponse<Blob, any>>({
+    // url: `http://rewuai-foreign.oss-us-west-1.aliyuncs.com/role/6be48da9-5216-4e89-8a32-971199e5b81f.png`,
+    // method: 'get',
     url: `/api/characters/export`,
     method: 'post',
     responseType: 'blob',

@@ -48,7 +48,7 @@ export function useMenuDialog() {
     const id = toast.loading(tCommon('deleting'))
 
     const res = await deleteCard(charaCardInfo.avatar)
-    if (res === 'OK') {
+    if (res.code === 0) {
       toast.success(tCommon('deleted'), {
         id: id,
       })
