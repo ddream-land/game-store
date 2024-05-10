@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios'
 import { request, requestList } from '../request'
 import { backgroundMapping } from './mapping'
 import { AllBgResDto, UploadBgResDto } from './resDto'
+import { DtoBase } from '../dtoBase'
 
 export async function uploadBackground(file: File) {
   const formData = new FormData()
@@ -31,14 +32,12 @@ export async function getAllBackgrounds() {
   return backgroundMapping(res)
 }
 
-export async function deleteBackground(name: string) {
-  return await request<{
-    file_name: string
-  }>({
+export async function deleteBackground(id: string) {
+  return await request<DtoBase>({
     url: `/api/backgrounds/delete`,
     method: 'post',
     data: {
-      bg: name,
+      id: id,
     },
     headers: { 'Content-Type': 'application/json' },
   })

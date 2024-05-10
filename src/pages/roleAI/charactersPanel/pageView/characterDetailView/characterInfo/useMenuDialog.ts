@@ -33,7 +33,7 @@ export function useMenuDialog() {
     }
 
     try {
-      const res = await exportCardPNG(charaCardInfo.avatar)
+      const res = await exportCardPNG(charaCardInfo.id)
       saveBlob(res.data, `${charaCardInfo.card.data.name}.png`)
     } catch {
       toast.error(tCommon('opFailed'))
@@ -47,7 +47,7 @@ export function useMenuDialog() {
 
     const id = toast.loading(tCommon('deleting'))
 
-    const res = await deleteCard(charaCardInfo.avatar)
+    const res = await deleteCard(charaCardInfo.id)
     if (res.code === 0) {
       toast.success(tCommon('deleted'), {
         id: id,

@@ -1,10 +1,8 @@
 import { isOfTypes } from '@/libs/isTypes'
-import {
-  CharacterCardV1,
-  isCharacterCardV1,
-} from './characterCardV1'
+import { CharacterCardV1, isCharacterCardV1 } from './characterCardV1'
 import { CharacterBook } from './characterBook'
 import { CharacterCardVersion } from './CharacterCardVersion'
+import { NuwaExtensions } from './NuwaCharacterCardExtensions'
 
 export type CharacteCardV2DataBeta = CharacterCardV1 & {
   // New fields start here
@@ -15,14 +13,13 @@ export type CharacteCardV2DataBeta = CharacterCardV1 & {
   character_book?: CharacterBook
 }
 
-export type CharacteCardV2Data<ExtensionsValType = any> =
-  CharacteCardV2DataBeta & {
-    // May 8th additions
-    tags: Array<string>
-    creator: string
-    character_version: string
-    extensions: Record<string, ExtensionsValType> // see details for explanation
-  }
+export type CharacteCardV2Data<ExtensionsValType = any> = CharacteCardV2DataBeta & {
+  // May 8th additions
+  tags: Array<string>
+  creator: string
+  character_version: string
+  extensions: Record<string, ExtensionsValType> | NuwaExtensions
+}
 
 export type CharacterCardV2 = {
   spec: 'chara_card_v2'
@@ -30,9 +27,7 @@ export type CharacterCardV2 = {
   data: CharacteCardV2Data
 }
 
-export function isCharacteCardV2Data(
-  val: unknown
-): val is CharacteCardV2Data {
+export function isCharacteCardV2Data(val: unknown): val is CharacteCardV2Data {
   return (
     isCharacterCardV1(val) &&
     isOfTypes(val, [
@@ -48,20 +43,9 @@ export function isCharacteCardV2Data(
   )
 }
 
-export function isCharacterCardV2(
-  val: unknown
-): val is CharacterCardV2 {
-  if (
-    isOfTypes<CharacterCardV2>(val, [
-      'spec',
-      'spec_version',
-      'data',
-    ])
-  ) {
-    if (
-      val.spec === 'chara_card_v2' &&
-      val.spec_version === CharacterCardVersion.v2
-    ) {
+export function isCharacterCardV2(val: unknown): val is CharacterCardV2 {
+  if (isOfTypes<CharacterCardV2>(val, ['spec', 'spec_version', 'data'])) {
+    if (val.spec === 'chara_card_v2' && val.spec_version === CharacterCardVersion.v2) {
       if (isCharacteCardV2Data(val.data)) {
         return true
       }
@@ -110,8 +94,7 @@ export function v1Tov2(
     ...val,
     creator_notes: newField.creator_notes,
     system_prompt: newField.system_prompt,
-    post_history_instructions:
-      newField.post_history_instructions,
+    post_history_instructions: newField.post_history_instructions,
     alternate_greetings: newField.alternate_greetings,
     character_book: newField.character_book,
     tags: newField.tags,

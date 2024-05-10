@@ -1,10 +1,10 @@
-import classes from './RoleAI.module.scss'
+import Main from './Main'
 import { RoleAIContextProvider } from './context/RoleAIContextProvider'
 import Live2dExtension from '@/components/live2dExtension/Live2dExtension'
 import RoleAILayout from './layout/RoleAILayout'
 import ChatPanel from './chatPanel/ChatPanel'
 import CharactersPanel from './charactersPanel/CharactersPanel'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { DEFAULT_OPEN_LIVE2D } from '@/constant/env'
 import Notifications from './notifications/Notifications'
 
@@ -13,18 +13,17 @@ export default function RoleAI() {
 
   return (
     <>
-      <div className={`${classes.roleAI} w-full h-full flex flex-row box-border`}>
-        <RoleAIContextProvider>
-          <>
-            {live2dExtensionEnable && <Live2dExtension></Live2dExtension>}
-            <RoleAILayout
-              charactersArea={<CharactersPanel></CharactersPanel>}
-              chatArea={<ChatPanel></ChatPanel>}
-            ></RoleAILayout>
-          </>
-        </RoleAIContextProvider>
-      </div>
-      <Notifications></Notifications>
+      <RoleAIContextProvider>
+        <Main>
+          {live2dExtensionEnable && <Live2dExtension></Live2dExtension>}
+          <RoleAILayout
+            charactersArea={<CharactersPanel></CharactersPanel>}
+            chatArea={<ChatPanel></ChatPanel>}
+          ></RoleAILayout>
+
+          <Notifications></Notifications>
+        </Main>
+      </RoleAIContextProvider>
     </>
   )
 }

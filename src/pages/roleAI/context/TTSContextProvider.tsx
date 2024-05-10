@@ -1,13 +1,13 @@
 import { ttsGetUrl } from '@/api/tts/textTTS'
 import { DEFAULT_OPEN_TTS } from '@/constant/env'
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 const TTSTextContext = createContext<string | undefined>(undefined)
 const SetTTSTextContext = createContext<React.Dispatch<React.SetStateAction<string | undefined>>>(
   function () {}
 )
 
-export function TTSContextProvider({ children }: { children: JSX.Element }) {
+export function TTSContextProvider({ children }: { children: ReactNode }) {
   const audioEl = useRef<HTMLAudioElement>(null)
   const [ttsEnable, setTTSEnable] = useState(DEFAULT_OPEN_TTS)
   const [ttsText, setTTSText] = useState<string | undefined>()

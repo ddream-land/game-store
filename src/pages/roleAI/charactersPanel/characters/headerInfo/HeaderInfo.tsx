@@ -3,7 +3,7 @@ import {
   useSetCharacterCardInfoList,
 } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
 import classes from './HeaderInfo.module.scss'
-import { useRef, ChangeEvent } from 'react'
+import { useRef, ChangeEvent, useEffect } from 'react'
 import { extractChunks } from '@/libs/pngChunks'
 import { readCharacterCardFromChunks } from '@/core/characterCard/characterCard'
 import { toBase64 } from '@/libs/fileBase64Encode'
@@ -54,7 +54,6 @@ function HeaderInfo({}: HeaderInfoProps) {
         pngUrlOrBase64: pngBase64,
         card: characterCard,
         id: (uid++).toString(),
-        avatar: file.name,
       }
 
       setCharacterCardInfoList([...characterCardInfoList, cardInfo])

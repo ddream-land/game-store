@@ -6,8 +6,10 @@
   "save": "Save",
   "deleting": "Deleting",
   "deleted": "Deleted",
+  "opSuccess": "Operate Success",
   "opFailed": "Operate Failed",
   "img": "Image",
   "uploading": "Uploading",
-  "uploaded": "Uploaded"
+  "uploaded": "Uploaded",
+  "loading": "Loading"
 }

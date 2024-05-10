@@ -32,10 +32,9 @@ export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCar
     const url = stCard.avatar
 
     const charaCardInfo: CharacterCardInfo = {
-      id: index,
+      id: url,
       card: cardV2,
       pngUrlOrBase64: url,
-      avatar: stCard.avatar,
     }
 
     result.push(charaCardInfo)

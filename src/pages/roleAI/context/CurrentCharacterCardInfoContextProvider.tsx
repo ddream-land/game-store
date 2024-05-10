@@ -1,10 +1,14 @@
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { createContext, useContext, useEffect, useMemo } from 'react'
-import { useCharacterCardInfoList } from './CharacterCardInfoListContextProvider'
+import {
+  useCharacterCardInfoList,
+  useSetCharacterCardInfoList,
+} from './CharacterCardInfoListContextProvider'
 import { useCurrentCharacterCardInfoId } from './CurrentCharacterCardInfoIdContextProvider'
 import { preMsgGenerator } from '@/core/promptMessageGenerator'
 import { AIChatMessage } from '@/core/ChatMessage'
-import { useNavigate } from 'react-router-dom'
+import { editCard } from '@/api/characterCard/characterCard'
+import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 
 const CurrentCharacterCardInfoContext = createContext<CharacterCardInfo | undefined>(undefined)
 
@@ -24,6 +28,7 @@ export function CurrentCharacterCardInfoContextProvider({ children }: { children
 }
 
 export function useCurrentCharacterCardInfo() {
+  const { setCharacterCardInfoList, refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
   const charaCardInfo = useContext(CurrentCharacterCardInfoContext)
 
   const charaPreMsg: AIChatMessage[] | undefined = useMemo(
@@ -36,8 +41,23 @@ export function useCurrentCharacterCardInfo() {
     [charaCardInfo]
   )
 
+  async function uploadCurrentCharacterCardInfo(card: CharacterCardV2) {
+    const currentId = charaCardInfo?.id
+    if (!currentId) {
+      return
+    }
+
+    const res = await editCard(currentId, card)
+    if (res.code === 0) {
+      await refreshCharacterCardInfoList()
+    } else {
+      throw new Error(res.msg ?? 'error')
+    }
+  }
+
   return {
     charaCardInfo: charaCardInfo,
     charaPreMsg,
+    uploadCurrentCharacterCardInfo,
   }
 }

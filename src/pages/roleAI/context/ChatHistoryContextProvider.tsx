@@ -1,12 +1,12 @@
 import { AIChatMessage, ChatMessage } from '@/core/ChatMessage'
-import { createContext, useContext, useMemo, useState } from 'react'
+import { ReactNode, createContext, useContext, useMemo, useState } from 'react'
 
 const ChatHistoryContext = createContext<ChatMessage[]>([])
 const SetChatHistoryContext = createContext<React.Dispatch<React.SetStateAction<ChatMessage[]>>>(
   function () {}
 )
 
-export function ChatHistoryContextProvider({ children }: { children: JSX.Element }) {
+export function ChatHistoryContextProvider({ children }: { children: ReactNode }) {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([])
 
   return (

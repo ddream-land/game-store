@@ -12,11 +12,20 @@ import {
   uploadBackground,
 } from '@/api/backgrounds/backgrounds'
 import toast from 'react-hot-toast'
+import { isString } from '@/libs/isTypes'
+import {
+  NuwaBackgroundExtension,
+  NuwaExtensionVersion,
+  NuwaExtensions,
+} from '@/core/characterCard/NuwaCharacterCardExtensions'
+import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 
 export default CharacterDetailEditCoverView
 
 function CharacterDetailEditCoverView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const imgInputEl = useRef<HTMLInputElement>(null)
@@ -36,12 +45,12 @@ function CharacterDetailEditCoverView() {
       const res = await uploadBackground(file)
       await refreshImgs()
 
-      if (res.code) {
-        toast.error(res.msg, {
+      if (!res.code || res.code === 0) {
+        toast.success(tCommon('uploaded'), {
           id: id,
         })
       } else {
-        toast.success(tCommon('uploaded'), {
+        toast.error(res.msg, {
           id: id,
         })
       }
@@ -52,16 +61,20 @@ function CharacterDetailEditCoverView() {
     }
   }
 
-  async function delImg(imgName: string) {
-    const id = toast.loading(tCommon('deleting'))
+  async function delImg(id: string) {
+    const toastId = toast.loading(tCommon('deleting'))
     try {
-      const res = await deleteBackground(imgName)
+      const res = await deleteBackground(id)
+      if (res.code !== 0) {
+        throw new Error(res.msg)
+      }
+      await refreshImgs()
       toast.success(tCommon('deleted'), {
-        id: id,
+        id: toastId,
       })
-    } catch (err) {
-      toast(tCommon('opFailed'), {
-        id: id,
+    } catch (err: unknown) {
+      toast.error(isString(err) ? err : tCommon('opFailed'), {
+        id: toastId,
       })
     }
   }
@@ -69,6 +82,38 @@ function CharacterDetailEditCoverView() {
   async function refreshImgs() {
     const bgs = await getAllBackgrounds()
     setImgs(bgs)
+  }
+
+  async function onBackgroundClicked(bg: Background) {
+    const id = toast.loading(tCommon('loading'))
+    try {
+      const nuwaBgExtension: NuwaBackgroundExtension = {
+        nuwa_bg: {
+          version: NuwaExtensionVersion.V1,
+          url: bg.url,
+        },
+      }
+      const newCard: CharacterCardV2 = {
+        spec: charaCardInfo.card.spec,
+        spec_version: charaCardInfo.card.spec_version,
+        data: {
+          ...charaCardInfo.card.data,
+          extensions: {
+            ...charaCardInfo.card.data.extensions,
+            ...nuwaBgExtension,
+          },
+        },
+      }
+
+      await uploadCurrentCharacterCardInfo(newCard)
+      toast.success(tCommon('opSuccess'), {
+        id: id,
+      })
+    } catch (err: unknown) {
+      toast.error(isString(err) ? err : tCommon('opFailed'), {
+        id: id,
+      })
+    }
   }
 
   useEffect(function () {
@@ -120,6 +165,7 @@ function CharacterDetailEditCoverView() {
                   return (
                     <div
                       key={img.id}
+                      onClick={() => onBackgroundClicked(img)}
                       className={`${classes.item} overflow-hidden cursor-pointer relative`}
                     >
                       <img src={img.url} alt={img.name} className="w-full h-full" />
@@ -129,7 +175,7 @@ function CharacterDetailEditCoverView() {
                         {img.name}
                       </div>
                       <div
-                        onClick={() => delImg(img.name)}
+                        onClick={() => delImg(img.id)}
                         className={`${classes.del} absolute top-4 right-4`}
                       ></div>
                     </div>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { useLocalStorage } from '@/libs/useLocalStorage'
 import { getAllCards } from '@/api/characterCard/characterCard'
@@ -11,7 +11,7 @@ const SetCharacterCardInfoListContext = createContext<
   React.Dispatch<React.SetStateAction<CharacterCardInfo[]>>
 >(function () {})
 
-export function CharacterCardInfoListContextProvider({ children }: { children: JSX.Element }) {
+export function CharacterCardInfoListContextProvider({ children }: { children: ReactNode }) {
   const [characterCardInfoList, setCharacterCardInfoList] = useState<CharacterCardInfo[]>([])
 
   // const [characterCardInfoList, setCharacterCardInfoList] = useLocalStorage<CharacterCardInfo[]>(

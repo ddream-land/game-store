@@ -3,6 +3,8 @@ import { request, requestList } from '../request'
 import { stCardToCharacterCardInfo } from './mapping'
 import { GetAllCardsRes } from './resDto'
 import { DtoBase } from '../dtoBase'
+import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 
 export async function createCard(file: File) {
   const formData = new FormData()
@@ -72,4 +74,42 @@ export async function exportCardJSON(avatar: string) {
 
 export function avatarUrl(avatar: string) {
   return `https://st.nirvanaworld.cn/thumbnail?type=avatar&file=${avatar}`
+}
+
+export async function editCard(id: string, card: CharacterCardV2) {
+  return await request<DtoBase>({
+    url: `/api/characters/edit`,
+    method: 'post',
+    data: {
+      avatar_url: id,
+
+      alternate_greetings: card.data.alternate_greetings,
+      world: card.data.character_book,
+      character_version: card.data.character_version,
+      creator: card.data.creator,
+      creator_notes: card.data.creator_notes,
+      description: card.data.description,
+      extensions: card.data.extensions,
+      first_mes: card.data.first_mes,
+      mes_example: card.data.mes_example,
+      ch_name: card.data.name,
+      personality: card.data.personality,
+      post_history_instructions: card.data.post_history_instructions,
+      scenario: card.data.scenario,
+      system_prompt: card.data.system_prompt,
+      tags: card.data.tags,
+
+      // ST deprecated
+      json_data: '',
+      chat: '',
+      talkativeness: '',
+
+      // nuwa not use
+      fav: '',
+      create_date: '',
+      last_mes: '',
+      depth_prompt_prompt: '',
+      depth_prompt_depth: '',
+    },
+  })
 }

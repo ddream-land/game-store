@@ -12,6 +12,7 @@ export type ChatMessage = AIChatMessage & {
 
 let uid = Date.now()
 export function chatMessage(content: string, role: ChatRole = ChatRole.User): ChatMessage {
+  
   const chatMsg: ChatMessage = {
     id: uid++,
     role: role,
