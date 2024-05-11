@@ -19,6 +19,7 @@ function CharacterDetailEditAvatarView() {
     {
       type: CharacterAvatarType.Live2D,
       typeName: 'Live2D',
+      enable: true,
       contents: [
         {
           name: 'Haru',
@@ -33,6 +34,7 @@ function CharacterDetailEditAvatarView() {
     {
       type: CharacterAvatarType.VRM,
       typeName: 'VRM',
+      enable: true,
       contents: [
         {
           name: 'VRM111111111',
@@ -63,6 +65,7 @@ function CharacterDetailEditAvatarView() {
     {
       type: CharacterAvatarType.Img,
       typeName: '图片',
+      enable: true,
       contents: [
         {
           name: 'QQQQQQQQQQQQQ',
@@ -120,7 +123,7 @@ function CharacterDetailEditAvatarView() {
 
   const panels = avatars
     .filter(function (avatar) {
-      return avatar.contents && avatar.contents.length > 0
+      return avatar.enable && avatar.contents && avatar.contents.length > 0
     })
     .map(function (avatar, index) {
       return (

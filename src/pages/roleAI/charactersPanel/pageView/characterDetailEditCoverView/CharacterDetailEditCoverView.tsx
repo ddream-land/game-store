@@ -3,7 +3,7 @@ import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState, MouseEvent } from 'react'
 import { useNavigateBack } from '@/router/useNavigateBack'
 import { Background } from '@/core/Background'
 import {
@@ -61,7 +61,9 @@ function CharacterDetailEditCoverView() {
     }
   }
 
-  async function delImg(id: string) {
+  async function delImg(e: MouseEvent<HTMLDivElement>, id: string) {
+    e.stopPropagation()
+
     const toastId = toast.loading(tCommon('deleting'))
     try {
       const res = await deleteBackground(id)
@@ -175,7 +177,7 @@ function CharacterDetailEditCoverView() {
                         {img.name}
                       </div>
                       <div
-                        onClick={() => delImg(img.id)}
+                        onClick={(e) => delImg(e, img.id)}
                         className={`${classes.del} absolute top-4 right-4`}
                       ></div>
                     </div>

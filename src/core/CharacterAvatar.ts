@@ -12,5 +12,6 @@ export enum CharacterAvatarType {
 export type CharacterAvatarTypeContents = {
   type: CharacterAvatarType
   typeName: string
+  enable: boolean
   contents: CharacterAvatar[]
 }
