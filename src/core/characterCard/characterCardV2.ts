@@ -18,7 +18,7 @@ export type CharacteCardV2Data<ExtensionsValType = any> = CharacteCardV2DataBeta
   tags: Array<string>
   creator: string
   character_version: string
-  extensions: Record<string, ExtensionsValType> | NuwaExtensions
+  extensions: NuwaExtensions //| Record<string, ExtensionsValType>
 }
 
 export type CharacterCardV2 = {

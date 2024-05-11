@@ -1,13 +1,13 @@
 import classes from './ControlDialog.module.scss'
 import { useTranslation } from 'react-i18next'
 
-export type ControlDialogProps = {
+export type ControlDialogProps = Readonly<{
   regenerate: () => void
   newChat: () => void
   closeChat: () => void
   continueMsg: () => void
   closeDialog: () => void
-}
+}>
 
 export default function ControlDialog({
   regenerate,

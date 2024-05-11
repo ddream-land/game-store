@@ -13,8 +13,9 @@ import { useTranslation } from 'react-i18next'
 import { createCard } from '@/api/characterCard/characterCard'
 import toast from 'react-hot-toast'
 import { isString } from '@/libs/isTypes'
+import OSS from 'ali-oss'
 
-export type HeaderInfoProps = {}
+export type HeaderInfoProps = Readonly<{}>
 export default HeaderInfo
 
 let uid = Date.now()

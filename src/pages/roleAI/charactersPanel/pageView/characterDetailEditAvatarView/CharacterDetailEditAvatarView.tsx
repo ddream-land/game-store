@@ -1,18 +1,30 @@
 import classes from './CharacterDetailEditAvatarView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
-import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
 import { useState } from 'react'
-import { CharacterAvatarType, CharacterAvatarTypeContents } from '@/core/CharacterAvatar'
+import {
+  CharacterAvatar,
+  CharacterAvatarType,
+  CharacterAvatarTypeContents,
+} from '@/core/CharacterAvatar'
 import { useNavigateBack } from '@/router/useNavigateBack'
+import AvatarPanel from './AvatarPanel'
+import toast from 'react-hot-toast'
+import {
+  NuwaAvatarExtension,
+  NuwaExtensionVersion,
+} from '@/core/characterCard/NuwaCharacterCardExtensions'
+import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
+import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { isString } from '@/libs/isTypes'
 
 export default CharacterDetailEditAvatarView
 
 function CharacterDetailEditAvatarView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-
+  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
   const { t: tCommon } = useTranslation('common')
 
   const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([
@@ -23,7 +35,7 @@ function CharacterDetailEditAvatarView() {
       contents: [
         {
           name: 'Haru',
-          url: '/assets/live2d/Haru/Haru.model3.json',
+          url: '/assets/live2d/Haru11/Haru.model3.json',
         },
         {
           name: 'Hiyori',
@@ -110,76 +122,46 @@ function CharacterDetailEditAvatarView() {
       ],
     },
   ])
-  const [currentAvarar, setCurrentAvatar] = useState({
-    type: CharacterAvatarType.Live2D,
-    index: 1,
-  })
 
   const { back } = useNavigateBack()
 
-  function onAddClicked(type: CharacterAvatarType) {
+  async function onAddClicked(type: CharacterAvatarType) {
     console.log('add', type)
   }
 
-  const panels = avatars
-    .filter(function (avatar) {
-      return avatar.enable && avatar.contents && avatar.contents.length > 0
-    })
-    .map(function (avatar, index) {
-      return (
-        <div key={index} className={`${classes.panel} mt-2`}>
-          <div className={`${classes.header} flex flex-row justify-between items-center px-2`}>
-            <div className={`${classes.title}`}>{avatar.typeName}</div>
-            <NormalButton
-              onClick={() => onAddClicked(avatar.type)}
-              className={`${classes.add}`}
-              size={`small`}
-            >
-              +{' '}
-            </NormalButton>
-          </div>
+  async function onSelectClicked(type: CharacterAvatarType, item: CharacterAvatar) {
+    const id = toast.loading(tCommon('loading'))
+    try {
+      const nuwaAvatarExtension: NuwaAvatarExtension = {
+        nuwa_avatar: {
+          version: NuwaExtensionVersion.V1,
+          type: type,
+          url: item.url,
+          name: item.name ?? '',
+        },
+      }
+      const newCard: CharacterCardV2 = {
+        spec: charaCardInfo.card.spec,
+        spec_version: charaCardInfo.card.spec_version,
+        data: {
+          ...charaCardInfo.card.data,
+          extensions: {
+            ...charaCardInfo.card.data.extensions,
+            ...nuwaAvatarExtension,
+          },
+        },
+      }
 
-          <div
-            className={`${classes.listArea} ${
-              avatar.type === CharacterAvatarType.Img ? classes.noBg : 'p-6'
-            } mt-2`}
-          >
-            <div
-              className={`${classes.list} w-full flex ${
-                avatar.type === CharacterAvatarType.Img
-                  ? 'flex-row flex-wrap justify-between gap-3'
-                  : 'flex-col'
-              }`}
-            >
-              {avatar.contents.map(function (item, i) {
-                if (avatar.type === CharacterAvatarType.Img) {
-                  return (
-                    <div key={i} className={`${classes.imgItem} overflow-hidden cursor-pointer`}>
-                      <img src={item.url} alt={item.name} className="w-full h-full" />
-                    </div>
-                  )
-                } else {
-                  return (
-                    <div key={i} className={`${classes.item}`}>
-                      <div
-                        className={`${classes.name} ${
-                          currentAvarar.type === avatar.type && currentAvarar.index === i
-                            ? classes.active
-                            : ''
-                        } px-4 py-2 truncate cursor-pointer`}
-                      >
-                        {item.name}
-                      </div>
-                      <div className={`${classes.line} w-full`}></div>
-                    </div>
-                  )
-                }
-              })}
-            </div>
-          </div>
-        </div>
-      )
-    })
+      await uploadCurrentCharacterCardInfo(newCard)
+      toast.success(tCommon('opSuccess'), {
+        id: id,
+      })
+    } catch (err: unknown) {
+      toast.error(isString(err) ? err : tCommon('opFailed'), {
+        id: id,
+      })
+    }
+  }
 
   return (
     <div
@@ -200,7 +182,20 @@ function CharacterDetailEditAvatarView() {
         <div
           className={`${classes.content} h-full w-full overflow-hidden overflow-y-scroll scrollbar-override`}
         >
-          {panels}
+          {avatars
+            .filter(function (avatar) {
+              return avatar.enable && avatar.contents && avatar.contents.length > 0
+            })
+            .map(function (avatar, index) {
+              return (
+                <AvatarPanel
+                  key={index}
+                  avatar={avatar}
+                  onAddClicked={onAddClicked}
+                  onSelectClicked={onSelectClicked}
+                ></AvatarPanel>
+              )
+            })}
         </div>
       </div>
     </div>

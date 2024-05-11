@@ -1,14 +1,11 @@
 import classes from './LockPanelDialog.module.scss'
 
-export type LockPanelDialogProps = {
+export type LockPanelDialogProps = Readonly<{
   lock: boolean
   switchLock: (to: boolean) => void
-}
+}>
 
-function LockPanelDialog({
-  lock,
-  switchLock,
-}: LockPanelDialogProps) {
+function LockPanelDialog({ lock, switchLock }: LockPanelDialogProps) {
   return (
     <div
       onClick={function () {

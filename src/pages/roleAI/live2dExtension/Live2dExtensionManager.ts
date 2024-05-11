@@ -13,19 +13,13 @@ export type AddModelOption = {
 class Live2dExtensionManager {
   public pixiApp: PixiApp
 
-  private models: Record<
-    ModelId,
-    Live2dExtensionModel<InternalModel>
-  > = {}
+  private models: Record<ModelId, Live2dExtensionModel<InternalModel>> = {}
 
   constructor(canvas: HTMLCanvasElement) {
     this.pixiApp = new PixiApp(canvas)
   }
 
-  public async addModel(
-    modelPath: string,
-    option?: AddModelOption
-  ) {
+  public async addModel(modelPath: string, option?: AddModelOption) {
     let model: Live2dExtensionModel<InternalModel> | undefined
     try {
       model = await Live2dExtensionModel.from(modelPath)
@@ -42,7 +36,23 @@ class Live2dExtensionManager {
     //@ts-ignore
     this.pixiApp.stage.addChild(model)
 
+    this.models[model.id] = model
+
     return model
+  }
+
+  public modelExistByModelPath(modelPath: string) {
+    const { models } = this
+    const modelIds = Reflect.ownKeys(models) as ModelId[]
+    const len = modelIds.length
+    for (let i = 0; i < len; i++) {
+      const id = modelIds[i]
+      const model = models[id]
+      if (model.internalModel.settings.url === modelPath) {
+        return true
+      }
+    }
+    return false
   }
 
   public removeModel(id: ModelId) {
@@ -72,10 +82,7 @@ class Live2dExtensionManager {
     this.removeModels()
   }
 
-  private initModelOption(
-    model: Live2dExtensionModel<InternalModel>,
-    option?: AddModelOption
-  ) {
+  private initModelOption(model: Live2dExtensionModel<InternalModel>, option?: AddModelOption) {
     const DEFAULT_OPTION: AddModelOption = {
       dragglable: true,
       followCursor: true,
@@ -89,9 +96,7 @@ class Live2dExtensionManager {
     // Scale to canvas
     model.scale.set(window.innerHeight / model.height)
 
-    dragglable
-      ? model.setDragglable()
-      : model.removeDragglable()
+    dragglable ? model.setDragglable() : model.removeDragglable()
 
     model.followCursor(followCursor)
 
@@ -118,26 +123,17 @@ class Live2dExtensionManager {
     })
   }
 
-  public setScale(
-    scaleX?: number,
-    scaleY?: number,
-    ids?: ModelId[]
-  ) {
+  public setScale(scaleX?: number, scaleY?: number, ids?: ModelId[]) {
     this.filterUpdateModel(ids, function (model) {
       model.scale.set(scaleX, scaleY)
     })
   }
 
-  public setDraggle(
-    dragglable: boolean = true,
-    ids?: ModelId[]
-  ) {
+  public setDraggle(dragglable: boolean = true, ids?: ModelId[]) {
     this.filterUpdateModel(ids, function (model) {
-      dragglable
-        ? model.setDragglable()
-        : model.removeDragglable()
+      dragglable ? model.setDragglable() : model.removeDragglable()
     })
   }
 }
 
-export default Live2dExtensionManager
+export { Live2dExtensionManager }

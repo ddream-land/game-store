@@ -9,11 +9,11 @@ import { MouseEventHandler } from 'react'
 
 export default CharacterInfo
 
-export type CharacterInfoProps = {
+export type CharacterInfoProps = Readonly<{
   editCoverClicked?: MouseEventHandler
   editAvatarClicked?: MouseEventHandler
   editPromptClicked?: MouseEventHandler
-}
+}>
 
 function CharacterInfo({
   editCoverClicked,

@@ -1,4 +1,4 @@
-import Live2dExt from '@/components/live2dExtension/Live2dExtension'
+import Live2dExt from '@/pages/roleAI/live2dExtension/Live2dExtension'
 
 export default function OnlyLive2D() {
   return (

@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import classes from './MenuDialog.module.scss'
 
-export type MenuDialogProps = {
+export type MenuDialogProps = Readonly<{
   onRenameClicked: () => Promise<void>
   onLinkToWorldBookClicked: () => Promise<void>
   onExportClicked: () => Promise<void>
   onDeleteClicked: () => Promise<void>
-}
+}>
 
 export default MenuDialog
 

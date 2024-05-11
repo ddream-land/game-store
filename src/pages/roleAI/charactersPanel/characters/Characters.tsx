@@ -2,9 +2,9 @@ import classes from './Characters.module.scss'
 import HeaderInfo from './headerInfo/HeaderInfo'
 import CharacterList from './characterList/CharacterList'
 
-export type CharactersProps = {
+export type CharactersProps = Readonly<{
   characterSelected?: (id: string) => void
-}
+}>
 
 export default Characters
 
