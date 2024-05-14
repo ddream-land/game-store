@@ -19,8 +19,7 @@ import {
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { isString } from '@/libs/isTypes'
-import { uploadLive2dZip } from '@/api/oss/oss'
-import { getAllLive2d } from '@/api/live2d/live2d'
+import { createLive2d, getAllLive2d } from '@/api/live2d/live2d'
 
 export default CharacterDetailEditAvatarView
 
@@ -31,80 +30,84 @@ function CharacterDetailEditAvatarView() {
   const live2dInputEl = useRef<HTMLInputElement>(null)
   const vrmInputEl = useRef<HTMLInputElement>(null)
 
+  async function refreshList() {
+    const res = await getAllLive2d()
+
+    const live2dList: CharacterAvatarTypeContents = {
+      type: CharacterAvatarType.Live2D,
+      typeName: 'Live2D',
+      enable: true,
+      contents: (res.resp ?? []).map(function (item) {
+        return {
+          id: item.id,
+          name: item.name,
+          url: item.url,
+        }
+      }),
+    }
+
+    const vrmList: CharacterAvatarTypeContents = {
+      type: CharacterAvatarType.VRM,
+      typeName: 'VRM',
+      enable: false,
+      contents: [
+        {
+          id: '1',
+          name: 'VRM111111111',
+          url: '/assets/live2d/Haru/Haru.model3.json',
+        },
+        {
+          id: '2',
+          name: 'VRM222222',
+          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
+        },
+        {
+          id: '3',
+          name: 'VRM111111111',
+          url: '/assets/live2d/Haru/Haru.model3.json',
+        },
+        {
+          id: '4',
+          name: 'VRM222222',
+          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
+        },
+      ],
+    }
+
+    const imgList: CharacterAvatarTypeContents = {
+      type: CharacterAvatarType.Img,
+      typeName: '图片',
+      enable: false,
+      contents: [
+        {
+          id: '11',
+          name: 'QQQQQQQQQQQQQ',
+          url: '/imgs/default-avatar3.png',
+        },
+        {
+          id: '22',
+          name: 'WWWWWWWWWW',
+          url: '/main_ian-76649fb8_spec_v2.png',
+        },
+        {
+          id: '33',
+          name: 'QQQQQQQQQQQQQ',
+          url: '/imgs/default-avatar3.png',
+        },
+        {
+          id: '44',
+          name: 'WWWWWWWWWW',
+          url: '/main_ian-76649fb8_spec_v2.png',
+        },
+      ],
+    }
+
+    setAvatars([live2dList, vrmList, imgList])
+  }
+
   useEffect(function () {
     ;(async function () {
-      const res = await getAllLive2d()
-
-      const live2dList: CharacterAvatarTypeContents = {
-        type: CharacterAvatarType.Live2D,
-        typeName: 'Live2D',
-        enable: true,
-        contents: (res.resp ?? []).map(function (item) {
-          return {
-            id: item.id,
-            name: item.name,
-            url: item.url,
-          }
-        }),
-      }
-
-      const vrmList: CharacterAvatarTypeContents = {
-        type: CharacterAvatarType.VRM,
-        typeName: 'VRM',
-        enable: false,
-        contents: [
-          {
-            id: '1',
-            name: 'VRM111111111',
-            url: '/assets/live2d/Haru/Haru.model3.json',
-          },
-          {
-            id: '2',
-            name: 'VRM222222',
-            url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-          },
-          {
-            id: '3',
-            name: 'VRM111111111',
-            url: '/assets/live2d/Haru/Haru.model3.json',
-          },
-          {
-            id: '4',
-            name: 'VRM222222',
-            url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-          },
-        ],
-      }
-
-      const imgList: CharacterAvatarTypeContents = {
-        type: CharacterAvatarType.Img,
-        typeName: '图片',
-        enable: false,
-        contents: [
-          {
-            id: '11',
-            name: 'QQQQQQQQQQQQQ',
-            url: '/imgs/default-avatar3.png',
-          },
-          {
-            id: '22',
-            name: 'WWWWWWWWWW',
-            url: '/main_ian-76649fb8_spec_v2.png',
-          },
-          {
-            id: '33',
-            name: 'QQQQQQQQQQQQQ',
-            url: '/imgs/default-avatar3.png',
-          },
-          {
-            id: '44',
-            name: 'WWWWWWWWWW',
-            url: '/main_ian-76649fb8_spec_v2.png',
-          },
-        ],
-      }
-
-      setAvatars([live2dList, vrmList, imgList])
+      await refreshList()
     })()
   }, [])
 
@@ -136,20 +139,18 @@ function CharacterDetailEditAvatarView() {
     const id = toast.loading(tCommon('uploading'))
     try {
       const file = live2dInputEl.current.files[0]
+      const res = await createLive2d(file)
+      if (res.code !== 0) {
+        throw new Error(res.msg)
+      }
 
-      const x = await uploadLive2dZip(file)
-
-      // const res = await createCard(file)
-      // if (res.code === 0) {
-      //   toast.success(tCommon('uploaded'), {
-      //     id: id,
-      //   })
-      //   await refreshCharacterCardInfoList()
-      // } else {
-      //   throw new Error(res.msg)
-      // }
-    } catch (err) {
-      toast.error(isString(err) ? err : tCommon('opFailed'), {
+      await refreshList()
+      toast.success(tCommon('uploaded'), {
+        id: id,
+      })
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
         id: id,
       })
     }
@@ -186,8 +187,9 @@ function CharacterDetailEditAvatarView() {
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
-    } catch (err: unknown) {
-      toast.error(isString(err) ? err : tCommon('opFailed'), {
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
         id: id,
       })
     }

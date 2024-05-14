@@ -74,9 +74,10 @@ function CharacterDetailEditCoverView() {
       toast.success(tCommon('deleted'), {
         id: toastId,
       })
-    } catch (err: unknown) {
-      toast.error(isString(err) ? err : tCommon('opFailed'), {
-        id: toastId,
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
+        id: id,
       })
     }
   }
@@ -111,8 +112,9 @@ function CharacterDetailEditCoverView() {
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
-    } catch (err: unknown) {
-      toast.error(isString(err) ? err : tCommon('opFailed'), {
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
         id: id,
       })
     }

@@ -46,7 +46,7 @@ export async function isExist(name: string) {
   }
 }
 
-export async function uploadLive2dZip(file: File) {
+export async function uploadLive2dZip(file: File): Promise<[string, string]> {
   const filename = file.name
   const modelname = filename.split('.')[0]
   if (!filename.endsWith('.zip') && !filename.endsWith('.ZIP') && !modelname) {
@@ -60,11 +60,12 @@ export async function uploadLive2dZip(file: File) {
   if (res.res.status !== 200) {
     throw new Error(`Upload failed.`)
   }
-  // const zipUrl = res.url
+
   const base = `/nuwa/live2d/${newFilenameWithoutExt}`
   const live2dJsonUrl = `${base}/${modelname}/${modelname}.model3.json`
-  if (await isExist(live2dJsonUrl)) {
-    return `${token.resp.Endpoint}/${live2dJsonUrl}`
+  if (!(await isExist(live2dJsonUrl))) {
+    throw new Error(`Upload failed.`)
   }
-  throw new Error(`Upload failed.`)
+
+  return [modelname, `${token.resp.Endpoint}/${live2dJsonUrl}`]
 }

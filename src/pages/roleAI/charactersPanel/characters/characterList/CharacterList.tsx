@@ -16,7 +16,7 @@ function CharacterList({ characterSelected }: CharacterListProps) {
 
   const lifeElementItems = lifeList.map(function (life) {
     const name = life.card.data.name
-    const avatarUrl = life.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
+    const avatarUrl = `${life.pngUrlOrBase64}/w350` ?? '/imgs/default-avatar3.png'
     const desc = life.card.data.description
     const tags = life.card.data.tags
     const id = life.id
