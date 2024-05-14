@@ -14,6 +14,7 @@ import { createCard } from '@/api/characterCard/characterCard'
 import toast from 'react-hot-toast'
 import { isString } from '@/libs/isTypes'
 import OSS from 'ali-oss'
+import { uploadFile } from '@/api/oss/oss'
 
 export type HeaderInfoProps = Readonly<{}>
 export default HeaderInfo
@@ -69,6 +70,7 @@ function HeaderInfo({}: HeaderInfoProps) {
     const id = toast.loading(tCommon('uploading'))
     try {
       const file = pngInputEl.current.files[0]
+
       const res = await createCard(file)
       if (res.code === 0) {
         toast.success(tCommon('uploaded'), {
@@ -87,6 +89,7 @@ function HeaderInfo({}: HeaderInfoProps) {
     // try {
     //   await localCreateCard(file)
     // } catch {}
+    pngInputEl.current.value = ''
   }
 
   return (

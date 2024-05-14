@@ -3,7 +3,7 @@ import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
-import { useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import {
   CharacterAvatar,
   CharacterAvatarType,
@@ -19,6 +19,8 @@ import {
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { isString } from '@/libs/isTypes'
+import { uploadLive2dZip } from '@/api/oss/oss'
+import { getAllLive2d } from '@/api/live2d/live2d'
 
 export default CharacterDetailEditAvatarView
 
@@ -26,108 +28,136 @@ function CharacterDetailEditAvatarView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
   const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
   const { t: tCommon } = useTranslation('common')
+  const live2dInputEl = useRef<HTMLInputElement>(null)
+  const vrmInputEl = useRef<HTMLInputElement>(null)
 
-  const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([
-    {
-      type: CharacterAvatarType.Live2D,
-      typeName: 'Live2D',
-      enable: true,
-      contents: [
-        {
-          name: 'Haru',
-          url: '/assets/live2d/Haru11/Haru.model3.json',
-        },
-        {
-          name: 'Hiyori',
-          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-        },
-      ],
-    },
-    {
-      type: CharacterAvatarType.VRM,
-      typeName: 'VRM',
-      enable: true,
-      contents: [
-        {
-          name: 'VRM111111111',
-          url: '/assets/live2d/Haru/Haru.model3.json',
-        },
-        {
-          name: 'VRM222222',
-          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-        },
-        {
-          name: 'VRM111111111',
-          url: '/assets/live2d/Haru/Haru.model3.json',
-        },
-        {
-          name: 'VRM222222',
-          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-        },
-        {
-          name: 'VRM111111111',
-          url: '/assets/live2d/Haru/Haru.model3.json',
-        },
-        {
-          name: 'VRM222222',
-          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-        },
-      ],
-    },
-    {
-      type: CharacterAvatarType.Img,
-      typeName: '图片',
-      enable: true,
-      contents: [
-        {
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-        {
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-        {
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-        {
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-        {
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-      ],
-    },
-  ])
+  useEffect(function () {
+    ;(async function () {
+      const res = await getAllLive2d()
+
+      const live2dList: CharacterAvatarTypeContents = {
+        type: CharacterAvatarType.Live2D,
+        typeName: 'Live2D',
+        enable: true,
+        contents: (res.resp ?? []).map(function (item) {
+          return {
+            id: item.id,
+            name: item.name,
+            url: item.url,
+          }
+        }),
+      }
+
+      const vrmList: CharacterAvatarTypeContents = {
+        type: CharacterAvatarType.VRM,
+        typeName: 'VRM',
+        enable: false,
+        contents: [
+          {
+            id: '1',
+            name: 'VRM111111111',
+            url: '/assets/live2d/Haru/Haru.model3.json',
+          },
+          {
+            id: '2',
+            name: 'VRM222222',
+            url: '/assets/live2d/Hiyori/Hiyori.model3.json',
+          },
+          {
+            id: '3',
+            name: 'VRM111111111',
+            url: '/assets/live2d/Haru/Haru.model3.json',
+          },
+          {
+            id: '4',
+            name: 'VRM222222',
+            url: '/assets/live2d/Hiyori/Hiyori.model3.json',
+          },
+        ],
+      }
+
+      const imgList: CharacterAvatarTypeContents = {
+        type: CharacterAvatarType.Img,
+        typeName: '图片',
+        enable: false,
+        contents: [
+          {
+            id: '11',
+            name: 'QQQQQQQQQQQQQ',
+            url: '/imgs/default-avatar3.png',
+          },
+          {
+            id: '22',
+            name: 'WWWWWWWWWW',
+            url: '/main_ian-76649fb8_spec_v2.png',
+          },
+          {
+            id: '33',
+            name: 'QQQQQQQQQQQQQ',
+            url: '/imgs/default-avatar3.png',
+          },
+          {
+            id: '44',
+            name: 'WWWWWWWWWW',
+            url: '/main_ian-76649fb8_spec_v2.png',
+          },
+        ],
+      }
+
+      setAvatars([live2dList, vrmList, imgList])
+    })()
+  }, [])
+
+  const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([])
 
   const { back } = useNavigateBack()
 
   async function onAddClicked(type: CharacterAvatarType) {
-    console.log('add', type)
+    switch (type) {
+      case CharacterAvatarType.Live2D: {
+        live2dInputEl.current && live2dInputEl.current.click()
+        break
+      }
+      case CharacterAvatarType.VRM: {
+        vrmInputEl.current && vrmInputEl.current.click()
+        break
+      }
+      case CharacterAvatarType.Img: {
+        break
+      }
+    }
   }
+
+  async function onLive2dImport(zip: ChangeEvent<HTMLInputElement>) {
+    if (!live2dInputEl.current || !live2dInputEl.current.files) {
+      return
+    }
+
+    const id = toast.loading(tCommon('uploading'))
+    try {
+      const file = live2dInputEl.current.files[0]
+
+      const x = await uploadLive2dZip(file)
+
+      // const res = await createCard(file)
+      // if (res.code === 0) {
+      //   toast.success(tCommon('uploaded'), {
+      //     id: id,
+      //   })
+      //   await refreshCharacterCardInfoList()
+      // } else {
+      //   throw new Error(res.msg)
+      // }
+    } catch (err) {
+      toast.error(isString(err) ? err : tCommon('opFailed'), {
+        id: id,
+      })
+    }
+
+    live2dInputEl.current.value = ''
+  }
+
+  async function onVrmImport(zip: ChangeEvent<HTMLInputElement>) {}
 
   async function onSelectClicked(type: CharacterAvatarType, item: CharacterAvatar) {
     const id = toast.loading(tCommon('loading'))
@@ -198,6 +228,23 @@ function CharacterDetailEditAvatarView() {
             })}
         </div>
       </div>
+
+      <input
+        ref={live2dInputEl}
+        className="hidden"
+        type="file"
+        onChange={onLive2dImport}
+        accept=".zip"
+        multiple={false}
+      />
+      <input
+        ref={vrmInputEl}
+        className="hidden"
+        type="file"
+        onChange={onVrmImport}
+        accept=".zip"
+        multiple={false}
+      />
     </div>
   )
 }

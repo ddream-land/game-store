@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios'
 import { request, requestList } from '../request'
 import { backgroundMapping } from './mapping'
 import { AllBgResDto, UploadBgResDto } from './resDto'

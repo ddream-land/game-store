@@ -1,6 +1,7 @@
 import OSS from 'ali-oss'
-import { request, requestList } from '../request'
+import { request } from '../request'
 import { OssTokenDto } from './resDto'
+import generateId from '@/core/generateId'
 
 export async function ossToken() {
   return await request<OssTokenDto>({
@@ -9,7 +10,7 @@ export async function ossToken() {
   })
 }
 
-export async function uploadFile(file: File) {
+export async function prepearOssClient(): Promise<[OSS, OssTokenDto]> {
   const token = await ossToken()
 
   const client = new OSS({
@@ -18,20 +19,52 @@ export async function uploadFile(file: File) {
     accessKeySecret: token.resp.Credentials.AccessKeySecret,
     stsToken: token.resp.Credentials.SecurityToken,
     bucket: token.resp.Bucket,
+    secure: true,
   })
 
-  const res = await client.put('', file)
+  return [client, token]
+}
 
-  client
-    .put('object.rar', file)
-    .then(function (r1) {
-      console.log('put success: %j', r1)
-      return client.get('object')
-    })
-    .then(function (r2) {
-      console.log('get success: %j', r2)
-    })
-    .catch(function (err) {
-      console.error('error: %j', err)
-    })
+export async function uploadFile(file: File) {
+  const [client] = await prepearOssClient()
+
+  const res = await client.put('/zipfolder/qqq.zip', file)
+  console.log(res)
+}
+
+export async function isExist(name: string) {
+  const [client, token] = await prepearOssClient()
+
+  try {
+    await client.head(name)
+    return true
+  } catch (error: any) {
+    if (error.code === 'NoSuchKey') {
+      return false
+    }
+    return false
+  }
+}
+
+export async function uploadLive2dZip(file: File) {
+  const filename = file.name
+  const modelname = filename.split('.')[0]
+  if (!filename.endsWith('.zip') && !filename.endsWith('.ZIP') && !modelname) {
+    throw new Error('Invalid file.')
+  }
+
+  const [client, token] = await prepearOssClient()
+
+  const newFilenameWithoutExt = generateId()
+  const res = await client.put(`/nuwa/live2dzip/${newFilenameWithoutExt}.zip`, file)
+  if (res.res.status !== 200) {
+    throw new Error(`Upload failed.`)
+  }
+  // const zipUrl = res.url
+  const base = `/nuwa/live2d/${newFilenameWithoutExt}`
+  const live2dJsonUrl = `${base}/${modelname}/${modelname}.model3.json`
+  if (await isExist(live2dJsonUrl)) {
+    return `${token.resp.Endpoint}/${live2dJsonUrl}`
+  }
+  throw new Error(`Upload failed.`)
 }

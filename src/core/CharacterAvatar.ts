@@ -1,6 +1,7 @@
 export type CharacterAvatar = {
   name?: string
   url: string
+  id: string
 }
 
 export enum CharacterAvatarType {

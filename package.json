@@ -30,6 +30,7 @@
     "i18next": "^23.11.2",
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-backend": "^2.5.1",
+    "nanoid": "^5.0.7",
     "pixi-live2d-display": "^0.4.0",
     "pixi.js": "6.5.2",
     "png-chunk-text": "^1.0.0",
