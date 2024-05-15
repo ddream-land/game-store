@@ -30,6 +30,7 @@
     "i18next": "^23.11.2",
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-backend": "^2.5.1",
+    "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
     "pixi-live2d-display": "^0.4.0",
     "pixi.js": "6.5.2",
@@ -45,6 +46,7 @@
     "react-router-dom": "^6.23.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.1",
     "@types/node": "^20.12.7",
     "@types/png-chunk-text": "^1.0.3",
     "@types/png-chunks-extract": "^1.0.2",

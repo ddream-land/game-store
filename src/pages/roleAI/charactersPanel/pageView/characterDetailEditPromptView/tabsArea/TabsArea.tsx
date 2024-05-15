@@ -1,16 +1,32 @@
-import { useState } from 'react'
+import { ForwardedRef, forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import classes from './TabsArea.module.scss'
 import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
+import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
+import { Textarea } from '@nextui-org/react'
+import { cloneDeep } from 'lodash'
+import { CharacterCardInfo } from '@/core/CharacterCardInfo'
+import { CharacteCardV2Data } from '@/core/characterCard/characterCardV2'
 
-export default TabsArea
+export type TabsAreaProps = Readonly<{}>
 
-function TabsArea() {
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
-  if (!charaCardInfo) {
-    throw new Error(`Runtime error.`)
-  }
+export type TabsAreaRef = {
+  currentCharaCardData: CharacteCardV2Data<any>
+}
+
+export default forwardRef<TabsAreaRef, TabsAreaProps>(TabsArea)
+
+function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
+  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const [currentCharaCardData, setCurrentCharaCardData] = useState(
+    cloneDeep(charaCardInfo.card.data)
+  )
+
+  useImperativeHandle(ref, function () {
+    return {
+      currentCharaCardData,
+    }
+  })
 
   const { t } = useTranslation('roleAI')
 
@@ -22,6 +38,7 @@ function TabsArea() {
     { prop: 'first_mes', txt: t('greetingMsg') },
     { prop: 'tags', txt: t('tags') },
   ])
+
   const tabsElement = tabs.map(function (tab, index) {
     return (
       <div
@@ -38,10 +55,9 @@ function TabsArea() {
 
   function getContent() {
     const prop = tabs[currentTabIndex].prop
-    const data = charaCardInfo?.card.data
-    let content = '无'
-    if (data && isKey(data, prop)) {
-      const val = data[prop]
+    let content = ''
+    if (currentCharaCardData && isKey(currentCharaCardData, prop)) {
+      const val = currentCharaCardData[prop]
       if (isString(val)) {
         content = val
       } else if (isNumber(val)) {
@@ -53,6 +69,25 @@ function TabsArea() {
     return content
   }
 
+  function onContentChange(val: string) {
+    const prop = tabs[currentTabIndex].prop
+    if (currentCharaCardData && isKey(currentCharaCardData, prop)) {
+      const raw = currentCharaCardData[prop]
+      let content: string | number | string[] = val
+      if (isString(raw)) {
+        content = val
+      } else if (isNumber(raw)) {
+        content = Number(val)
+      } else if (isArray(raw)) {
+        content = val.split(' ')
+      }
+      setCurrentCharaCardData({
+        ...currentCharaCardData,
+        [prop]: content,
+      })
+    }
+  }
+
   return (
     <div
       className={`${classes.tabsArea} w-full h-full box-border flex flex-col justify-center items-center`}
@@ -62,7 +97,15 @@ function TabsArea() {
       </div>
       <div className={`${classes.line} flex-none`}></div>
       <div className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}>
-        {getContent()}
+        <Textarea
+          value={getContent()}
+          onValueChange={onContentChange}
+          disableAutosize={true}
+          className={`${classes.textarea} h-full w-full`}
+          classNames={{
+            input: 'scrollbar-override',
+          }}
+        />
       </div>
     </div>
   )
