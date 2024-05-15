@@ -15,12 +15,14 @@ function AvatarPanel({
   checkMode,
   onValueChange,
   onAddClicked,
+  onSettingClicked,
   onSelectClicked,
 }: {
   avatar: CharacterAvatarTypeContents
   checkMode?: boolean
   onValueChange?: (id: string, isSelected: boolean) => void
   onAddClicked?: (type: CharacterAvatarType) => Promise<void>
+  onSettingClicked?: (type: CharacterAvatarType) => Promise<void>
   onSelectClicked?: (type: CharacterAvatarType, item: CharacterAvatar) => Promise<void>
 }) {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
@@ -39,13 +41,24 @@ function AvatarPanel({
     <div className={`${classes.avatarPanel} mt-2`}>
       <div className={`${classes.header} flex flex-row justify-between items-center px-2`}>
         <div className={`${classes.title}`}>{avatar.typeName}</div>
-        <NormalButton
-          onClick={() => onAddClicked && onAddClicked(avatar.type)}
-          className={`${classes.add}`}
-          size={`small`}
-        >
-          +{' '}
-        </NormalButton>
+
+        <div className="flex ">
+          {avatar.type === nuwaAvatar?.type && (
+            <NormalButton
+              onClick={() => onSettingClicked && onSettingClicked(avatar.type)}
+              className={`${classes.setting}`}
+              size={`small`}
+            ></NormalButton>
+          )}
+
+          <NormalButton
+            onClick={() => onAddClicked && onAddClicked(avatar.type)}
+            className={`${classes.add} ml-3`}
+            size={`small`}
+          >
+            +{' '}
+          </NormalButton>
+        </div>
       </div>
 
       <div

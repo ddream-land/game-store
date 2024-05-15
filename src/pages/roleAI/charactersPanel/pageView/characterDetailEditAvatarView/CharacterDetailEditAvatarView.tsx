@@ -20,6 +20,7 @@ import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 export default CharacterDetailEditAvatarView
 
@@ -31,6 +32,8 @@ function CharacterDetailEditAvatarView() {
   const vrmInputEl = useRef<HTMLInputElement>(null)
   const [editMode, setEditMode] = useState(false)
   const [deleteIds, setDeleteIds] = useState<string[]>([])
+  const { back } = useNavigateBack()
+  const navigate = useNavigate()
 
   async function refreshList() {
     const res = await getAllLive2d()
@@ -122,8 +125,6 @@ function CharacterDetailEditAvatarView() {
 
   const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([])
 
-  const { back } = useNavigateBack()
-
   async function onAddClicked(type: CharacterAvatarType) {
     switch (type) {
       case CharacterAvatarType.Live2D: {
@@ -132,6 +133,21 @@ function CharacterDetailEditAvatarView() {
       }
       case CharacterAvatarType.VRM: {
         vrmInputEl.current && vrmInputEl.current.click()
+        break
+      }
+      case CharacterAvatarType.Img: {
+        break
+      }
+    }
+  }
+
+  async function onSettingClicked(type: CharacterAvatarType) {
+    switch (type) {
+      case CharacterAvatarType.Live2D: {
+        navigate(`live2dSetting`)
+        break
+      }
+      case CharacterAvatarType.VRM: {
         break
       }
       case CharacterAvatarType.Img: {
@@ -293,6 +309,7 @@ function CharacterDetailEditAvatarView() {
                   avatar={avatar}
                   checkMode={editMode}
                   onAddClicked={onAddClicked}
+                  onSettingClicked={onSettingClicked}
                   onSelectClicked={onSelectClicked}
                   onValueChange={onDeleteChecked}
                 ></AvatarPanel>
@@ -317,6 +334,8 @@ function CharacterDetailEditAvatarView() {
         accept=".zip"
         multiple={false}
       />
+
+      <Outlet></Outlet>
     </div>
   )
 }

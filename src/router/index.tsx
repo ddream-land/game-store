@@ -8,6 +8,7 @@ import CharacterDetailEditAvatarView from '@/pages/roleAI/charactersPanel/pageVi
 import CharacterDetailEditCoverView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditCoverView/CharacterDetailEditCoverView'
 
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
+import AvatarLive2dSettingView from '@/pages/roleAI/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,16 @@ const router = createBrowserRouter([
                     <CharacterDetailEditAvatarView></CharacterDetailEditAvatarView>
                   </PageView>
                 ),
+                children: [
+                  {
+                    path: '/:language/detail/editAvatar/live2dSetting',
+                    element: (
+                      <PageView>
+                        <AvatarLive2dSettingView></AvatarLive2dSettingView>
+                      </PageView>
+                    ),
+                  },
+                ],
               },
               {
                 path: '/:language/detail/editCover',
