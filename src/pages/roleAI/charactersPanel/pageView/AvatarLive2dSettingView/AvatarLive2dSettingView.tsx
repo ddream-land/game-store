@@ -2,14 +2,28 @@ import { useNavigateBack } from '@/router/useNavigateBack'
 import classes from './AvatarLive2dSettingView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import { Slider, SliderValue } from '@nextui-org/react'
+import { useLive2dExtension } from '@/pages/roleAI/context/Live2dExtensionContextProvider'
+import { useState } from 'react'
 
 export default AvatarLive2dSettingView
 
 function AvatarLive2dSettingView() {
   const { back } = useNavigateBack()
+  const { managerRef } = useLive2dExtension()
+
+  const modelIds = managerRef.current?.modelIds
+  const id = modelIds && modelIds[0]
+  const [scaleX, scaleY] = ((id && managerRef.current && managerRef.current.getScale(id)) ?? [
+    1, 1,
+  ]) as [number, number]
+
+  const [scale, setScale] = useState(Math.max(scaleX, scaleY))
 
   async function scaleChange(value: SliderValue) {
-    const scale = ((value as number) - 50) / 50 + 1
+    let scale = ((value as number) - 50) / 50 + 1
+    scale <= 0 && (scale = 0.1)
+    setScale(Math.round(scale * 10) / 10)
+    managerRef.current && managerRef.current.setScale(scale, scale)
   }
 
   return (
@@ -33,7 +47,7 @@ function AvatarLive2dSettingView() {
                 maxValue={100}
                 minValue={0}
                 aria-label="Scale"
-                defaultValue={50}
+                value={(scale - 1) * 50 + 50}
                 className="max-w-md"
                 classNames={{
                   track: 'border-s-secondary-100',
@@ -43,7 +57,7 @@ function AvatarLive2dSettingView() {
                 onChange={scaleChange}
               />
             </div>
-            <div className={`${classes.val} flex-none`}>1x</div>
+            <div className={`${classes.val} flex-none`}>{`${scale.toFixed(1)}x`}</div>
           </div>
 
           <div className={`${classes.row} w-full flex flex-row mt-16`}>

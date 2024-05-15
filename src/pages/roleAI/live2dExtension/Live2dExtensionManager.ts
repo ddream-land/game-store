@@ -15,6 +15,10 @@ class Live2dExtensionManager {
 
   private models: Record<ModelId, Live2dExtensionModel<InternalModel>> = {}
 
+  public get modelIds(): ModelId[] {
+    return Reflect.ownKeys(this.models) as ModelId[]
+  }
+
   constructor(canvas: HTMLCanvasElement) {
     this.pixiApp = new PixiApp(canvas)
   }
@@ -117,9 +121,9 @@ class Live2dExtensionManager {
     ids: ModelId[] | undefined = undefined,
     fn: (model: Live2dExtensionModel) => void
   ) {
-    const { models, getUpdateIds } = this
-    getUpdateIds(ids).forEach(function (id) {
-      fn(models[id])
+    const self = this
+    this.getUpdateIds(ids).forEach(function (id) {
+      fn(self.models[id])
     })
   }
 
@@ -127,6 +131,13 @@ class Live2dExtensionManager {
     this.filterUpdateModel(ids, function (model) {
       model.scale.set(scaleX, scaleY)
     })
+  }
+
+  public getScale(id: ModelId): [number, number] | undefined {
+    if (id in this.models) {
+      const s = this.models[id].scale
+      return [s.x, s.y]
+    }
   }
 
   public setDraggle(dragglable: boolean = true, ids?: ModelId[]) {
