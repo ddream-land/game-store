@@ -2,6 +2,7 @@ import OSS from 'ali-oss'
 import { request } from '../request'
 import { OssTokenDto } from './resDto'
 import generateId from '@/core/generateId'
+import { sleep } from '@/libs/sleep'
 
 export async function ossToken() {
   return await request<OssTokenDto>({
@@ -23,13 +24,6 @@ export async function prepearOssClient(): Promise<[OSS, OssTokenDto]> {
   })
 
   return [client, token]
-}
-
-export async function uploadFile(file: File) {
-  const [client] = await prepearOssClient()
-
-  const res = await client.put('/zipfolder/qqq.zip', file)
-  console.log(res)
 }
 
 export async function isExist(name: string) {
@@ -63,6 +57,9 @@ export async function uploadLive2dZip(file: File): Promise<[string, string]> {
 
   const base = `/nuwa/live2d/${newFilenameWithoutExt}`
   const live2dJsonUrl = `${base}/${modelname}/${modelname}.model3.json`
+
+  await sleep(1000)
+
   if (!(await isExist(live2dJsonUrl))) {
     throw new Error(`Upload failed.`)
   }

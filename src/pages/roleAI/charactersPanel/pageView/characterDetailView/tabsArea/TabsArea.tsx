@@ -3,6 +3,7 @@ import classes from './TabsArea.module.scss'
 import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
+import { Textarea } from '@nextui-org/react'
 
 export default TabsArea
 

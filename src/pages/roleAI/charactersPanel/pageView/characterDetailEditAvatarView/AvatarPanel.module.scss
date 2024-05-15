@@ -44,6 +44,14 @@
           }
         }
 
+        .checkbox {
+          span {
+            &::after {
+              background-color: #000;
+            }
+          }
+        }
+
         .line {
           height: 0px;
           border: solid 0.5px rgba(60, 60, 60, 0.6);

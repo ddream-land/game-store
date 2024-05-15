@@ -11,5 +11,6 @@
   "img": "图片",
   "uploading": "上传中",
   "uploaded": "上传成功",
-  "loading": "加载中"
+  "loading": "加载中",
+  "cancel": "取消"
 }

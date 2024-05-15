@@ -6,15 +6,20 @@ import {
   CharacterAvatarTypeContents,
 } from '@/core/CharacterAvatar'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { Checkbox } from '@nextui-org/react'
 
 export default AvatarPanel
 
 function AvatarPanel({
   avatar,
+  checkMode,
+  onValueChange,
   onAddClicked,
   onSelectClicked,
 }: {
   avatar: CharacterAvatarTypeContents
+  checkMode?: boolean
+  onValueChange?: (id: string, isSelected: boolean) => void
   onAddClicked?: (type: CharacterAvatarType) => Promise<void>
   onSelectClicked?: (type: CharacterAvatarType, item: CharacterAvatar) => Promise<void>
 }) {
@@ -70,12 +75,24 @@ function AvatarPanel({
                 key={i}
                 className={`${classes.item}`}
               >
-                <div
-                  className={`${classes.name} ${
-                    isActive(avatar, item) ? classes.active : ''
-                  } px-4 py-2 truncate cursor-pointer`}
-                >
-                  {item.name}
+                <div className={`flex flex-row justify-between`}>
+                  <div
+                    className={`${classes.name} ${
+                      isActive(avatar, item) ? classes.active : ''
+                    } px-4 py-2 truncate cursor-pointer`}
+                  >
+                    {item.name}
+                  </div>
+                  {checkMode && (
+                    <Checkbox
+                      radius="sm"
+                      color="primary"
+                      onValueChange={(isSelected: boolean) => {
+                        onValueChange && onValueChange(item.id, isSelected)
+                      }}
+                      className={`${classes.checkbox}`}
+                    ></Checkbox>
+                  )}
                 </div>
                 <div className={`${classes.line} w-full`}></div>
               </div>

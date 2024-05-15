@@ -19,7 +19,7 @@ import {
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { isString } from '@/libs/isTypes'
-import { createLive2d, getAllLive2d } from '@/api/live2d/live2d'
+import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
 
 export default CharacterDetailEditAvatarView
 
@@ -29,6 +29,8 @@ function CharacterDetailEditAvatarView() {
   const { t: tCommon } = useTranslation('common')
   const live2dInputEl = useRef<HTMLInputElement>(null)
   const vrmInputEl = useRef<HTMLInputElement>(null)
+  const [editMode, setEditMode] = useState(false)
+  const [deleteIds, setDeleteIds] = useState<string[]>([])
 
   async function refreshList() {
     const res = await getAllLive2d()
@@ -110,6 +112,13 @@ function CharacterDetailEditAvatarView() {
       await refreshList()
     })()
   }, [])
+
+  useEffect(
+    function () {
+      setDeleteIds([])
+    },
+    [editMode]
+  )
 
   const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([])
 
@@ -195,6 +204,38 @@ function CharacterDetailEditAvatarView() {
     }
   }
 
+  async function onDeleteChecked(id: string, isSelected: boolean) {
+    if (isSelected) {
+      if (!deleteIds.includes(id)) {
+        setDeleteIds([...deleteIds, id])
+      }
+    } else {
+      setDeleteIds(deleteIds.filter((i) => i !== id))
+    }
+  }
+
+  async function onDelete() {
+    const id = toast.loading(tCommon('loading'))
+    try {
+      const len = deleteIds.length
+      for (let i = 0; i < len; i++) {
+        const id = deleteIds[i]
+        await deleteLive2d(id)
+      }
+      await refreshList()
+      toast.success(tCommon('opSuccess'), {
+        id: id,
+      })
+
+      setEditMode(false)
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
+        id: id,
+      })
+    }
+  }
+
   return (
     <div
       onWheel={(e) => e.stopPropagation()}
@@ -207,7 +248,34 @@ function CharacterDetailEditAvatarView() {
           onClick={back}
         ></BackButton>
 
-        <NormalButton className={`${classes.editBtn} absolute`} size={`small`}></NormalButton>
+        {!editMode && (
+          <NormalButton
+            onClick={() => {
+              setEditMode(true)
+            }}
+            className={`${classes.editBtn} absolute`}
+            size={`small`}
+          ></NormalButton>
+        )}
+
+        {editMode && (
+          <div className={`${classes.editMode} absolute flex flex-row `}>
+            <NormalButton
+              onClick={() => {
+                setEditMode(false)
+              }}
+              className={`${classes.cancel} `}
+              size={`small`}
+            >
+              {tCommon('cancel')}
+            </NormalButton>
+            <NormalButton
+              onClick={onDelete}
+              className={`${classes.delete} ml-4`}
+              size={`small`}
+            ></NormalButton>
+          </div>
+        )}
       </div>
 
       <div className={`${classes.container} px-4 pt-20 pb-8 flex-1 overflow-hidden`}>
@@ -216,15 +284,17 @@ function CharacterDetailEditAvatarView() {
         >
           {avatars
             .filter(function (avatar) {
-              return avatar.enable && avatar.contents && avatar.contents.length > 0
+              return avatar.enable
             })
             .map(function (avatar, index) {
               return (
                 <AvatarPanel
                   key={index}
                   avatar={avatar}
+                  checkMode={editMode}
                   onAddClicked={onAddClicked}
                   onSelectClicked={onSelectClicked}
+                  onValueChange={onDeleteChecked}
                 ></AvatarPanel>
               )
             })}
