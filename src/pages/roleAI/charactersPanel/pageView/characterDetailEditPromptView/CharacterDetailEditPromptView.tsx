@@ -1,4 +1,4 @@
-import { MouseEvent, WheelEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, MouseEvent, WheelEvent, useEffect, useRef, useState } from 'react'
 import classes from './CharacterDetailEditPromptView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
@@ -51,6 +51,39 @@ function CharacterDetailEditView() {
     }
   }
 
+  const pngInputEl = useRef<HTMLInputElement>(null)
+
+  async function pngImport(img: ChangeEvent<HTMLInputElement>) {
+    if (!pngInputEl.current || !pngInputEl.current.files) {
+      return
+    }
+
+    const id = toast.loading(tCommon('uploading'))
+    try {
+      const file = pngInputEl.current.files[0]
+
+      // const res = await createCard(file)
+      // if (res.code === 0) {
+      //   toast.success(tCommon('uploaded'), {
+      //     id: id,
+      //   })
+      //   await refreshCharacterCardInfoList()
+      // } else {
+      //   throw new Error(res.msg)
+      // }
+    } catch (err: any) {
+      const msg = err.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
+        id: id,
+      })
+    }
+
+    // try {
+    //   await localCreateCard(file)
+    // } catch {}
+    pngInputEl.current.value = ''
+  }
+
   return (
     <div className={`${classes.characterDetailEditPromptView} w-full h-full relative`}>
       <div
@@ -75,7 +108,19 @@ function CharacterDetailEditView() {
         {tCommon('save')}
       </NormalButton>
 
-      <NormalButton className={`${classes.upload} absolute`} size={`small`}></NormalButton>
+      <NormalButton
+        onClick={() => pngInputEl.current?.click()}
+        className={`${classes.upload} absolute`}
+        size={`small`}
+      ></NormalButton>
+      <input
+        ref={pngInputEl}
+        className="hidden"
+        type="file"
+        onChange={pngImport}
+        accept="image/png"
+        multiple={false}
+      />
     </div>
   )
 }

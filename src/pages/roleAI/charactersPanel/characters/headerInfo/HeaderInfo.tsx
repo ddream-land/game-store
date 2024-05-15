@@ -13,8 +13,6 @@ import { useTranslation } from 'react-i18next'
 import { createCard } from '@/api/characterCard/characterCard'
 import toast from 'react-hot-toast'
 import { isString } from '@/libs/isTypes'
-import OSS from 'ali-oss'
-import { uploadFile } from '@/api/oss/oss'
 
 export type HeaderInfoProps = Readonly<{}>
 export default HeaderInfo
@@ -80,8 +78,9 @@ function HeaderInfo({}: HeaderInfoProps) {
       } else {
         throw new Error(res.msg)
       }
-    } catch (err) {
-      toast.error(isString(err) ? err : tCommon('opFailed'), {
+    } catch (err: any) {
+      const msg = err.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
         id: id,
       })
     }
