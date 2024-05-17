@@ -9,11 +9,13 @@ import { useCurrentCharacterCardInfo } from '../context/CurrentCharacterCardInfo
 import { NuwaExtensionVersion } from '@/core/characterCard/NuwaCharacterCardExtensions'
 import { CharacterAvatarType } from '@/core/CharacterAvatar'
 
-type Live2dExtensionProps = Readonly<{}>
+type Live2dExtensionProps = Readonly<{
+  defaultModelUrl?: string
+}>
 
 export default Live2dExtension
 
-function Live2dExtension({}: Live2dExtensionProps) {
+function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { setLive2dExtensionManager } = useSetLive2dExtension()
   const { managerRef } = useLive2dExtension()
@@ -26,7 +28,7 @@ function Live2dExtension({}: Live2dExtensionProps) {
       }
       const manager = managerRef.current
 
-      let live2dUrl: string | undefined = undefined
+      let live2dUrl: string | undefined
 
       const nuwaAvatar = charaCardInfo?.card?.data?.extensions?.nuwa_avatar
       if (nuwaAvatar && !nuwaAvatar.disable) {
@@ -62,6 +64,7 @@ function Live2dExtension({}: Live2dExtensionProps) {
     }
 
     const manager = new Live2dExtensionManager(canvasRef.current)
+    defaultModelUrl && manager.addModel(defaultModelUrl)
     setLive2dExtensionManager(manager)
     //@ts-ignore
     window.lmn = manager

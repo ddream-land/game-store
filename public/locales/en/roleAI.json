@@ -16,5 +16,8 @@
   "newConversation": "New Conversation",
   "hideConversation": "Hide Conversation",
   "conversationWith": "Conversation with",
-  "digitalLives": "Digital lives"
+  "digitalLives": "Digital lives",
+  "live2dScale": "Scale",
+  "live2dOffsetX": "OffsetX",
+  "live2dOffsetY": "OffsetY"
 }

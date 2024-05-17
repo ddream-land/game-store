@@ -19,6 +19,14 @@ class Live2dExtensionManager {
     return Reflect.ownKeys(this.models) as ModelId[]
   }
 
+  public getModel(id: ModelId | undefined): Live2dExtensionModel<InternalModel> | undefined {
+    if (id && id in this.models) {
+      const model = this.models[id]
+      return model
+    }
+    return undefined
+  }
+
   constructor(canvas: HTMLCanvasElement) {
     this.pixiApp = new PixiApp(canvas)
   }
@@ -104,9 +112,7 @@ class Live2dExtensionManager {
 
     model.followCursor(followCursor)
 
-    model.position.x = 500
-
-    console.log(this.pixiApp.view.width, model.width)
+    model.position.x = (this.pixiApp.view.width - model.width) / 2
 
     // model.showFrames()
   }
@@ -145,6 +151,51 @@ class Live2dExtensionManager {
   public setDraggle(dragglable: boolean = true, ids?: ModelId[]) {
     this.filterUpdateModel(ids, function (model) {
       dragglable ? model.setDragglable() : model.removeDragglable()
+    })
+  }
+
+  public modelOffsetWidth(model: Live2dExtensionModel<InternalModel>) {
+    const viewW = this.pixiApp.view.width
+    return viewW - model.width
+  }
+
+  public modelOffsetHeight(model: Live2dExtensionModel<InternalModel>) {
+    const viewH = this.pixiApp.view.height
+    return viewH - model.height
+  }
+
+  public getOffsetXPercent(id: ModelId): number | undefined {
+    if (id in this.models) {
+      const model = this.models[id]
+      return (model.x / this.modelOffsetWidth(model)) * 100
+    }
+    return undefined
+  }
+
+  public setOffsetXPercent(offsetXPercent: number, ids?: ModelId[]) {
+    const offSetXPer = Math.max(Math.min(100, offsetXPercent), 0) / 100
+    const self = this
+
+    this.filterUpdateModel(ids, function (model) {
+      const xVal = self.modelOffsetWidth(model) * offSetXPer
+      model.x = xVal
+    })
+  }
+
+  public getOffsetYPercent(id: ModelId): number | undefined {
+    if (id in this.models) {
+      const model = this.models[id]
+      return (model.y / this.modelOffsetHeight(model)) * 100
+    }
+    return undefined
+  }
+
+  public setOffsetYPercent(offsetYPercent: number, ids?: ModelId[]) {
+    const offSetYPer = Math.max(Math.min(100, offsetYPercent), 0) / 100
+    const yVal = this.pixiApp.view.width * offSetYPer
+
+    this.filterUpdateModel(ids, function (model) {
+      model.y = yVal
     })
   }
 }
