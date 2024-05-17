@@ -56,12 +56,16 @@ export async function uploadLive2dZip(file: File): Promise<[string, string]> {
   }
 
   const base = `/nuwa/live2d/${newFilenameWithoutExt}`
-  const live2dJsonUrl = `${base}/${modelname}/${modelname}.model3.json`
+  let live2dJsonUrl = `${base}/${modelname}/${modelname}.model3.json`
 
   await sleep(1000)
 
   if (!(await isExist(live2dJsonUrl))) {
-    throw new Error(`Upload failed.`)
+    live2dJsonUrl = `${base}/${modelname}.model3.json`
+
+    if (!(await isExist(live2dJsonUrl))) {
+      throw new Error(`Upload failed.`)
+    }
   }
 
   return [modelname, `${token.resp.Endpoint}/${live2dJsonUrl}`]
