@@ -4,13 +4,14 @@ import CharacterList from './characterList/CharacterList'
 
 export type CharactersProps = Readonly<{
   characterSelected?: (id: string) => void
+  className?: string
 }>
 
 export default Characters
 
-function Characters({ characterSelected }: CharactersProps) {
+function Characters({ characterSelected, className }: CharactersProps) {
   return (
-    <div className={`${classes.characters} flex flex-col h-full w-full`}>
+    <div className={`${classes.characters} ${className ?? ''} flex flex-col h-full w-full`}>
       <div className="flex-none">
         <HeaderInfo></HeaderInfo>
       </div>

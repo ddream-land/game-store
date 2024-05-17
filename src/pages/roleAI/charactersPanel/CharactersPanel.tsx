@@ -33,11 +33,13 @@ function CharactersPanel() {
       onMouseLeave={mouseOutofPanel}
     >
       <div className={`${classes.page} ${classes['base-page']} w-full h-full`}>
-        {showLargePanel ? (
-          <Characters characterSelected={onCharaSelected}></Characters>
-        ) : (
-          <MinimizedOverview></MinimizedOverview>
-        )}
+        <Characters
+          className={`${showLargePanel ? 'block' : 'hidden'}`}
+          characterSelected={onCharaSelected}
+        ></Characters>
+
+        {!showLargePanel && <MinimizedOverview></MinimizedOverview>}
+
         <div className={`${showLockDialog ? '' : 'hidden'}`}>
           <LockPanelDialog
             lock={lockPanelForNotMinimize}
