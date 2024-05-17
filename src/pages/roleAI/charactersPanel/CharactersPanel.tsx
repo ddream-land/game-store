@@ -48,7 +48,9 @@ function CharactersPanel() {
         </div>
       </div>
 
-      {showLargePanel && <Outlet></Outlet>}
+      <div className={`${showLargePanel ? '' : 'hidden'}`}>
+        <Outlet></Outlet>
+      </div>
     </div>
   )
 }
