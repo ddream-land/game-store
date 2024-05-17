@@ -35,18 +35,18 @@ export async function getAllCards() {
   return stCardToCharacterCardInfo(res)
 }
 
-export async function deleteCard(avatar: string, deleteChats: boolean = true) {
+export async function deleteCard(id: string, deleteChats: boolean = true) {
   return await request<DtoBase>({
     url: `/api/characters/delete`,
     method: 'post',
     data: {
-      avatar_url: avatar,
+      id: id,
       delete_chats: deleteChats,
     },
   })
 }
 
-export async function exportCardPNG(avatar: string) {
+export async function exportCardPNG(id: string) {
   return await request<AxiosResponse<Blob, any>>({
     // url: `http://rewuai-foreign.oss-us-west-1.aliyuncs.com/role/6be48da9-5216-4e89-8a32-971199e5b81f.png`,
     // method: 'get',
@@ -54,18 +54,18 @@ export async function exportCardPNG(avatar: string) {
     method: 'post',
     responseType: 'blob',
     data: {
-      avatar_url: avatar,
+      id: id,
       format: 'png',
     },
   })
 }
 
-export async function exportCardJSON(avatar: string) {
+export async function exportCardJSON(id: string) {
   return await request<any>({
     url: `/api/characters/export`,
     method: 'post',
     data: {
-      avatar_url: avatar,
+      id: id,
       format: 'json',
     },
   })
@@ -99,7 +99,7 @@ export async function editCard(id: string, card: CharacterCardV2, avatar?: File)
   }
 
   const formData = new FormData()
-  formData.append('avatar_url', id)
+  formData.append('id', id)
   formData.append('character_version', card.data.character_version)
   formData.append('creator', card.data.creator)
   formData.append('creator_notes', card.data.creator_notes)

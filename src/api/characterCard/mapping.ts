@@ -4,7 +4,6 @@ import { isCharacterCard } from '@/core/characterCard/characterCard'
 import { CharacterCardVersion } from '@/core/characterCard/CharacterCardVersion'
 import { CharacterCardV2, v1Tov2 } from '@/core/characterCard/characterCardV2'
 import { CharacterCardV1 } from '@/core/characterCard/characterCardV1'
-import { avatarUrl } from './characterCard'
 
 export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCardInfo[] {
   const result: CharacterCardInfo[] = []
@@ -30,9 +29,10 @@ export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCar
 
     // const url = avatarUrl(stCard.avatar)
     const url = stCard.avatar
+    const id = stCard.id
 
     const charaCardInfo: CharacterCardInfo = {
-      id: url,
+      id: id,
       card: cardV2,
       pngUrlOrBase64: url,
     }

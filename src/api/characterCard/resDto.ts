@@ -5,6 +5,7 @@ export type STCard = CharacterCardV1AndV2 & {
   chat: string
   chat_size: number
   create_data: string
+  id: string
 }
 
 export type GetAllCardsRes = Record<string, STCard>
