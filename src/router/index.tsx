@@ -68,7 +68,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/vp-test',
+    path: '/vp-test/:modelname?',
     Component: OnlyLive2D,
   },
   {

@@ -126,8 +126,7 @@ class Live2dExtensionManager {
 
     model.position.x = (this.pixiApp.view.width - model.width) / 2
 
-    console.log(model.internalModel.settings);
-    
+    // console.log(model.internalModel.settings)
 
     // model.motion()
 
