@@ -6,12 +6,12 @@ import { Ticker } from '@pixi/ticker'
 
 BaseModel.registerTicker(Ticker)
 
-let uid = 0
+let uid = Date.now()
 
 class Live2dExtensionModel<IM extends InternalModel = InternalModel> extends BaseModel<IM> {
-  public id: ModelId = (uid++).toString()
+  public readonly id: ModelId = (uid++).toString()
 
-  public dragging: boolean = false
+  private dragging: boolean = false
 
   constructor() {
     super()

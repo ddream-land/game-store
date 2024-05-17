@@ -106,6 +106,8 @@ class Live2dExtensionManager {
 
     model.position.x = 500
 
+    console.log(this.pixiApp.view.width, model.width)
+
     // model.showFrames()
   }
 

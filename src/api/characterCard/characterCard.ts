@@ -75,7 +75,12 @@ export function avatarUrl(avatar: string) {
   return `https://st.nirvanaworld.cn/thumbnail?type=avatar&file=${avatar}`
 }
 
-export async function editCard(id: string, card: CharacterCardV2, avatar?: File) {
+export async function editCard(
+  id: string,
+  avatarUrl: string,
+  card: CharacterCardV2,
+  avatar?: File
+) {
   const cardData = {
     alternate_greetings: card.data.alternate_greetings,
     world: card.data.character_book,
@@ -100,6 +105,8 @@ export async function editCard(id: string, card: CharacterCardV2, avatar?: File)
 
   const formData = new FormData()
   formData.append('id', id)
+  formData.append('avatar_url', avatarUrl)
+
   formData.append('character_version', card.data.character_version)
   formData.append('creator', card.data.creator)
   formData.append('creator_notes', card.data.creator_notes)
