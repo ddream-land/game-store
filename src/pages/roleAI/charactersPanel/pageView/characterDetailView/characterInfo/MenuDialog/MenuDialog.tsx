@@ -33,13 +33,13 @@ function MenuDialog({
         {t('rename')}
       </div>
       <div className={`${classes.line} flex-none`}></div>
-      <div
+      {/* <div
         onClick={onLinkToWorldBookClicked}
         className={`${classes.btn} cursor-pointer flex-1 flex justify-center items-center`}
       >
         {t('linkToWorldBook')}
       </div>
-      <div className={`${classes.line} flex-none`}></div>
+      <div className={`${classes.line} flex-none`}></div> */}
       <div
         onClick={onExportClicked}
         className={`${classes.btn} cursor-pointer flex-1 flex justify-center items-center`}

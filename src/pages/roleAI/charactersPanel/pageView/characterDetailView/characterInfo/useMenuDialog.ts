@@ -23,7 +23,9 @@ export function useMenuDialog() {
     setMenuDialogOpened(false)
   }
 
-  async function renameClicked() {}
+  async function renameClicked() {
+    navigate('editName')
+  }
 
   async function linkToWorldBookClicked() {}
 

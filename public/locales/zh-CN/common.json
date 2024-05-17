@@ -12,5 +12,7 @@
   "uploading": "上传中",
   "uploaded": "上传成功",
   "loading": "加载中",
-  "cancel": "取消"
+  "cancel": "取消",
+  "description": "描述",
+  "optional": "选填"
 }

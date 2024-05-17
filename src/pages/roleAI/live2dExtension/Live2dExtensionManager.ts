@@ -129,7 +129,6 @@ class Live2dExtensionManager {
     // console.log(model.internalModel.settings)
 
     // model.motion()
-
     // model.showFrames()
   }
 

@@ -1,0 +1,82 @@
+.nameDescriptionSettingView {
+  .save {
+    top: 24px;
+    right: 24px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16.52px;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+
+  .charaImg {
+    height: 611px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .detail {
+    top: 300px;
+
+    .top {
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(8px);
+      height: 130px; // 90px + 40px
+      padding: 0 26px;
+
+      .name {
+        color: rgba(255, 255, 255, 1);
+        height: 36px;
+        box-sizing: content-box;
+        padding-top: 29px;
+
+        input {
+          font-family: Inter !important;
+          font-size: 30px !important;
+          font-weight: 800 !important;
+          line-height: 36px !important;
+        }
+      }
+
+      .editFlag {
+        margin-top: 29px;
+        width: 32px;
+        height: 32px;
+        background-image: url('/imgs/edit2.png');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+
+    .desc {
+      background-color: white;
+      border-radius: 40px;
+      margin-top: -40px;
+      padding: 20px 30px;
+
+      .title {
+      }
+      .line {
+        width: 100%;
+        height: 1px;
+        background: rgba(0, 0, 0, 1);
+        margin-top: 20px;
+      }
+      .content {
+        .textarea {
+          div {
+            height: 100% !important;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

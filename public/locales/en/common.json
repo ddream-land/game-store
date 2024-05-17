@@ -12,5 +12,7 @@
   "uploading": "Uploading",
   "uploaded": "Uploaded",
   "loading": "Loading",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "description": "Description",
+  "optional": "Optional"
 }

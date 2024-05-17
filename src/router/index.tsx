@@ -9,6 +9,7 @@ import CharacterDetailEditCoverView from '@/pages/roleAI/charactersPanel/pageVie
 
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 import AvatarLive2dSettingView from '@/pages/roleAI/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
+import NameDescriptionSettingView from '@/pages/roleAI/charactersPanel/pageView/NameDescriptionSettingView/NameDescriptionSettingView'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
                 element: (
                   <PageView>
                     <CharacterDetailEditPromptView></CharacterDetailEditPromptView>
+                  </PageView>
+                ),
+              },
+              {
+                path: '/:language/detail/editName',
+                element: (
+                  <PageView>
+                    <NameDescriptionSettingView></NameDescriptionSettingView>
                   </PageView>
                 ),
               },
