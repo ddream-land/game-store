@@ -18,12 +18,10 @@ function CharacterDetailEditView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
   const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
   const { t: tCommon } = useTranslation('common')
-
   const { back } = useNavigateBack()
-
   const tabsArea = useRef<TabsAreaRef | null>(null)
-
   const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
+  let avatarFile: File | undefined
 
   async function onSave() {
     const id = toast.loading(tCommon('loading'))
@@ -39,7 +37,7 @@ function CharacterDetailEditView() {
     }
 
     try {
-      await uploadCurrentCharacterCardInfo(newCard)
+      await uploadCurrentCharacterCardInfo(newCard, avatarFile)
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
@@ -57,30 +55,7 @@ function CharacterDetailEditView() {
     if (!pngInputEl.current || !pngInputEl.current.files) {
       return
     }
-
-    const id = toast.loading(tCommon('uploading'))
-    try {
-      const file = pngInputEl.current.files[0]
-
-      // const res = await createCard(file)
-      // if (res.code === 0) {
-      //   toast.success(tCommon('uploaded'), {
-      //     id: id,
-      //   })
-      //   await refreshCharacterCardInfoList()
-      // } else {
-      //   throw new Error(res.msg)
-      // }
-    } catch (err: any) {
-      const msg = err.message
-      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
-        id: id,
-      })
-    }
-
-    // try {
-    //   await localCreateCard(file)
-    // } catch {}
+    avatarFile = pngInputEl.current.files[0]
     pngInputEl.current.value = ''
   }
 

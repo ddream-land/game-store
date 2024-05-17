@@ -41,13 +41,13 @@ export function useCurrentCharacterCardInfo() {
     [charaCardInfo]
   )
 
-  async function uploadCurrentCharacterCardInfo(card: CharacterCardV2) {
+  async function uploadCurrentCharacterCardInfo(card: CharacterCardV2, avatar?: File) {
     const currentId = charaCardInfo?.id
     if (!currentId) {
       return
     }
 
-    const res = await editCard(currentId, card)
+    const res = await editCard(currentId, card, avatar)
     if (res.code === 0) {
       await refreshCharacterCardInfoList()
     } else {

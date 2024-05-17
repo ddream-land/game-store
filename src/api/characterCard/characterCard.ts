@@ -3,7 +3,6 @@ import { request, requestList } from '../request'
 import { stCardToCharacterCardInfo } from './mapping'
 import { GetAllCardsRes } from './resDto'
 import { DtoBase } from '../dtoBase'
-import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 
 export async function createCard(file: File) {
