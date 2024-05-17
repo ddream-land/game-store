@@ -1,13 +1,14 @@
 import * as PIXI from 'pixi.js'
 window.PIXI = PIXI
 import PixiApp from './PixiApp'
-import { InternalModel } from 'pixi-live2d-display'
+import { Cubism4ModelSettings, InternalModel, ModelSettings } from 'pixi-live2d-display'
 import { DEBUG_PREFIX, ModelId } from './constants'
 import Live2dExtensionModel from './Live2dExtensionModel'
 
 export type AddModelOption = {
   dragglable?: boolean
   followCursor?: boolean
+  autoInteract?: boolean
 }
 
 class Live2dExtensionManager {
@@ -17,6 +18,10 @@ class Live2dExtensionManager {
 
   public get modelIds(): ModelId[] {
     return Reflect.ownKeys(this.models) as ModelId[]
+  }
+
+  public get canvas(): HTMLCanvasElement {
+    return this.pixiApp.view
   }
 
   public getModel(id: ModelId | undefined): Live2dExtensionModel<InternalModel> | undefined {
@@ -29,6 +34,11 @@ class Live2dExtensionManager {
 
   constructor(canvas: HTMLCanvasElement) {
     this.pixiApp = new PixiApp(canvas)
+    document.addEventListener('pointermove', this.pointerMoveFocus.bind(this))
+  }
+
+  public destroy() {
+    document.removeEventListener('pointermove', this.pointerMoveFocus.bind(this))
   }
 
   public async addModel(modelPath: string, option?: AddModelOption) {
@@ -41,7 +51,7 @@ class Live2dExtensionManager {
     // model.st_character = character
     // model.st_model_path = model_path
     // model.is_dragged = false
-    console.debug(DEBUG_PREFIX, 'loaded', model)
+    // console.debug(DEBUG_PREFIX, 'loaded', model)
 
     this.initModelOption(model, option)
 
@@ -95,24 +105,31 @@ class Live2dExtensionManager {
   }
 
   private initModelOption(model: Live2dExtensionModel<InternalModel>, option?: AddModelOption) {
-    const DEFAULT_OPTION: AddModelOption = {
+    const DEFAULT_OPTION = {
       dragglable: true,
       followCursor: true,
+      autoInteract: false,
     }
 
-    const { dragglable, followCursor } = {
+    const { dragglable, followCursor, autoInteract } = {
       ...DEFAULT_OPTION,
       ...(option ?? {}),
     }
+
+    model.autoInteract = autoInteract
+    model.followCursor = followCursor
 
     // Scale to canvas
     model.scale.set(window.innerHeight / model.height)
 
     dragglable ? model.setDragglable() : model.removeDragglable()
 
-    model.followCursor(followCursor)
-
     model.position.x = (this.pixiApp.view.width - model.width) / 2
+
+    console.log(model.internalModel.settings);
+    
+
+    // model.motion()
 
     // model.showFrames()
   }
@@ -156,18 +173,13 @@ class Live2dExtensionManager {
 
   public modelOffsetWidth(model: Live2dExtensionModel<InternalModel>) {
     const viewW = this.pixiApp.view.width
-    return viewW - model.width
-  }
-
-  public modelOffsetHeight(model: Live2dExtensionModel<InternalModel>) {
-    const viewH = this.pixiApp.view.height
-    return viewH - model.height
+    return viewW + model.width
   }
 
   public getOffsetXPercent(id: ModelId): number | undefined {
     if (id in this.models) {
       const model = this.models[id]
-      return (model.x / this.modelOffsetWidth(model)) * 100
+      return ((model.x + model.width) / this.modelOffsetWidth(model)) * 100
     }
     return undefined
   }
@@ -178,25 +190,55 @@ class Live2dExtensionManager {
 
     this.filterUpdateModel(ids, function (model) {
       const xVal = self.modelOffsetWidth(model) * offSetXPer
-      model.x = xVal
+      model.x = xVal - model.width
     })
+  }
+
+  public modelOffsetHeight(model: Live2dExtensionModel<InternalModel>) {
+    const viewH = this.pixiApp.view.height
+    return viewH + model.height
   }
 
   public getOffsetYPercent(id: ModelId): number | undefined {
     if (id in this.models) {
       const model = this.models[id]
-      return (model.y / this.modelOffsetHeight(model)) * 100
+      return ((model.y + model.height) / this.modelOffsetHeight(model)) * 100
     }
     return undefined
   }
 
   public setOffsetYPercent(offsetYPercent: number, ids?: ModelId[]) {
     const offSetYPer = Math.max(Math.min(100, offsetYPercent), 0) / 100
-    const yVal = this.pixiApp.view.width * offSetYPer
+    const self = this
 
     this.filterUpdateModel(ids, function (model) {
-      model.y = yVal
+      const yVal = self.modelOffsetHeight(model) * offSetYPer
+      model.y = yVal - model.height
     })
+  }
+
+  private pointerMoveFocus(e: PointerEvent) {
+    // console.log(e.clientX, this, this.filterUpdateModel)
+    this.filterUpdateModel(undefined, function (model) {
+      if (model.followCursor) {
+        model.focus(e.clientX, e.clientY)
+      }
+    })
+  }
+
+  public getFollowCursor(id: ModelId): boolean | undefined {
+    if (id in this.models) {
+      const model = this.models[id]
+      return model.followCursor
+    }
+    return undefined
+  }
+
+  public setFollowCursor(id: ModelId | undefined, val: boolean): void {
+    if (id && id in this.models) {
+      const model = this.models[id]
+      model.followCursor = val
+    }
   }
 }
 

@@ -79,8 +79,13 @@ class Live2dExtensionModel<IM extends InternalModel = InternalModel> extends Bas
     this.addChild(hitAreaFrames)
   }
 
-  public followCursor(enable: boolean = true) {
-    this.autoInteract = enable
+  private _followCursor = false
+  public get followCursor(): boolean {
+    return this._followCursor
+  }
+
+  public set followCursor(val: boolean) {
+    this._followCursor = val
   }
 }
 

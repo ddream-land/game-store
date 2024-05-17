@@ -68,6 +68,10 @@ function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
     setLive2dExtensionManager(manager)
     //@ts-ignore
     window.lmn = manager
+
+    return function () {
+      managerRef.current && managerRef.current.destroy()
+    }
   }, [])
 
   return (

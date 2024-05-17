@@ -2,6 +2,7 @@ import { useNavigateBack } from '@/router/useNavigateBack'
 import classes from './AvatarLive2dSettingView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import ModelTransform from './ModelTransform/ModelTransform'
+import ModelConfig from './ModelConfig/ModelConfig'
 
 export default AvatarLive2dSettingView
 
@@ -20,8 +21,7 @@ function AvatarLive2dSettingView() {
 
       <div className={`${classes.content} w-full mt-14`}>
         <ModelTransform></ModelTransform>
-
-        <div className={`${classes.config} w-full`}></div>
+        <ModelConfig></ModelConfig>
       </div>
     </div>
   )

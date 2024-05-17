@@ -19,5 +19,8 @@
   "digitalLives": "Digital lives",
   "live2dScale": "Scale",
   "live2dOffsetX": "OffsetX",
-  "live2dOffsetY": "OffsetY"
+  "live2dOffsetY": "OffsetY",
+  "live2dFollowCursor": "Follow cursor",
+  "live2dLipSync": "Lip sync",
+  "live2dClickAnimation": "Click animation"
 }
