@@ -258,11 +258,7 @@ function CharacterDetailEditAvatarView() {
       className={`${classes.characterDetailEditAvatarView} w-full h-full relative pointer-events-auto flex flex-col`}
     >
       <div className={`${classes.op} flex-none`}>
-        <BackButton
-          color={`rgba(0,0,0,1)`}
-          bgColor={`rgba(255,255,255,1)`}
-          onClick={back}
-        ></BackButton>
+        <BackButton onClick={back}></BackButton>
 
         {!editMode && (
           <NormalButton

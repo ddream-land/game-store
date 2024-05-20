@@ -10,8 +10,8 @@ export type BackButtonProps = {
 
 export default function BackButton({ onClick, bgColor, color }: BackButtonProps) {
   const style: CSSProperties = {
-    backgroundColor: bgColor ?? 'rgba(255, 255, 255, 0.21)',
-    color: color ?? 'rgba(255,255,255,1)',
+    backgroundColor: bgColor ?? 'rgba(255,255,255,1)',
+    color: color ?? 'rgba(0,0,0,1)',
   }
 
   return (
