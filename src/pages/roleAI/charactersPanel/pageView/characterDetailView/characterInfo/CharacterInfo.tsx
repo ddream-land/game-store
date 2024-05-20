@@ -44,11 +44,11 @@ function CharacterInfo({
       <div className={`${classes.name} truncate max-w-72`}>{name}</div>
       <div className={`${classes.tags} overflow-hidden w-full flex flex-nowrap gap-2`}>
         {tags &&
-          tags.map(function (tag) {
+          tags.map(function (tag, index) {
             return (
-              <>
-                <span className="flex-none"> {`#${tag}`}</span>
-              </>
+              <span key={index} className="flex-none">
+                {`#${tag}`}
+              </span>
             )
           })}
       </div>

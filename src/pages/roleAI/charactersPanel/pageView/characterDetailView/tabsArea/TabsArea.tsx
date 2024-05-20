@@ -52,24 +52,10 @@ function TabsArea() {
     </Tabs>
   )
 
-  const tabsElement = tabs.map(function (tab, index) {
-    return (
-      <div
-        key={index}
-        onClick={() => setCurrentTabIndex(index)}
-        className={`${classes.tab} ${
-          index === currentTabIndex ? classes.current : ''
-        } cursor-pointer flex justify-end items-center`}
-      >
-        {tab.txt}
-      </div>
-    )
-  })
-
   function getContent() {
     const prop = tabs[currentTabIndex].prop
     const data = charaCardInfo?.card.data
-    let content = '无'
+    let content = ''
     if (data && isKey(data, prop)) {
       const val = data[prop]
       if (isString(val)) {
