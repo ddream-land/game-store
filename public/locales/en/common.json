@@ -15,5 +15,8 @@
   "cancel": "Cancel",
   "description": "Description",
   "optional": "Optional",
-  "tone": "Tone"
+  "tone": "Tone",
+  "on": "On",
+  "off": "Off",
+  "autoPlay": "Autoplay"
 }

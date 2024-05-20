@@ -45,7 +45,7 @@ function ModelConfig() {
         </div>
       </div>
 
-      <div className={`${classes.row} w-full flex flex-row mt-16 justify-between`}>
+      {/* <div className={`${classes.row} w-full flex flex-row mt-16 justify-between`}>
         <div className={`${classes.desc} flex-none`}>{t('live2dLipSync')}</div>
         <div className={`${classes.slider} flex-none px-4`}>
           <Switch
@@ -61,13 +61,13 @@ function ModelConfig() {
             }}
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className={`${classes.row} w-full flex flex-row mt-16 justify-between`}>
+      {/* <div className={`${classes.row} w-full flex flex-row mt-16 justify-between`}>
         <div className={`${classes.desc} flex-none`}>{t('live2dClickAnimation')}</div>
 
         <div className={`${classes.slider} flex-none px-4`}>
-          {/* <Slider
+          <Slider
             size="sm"
             step={1}
             maxValue={100}
@@ -81,9 +81,9 @@ function ModelConfig() {
               thumb: 'bg-transparent',
             }}
             onChange={offsetYChange}
-          /> */}
+          />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

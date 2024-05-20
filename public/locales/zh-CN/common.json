@@ -15,5 +15,8 @@
   "cancel": "取消",
   "description": "描述",
   "optional": "选填",
-  "tone": "音色"
+  "tone": "音色",
+  "on": "开",
+  "off": "关",
+  "autoPlay": "自动播放"
 }
