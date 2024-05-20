@@ -4,7 +4,7 @@ import { useCurrentCharacterCardInfo } from './context/CurrentCharacterCardInfoC
 import { useLive2dExtension } from './context/Live2dExtensionContextProvider'
 import { NuwaExtensionVersion } from '@/core/characterCard/NuwaCharacterCardExtensions'
 
-const DEFAULT_MAIN_BG = '/bg.png'
+const DEFAULT_MAIN_BG = '/default-bg.jpg'
 
 export default function Main({ children }: { children: ReactNode }) {
   const [mainBgUrl, setMainBgUrl] = useState(DEFAULT_MAIN_BG)
