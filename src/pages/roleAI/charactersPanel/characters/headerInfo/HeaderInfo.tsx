@@ -61,8 +61,6 @@ function HeaderInfo({}: HeaderInfoProps) {
   }
 
   async function pngImport(img: ChangeEvent<HTMLInputElement>) {
-    console.log('---receice file', pngInputEl.current, pngInputEl.current?.files)
-
     if (!pngInputEl.current || !pngInputEl.current.files) {
       return
     }

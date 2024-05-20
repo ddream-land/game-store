@@ -17,9 +17,19 @@
     line-height: 36px;
   }
 
+  .tags {
+    height: 16px;
+    margin-top: 10px;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0.01em;
+  }
+
   .desc {
     height: 60px;
-    margin-top: 18px;
+    margin-top: 10px;
     font-family: Inter;
     font-size: 12px;
     font-weight: 700;
@@ -28,7 +38,7 @@
   }
 
   .op {
-    margin-top: 25px;
+    margin-top: 10px;
 
     .btn {
       background: rgba(0, 0, 0, 0.43) !important;

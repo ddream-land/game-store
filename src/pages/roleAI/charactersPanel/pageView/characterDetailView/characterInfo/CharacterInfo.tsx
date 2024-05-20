@@ -1,11 +1,11 @@
 import classes from './CharacterInfo.module.scss'
 import { useMenuDialog } from './useMenuDialog'
 import MenuDialog from './MenuDialog/MenuDialog'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 import MenuButton from '@/components/menuButton/MenuButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { MouseEventHandler } from 'react'
+import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
 
 export default CharacterInfo
 
@@ -22,16 +22,13 @@ function CharacterInfo({
   editToneClicked,
   editPromptClicked,
 }: CharacterInfoProps) {
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
-  if (!charaCardInfo) {
-    throw new Error(`Runtime error.`)
-  }
-
+  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')
 
   const name = charaCardInfo.card.data.name
-  const desc = charaCardInfo.card.data.description
+  const creatorNotes = charaCardInfo.card.data.creator_notes
+  const tags = charaCardInfo.card.data.tags
 
   const {
     menuDialogOpened,
@@ -45,7 +42,17 @@ function CharacterInfo({
   return (
     <div className={`${classes.characterInfo} w-full h-full relative`}>
       <div className={`${classes.name} truncate max-w-72`}>{name}</div>
-      <div className={`${classes.desc} text-ellipsis overflow-hidden`}>{desc}</div>
+      <div className={`${classes.tags} overflow-hidden w-full flex flex-nowrap gap-2`}>
+        {tags &&
+          tags.map(function (tag) {
+            return (
+              <>
+                <span className="flex-none"> {`#${tag}`}</span>
+              </>
+            )
+          })}
+      </div>
+      <div className={`${classes.desc} text-ellipsis overflow-hidden`}>{creatorNotes}</div>
       <div className={`${classes.op} flex flex-row gap-5`}>
         <NormalButton className={`${classes.btn}`} onClick={editCoverClicked}>
           {tCommon('edit')}

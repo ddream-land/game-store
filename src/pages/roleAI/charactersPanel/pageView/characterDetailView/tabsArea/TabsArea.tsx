@@ -1,28 +1,57 @@
-import { useState } from 'react'
+import { Key, useRef, useState, WheelEvent } from 'react'
 import classes from './TabsArea.module.scss'
 import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
-import { Textarea } from '@nextui-org/react'
+import { Tab, Tabs, Textarea, cn } from '@nextui-org/react'
+import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
 
 export default TabsArea
 
 function TabsArea() {
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
-  if (!charaCardInfo) {
-    throw new Error(`Runtime error.`)
-  }
-
+  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
   const { t } = useTranslation('roleAI')
+
+  charaCardInfo.card.data.scenario
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
   const [tabs] = useState([
-    { prop: 'creator_notes', txt: t('creatorNote') },
+    { prop: 'description', txt: t('description') },
     { prop: 'personality', txt: t('personality') },
-    { prop: 'description', txt: t('basicInfo') },
     { prop: 'first_mes', txt: t('greetingMsg') },
-    { prop: 'tags', txt: t('tags') },
+    { prop: 'mes_example', txt: t('msgExample') },
+    { prop: 'scenario', txt: t('scenario') },
+    // { prop: 'tags', txt: t('tags') },
+    // { prop: 'creator_notes', txt: t('creatorNote') }, only edit use
   ])
+
+  const tabsEl = (
+    <Tabs
+      onSelectionChange={(index: Key) => setCurrentTabIndex(index as number)}
+      aria-label="Tabs"
+      radius="full"
+      className=""
+      classNames={{
+        tabList: 'bg-transparent',
+        tab: 'h-10 px-3 text-xs font-medium',
+        tabContent: cn(
+          'group-data-[selected=true]:text-[#000]',
+          'group-data-[selected=true]:text-sm',
+          'group-data-[selected=true]:font-semibold'
+        ),
+        cursor: cn(
+          'group-data-[selected=true]:border-solid',
+          'group-data-[selected=true]:border-black',
+          'group-data-[selected=true]:border',
+          'group-data-[selected=true]:shadow-none'
+        ),
+      }}
+    >
+      {tabs.map(function (tab, index) {
+        return <Tab key={index} title={tab.txt} />
+      })}
+    </Tabs>
+  )
+
   const tabsElement = tabs.map(function (tab, index) {
     return (
       <div
@@ -48,18 +77,36 @@ function TabsArea() {
       } else if (isNumber(val)) {
         content = val.toString()
       } else if (isArray(val)) {
-        content = val.join(' ')
+        content = val.join(',')
       }
     }
     return content
+  }
+
+  const scrollContainer = useRef<HTMLDivElement>(null)
+  function tabsScroll(e: WheelEvent<HTMLDivElement>) {
+    e.stopPropagation()
+
+    if (!scrollContainer.current) {
+      return
+    }
+    if (e.deltaY > 0) {
+      scrollContainer.current.scrollLeft += 50
+    } else {
+      scrollContainer.current.scrollLeft -= 50
+    }
   }
 
   return (
     <div
       className={`${classes.tabsArea} w-full h-full box-border flex flex-col justify-center items-center`}
     >
-      <div className={`${classes.tabs} w-full flex flex-row justify-between flex-none`}>
-        {tabsElement}
+      <div
+        ref={scrollContainer}
+        onWheel={tabsScroll}
+        className={`${classes.tabs} w-full flex flex-row justify-between flex-none overflow-y-auto no-scrollbar`}
+      >
+        {tabsEl}
       </div>
       <div className={`${classes.line} flex-none`}></div>
       <div className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}>
