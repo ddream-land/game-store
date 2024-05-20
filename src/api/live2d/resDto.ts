@@ -1,5 +1,4 @@
-export type BackgroundInfo = {
-  _id: string
+export type Live2dInfo = {
   id: string
   name: string
   status: number

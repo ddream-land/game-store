@@ -1,6 +1,7 @@
-import { DtoBase, RespDto } from '../dtoBase'
+import { DtoBase, DataDto } from '../dtoBase'
 import { uploadLive2dZip } from '../oss/oss'
 import { request, requestList } from '../request'
+import { Live2dInfo } from './resDto'
 
 export async function createLive2d(file: File) {
   const [name, url] = await uploadLive2dZip(file)
@@ -17,17 +18,7 @@ export async function createLive2d(file: File) {
 }
 
 export async function getAllLive2d() {
-  const res = await request<
-    RespDto<
-      {
-        id: string
-        name: string
-        status: number
-        uid: string
-        url: string
-      }[]
-    >
-  >({
+  const res = await request<DataDto<Live2dInfo[]>>({
     url: `/api/live2d/all`,
     method: 'POST',
   })

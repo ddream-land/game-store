@@ -1,11 +1,11 @@
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
-import { GetAllCardsRes } from './resDto'
+import { GetAllCardsData } from './resDto'
 import { isCharacterCard } from '@/core/characterCard/characterCard'
 import { CharacterCardVersion } from '@/core/characterCard/CharacterCardVersion'
 import { CharacterCardV2, v1Tov2 } from '@/core/characterCard/characterCardV2'
 import { CharacterCardV1 } from '@/core/characterCard/characterCardV1'
 
-export function stCardToCharacterCardInfo(stCards: GetAllCardsRes): CharacterCardInfo[] {
+export function stCardToCharacterCardInfo(stCards: GetAllCardsData): CharacterCardInfo[] {
   const result: CharacterCardInfo[] = []
 
   const indexes = Reflect.ownKeys(stCards) as string[]

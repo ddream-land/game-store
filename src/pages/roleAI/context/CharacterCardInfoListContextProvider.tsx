@@ -2,7 +2,6 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { useLocalStorage } from '@/libs/useLocalStorage'
 import { getAllCards } from '@/api/characterCard/characterCard'
-import { GetAllCardsRes } from '@/api/characterCard/resDto'
 
 export const LOCAL_STORAGE_CARD_KEY = 'files'
 

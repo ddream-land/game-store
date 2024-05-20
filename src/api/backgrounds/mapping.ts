@@ -1,11 +1,9 @@
 import { Background } from '@/core/Background'
-import { backgroundUrl } from './backgrounds'
-import { AllBgResDto } from './resDto'
+import { BackgroundInfo } from './resDto'
 
-export function backgroundMapping(bgsRes: AllBgResDto): Background[] {
+export function backgroundMapping(bgs: BackgroundInfo[]): Background[] {
   const result: Background[] = []
 
-  const bgs = bgsRes.resp
   const len = bgs.length
 
   for (let i = 0; i < len; i++) {

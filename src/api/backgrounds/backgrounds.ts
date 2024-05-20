@@ -1,13 +1,13 @@
 import { request, requestList } from '../request'
 import { backgroundMapping } from './mapping'
-import { AllBgResDto, UploadBgResDto } from './resDto'
-import { DtoBase } from '../dtoBase'
+import { BackgroundInfo } from './resDto'
+import { DataDto, DtoBase } from '../dtoBase'
 
 export async function uploadBackground(file: File) {
   const formData = new FormData()
   formData.append('avatar', file)
 
-  return await request<UploadBgResDto>({
+  return await request<DtoBase>({
     url: `/api/backgrounds/upload`,
     method: 'post',
     data: formData,
@@ -16,7 +16,7 @@ export async function uploadBackground(file: File) {
 }
 
 export async function getAllBackgrounds() {
-  const res = await request<AllBgResDto>({
+  const res = await request<DataDto<BackgroundInfo[]>>({
     url: `/api/backgrounds/all`,
     headers: {
       Accept: '*/*',
@@ -28,7 +28,7 @@ export async function getAllBackgrounds() {
     }),
   })
 
-  return backgroundMapping(res)
+  return backgroundMapping(res.data)
 }
 
 export async function deleteBackground(id: string) {

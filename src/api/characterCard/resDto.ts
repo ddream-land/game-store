@@ -8,4 +8,4 @@ export type STCard = CharacterCardV1AndV2 & {
   id: string
 }
 
-export type GetAllCardsRes = Record<string, STCard>
+export type GetAllCardsData = Record<string, STCard>

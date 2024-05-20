@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios'
 import { request, requestList } from '../request'
 import { stCardToCharacterCardInfo } from './mapping'
-import { GetAllCardsRes } from './resDto'
-import { DtoBase } from '../dtoBase'
+import { GetAllCardsData } from './resDto'
+import { DataDto, DtoBase } from '../dtoBase'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 
 export async function createCard(file: File) {
@@ -20,7 +20,7 @@ export async function createCard(file: File) {
 }
 
 export async function getAllCards() {
-  const res = await request<GetAllCardsRes>({
+  const res = await request<DataDto<GetAllCardsData>>({
     url: `/api/characters/all`,
     headers: {
       Accept: '*/*',
@@ -32,7 +32,7 @@ export async function getAllCards() {
     }),
   })
 
-  return stCardToCharacterCardInfo(res)
+  return stCardToCharacterCardInfo(res.data)
 }
 
 export async function deleteCard(id: string, deleteChats: boolean = true) {

@@ -42,11 +42,11 @@ function CharacterDetailEditAvatarView() {
       type: CharacterAvatarType.Live2D,
       typeName: 'Live2D',
       enable: true,
-      contents: (res.resp ?? []).map(function (item) {
+      contents: (res.data ?? []).map(function (live2dInfo) {
         return {
-          id: item.id,
-          name: item.name,
-          url: item.url,
+          id: live2dInfo.id,
+          name: live2dInfo.name,
+          url: live2dInfo.url,
         }
       }),
     }

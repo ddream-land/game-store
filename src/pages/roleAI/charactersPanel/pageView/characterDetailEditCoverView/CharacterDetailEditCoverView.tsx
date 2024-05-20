@@ -50,12 +50,11 @@ function CharacterDetailEditCoverView() {
           id: id,
         })
       } else {
-        toast.error(res.msg, {
-          id: id,
-        })
+        throw new Error(res.msg)
       }
-    } catch (err) {
-      toast.error(tCommon('opFailed'), {
+    } catch (err: any) {
+      const msg = err.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
         id: id,
       })
     }
