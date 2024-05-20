@@ -11,7 +11,3 @@ export interface ListDto<T = any> extends DtoBase {
   total: number
   rows: T[]
 }
-
-export interface RespDto<T = any> extends DtoBase {
-  resp: T
-}
