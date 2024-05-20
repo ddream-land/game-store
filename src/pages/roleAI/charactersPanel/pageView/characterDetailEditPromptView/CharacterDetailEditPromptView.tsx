@@ -60,7 +60,10 @@ function CharacterDetailEditView() {
   }
 
   return (
-    <div className={`${classes.characterDetailEditPromptView} w-full h-full relative`}>
+    <div
+      onWheel={(e) => e.stopPropagation()}
+      className={`${classes.characterDetailEditPromptView} w-full h-full relative`}
+    >
       <div
         className={`${classes.charaImg} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
