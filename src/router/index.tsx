@@ -6,7 +6,7 @@ import CharacterDetailView from '@/pages/roleAI/charactersPanel/pageView/charact
 import CharacterDetailEditPromptView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditPromptView/CharacterDetailEditPromptView'
 import CharacterDetailEditAvatarView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditAvatarView/CharacterDetailEditAvatarView'
 import CharacterDetailEditCoverView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditCoverView/CharacterDetailEditCoverView'
-
+import CharacterDetailEditToneView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditToneView/CharacterDetailEditToneView'
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 import AvatarLive2dSettingView from '@/pages/roleAI/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
 import NameDescriptionSettingView from '@/pages/roleAI/charactersPanel/pageView/NameDescriptionSettingView/NameDescriptionSettingView'
@@ -41,6 +41,14 @@ const router = createBrowserRouter([
                 element: (
                   <PageView>
                     <NameDescriptionSettingView></NameDescriptionSettingView>
+                  </PageView>
+                ),
+              },
+              {
+                path: '/:language/detail/editTone',
+                element: (
+                  <PageView>
+                    <CharacterDetailEditToneView></CharacterDetailEditToneView>
                   </PageView>
                 ),
               },

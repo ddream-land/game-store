@@ -41,6 +41,10 @@ function CharacterDetailView() {
     navigate(`editCover`)
   }
 
+  function editToneClicked() {
+    navigate(`editTone`)
+  }
+
   function wheel(e: WheelEvent<HTMLDivElement>) {
     if (e.deltaY > 0) {
       setFullDetail(true)
@@ -71,6 +75,7 @@ function CharacterDetailView() {
             editCoverClicked={editCoverClicked}
             editPromptClicked={editPromptClicked}
             editAvatarClicked={editAvatartClicked}
+            editToneClicked={editToneClicked}
           ></CharacterInfo>
         </div>
         <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>

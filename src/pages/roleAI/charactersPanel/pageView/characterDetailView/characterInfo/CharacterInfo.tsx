@@ -12,12 +12,14 @@ export default CharacterInfo
 export type CharacterInfoProps = Readonly<{
   editCoverClicked?: MouseEventHandler
   editAvatarClicked?: MouseEventHandler
+  editToneClicked?: MouseEventHandler
   editPromptClicked?: MouseEventHandler
 }>
 
 function CharacterInfo({
   editCoverClicked,
   editAvatarClicked,
+  editToneClicked,
   editPromptClicked,
 }: CharacterInfoProps) {
   const { charaCardInfo } = useCurrentCharacterCardInfo()
@@ -50,11 +52,19 @@ function CharacterInfo({
           <br></br>
           {t('cover')}
         </NormalButton>
+
         <NormalButton className={`${classes.btn}`} onClick={editAvatarClicked}>
           {tCommon('edit')}
           <br></br>
           {t('avatar')}
         </NormalButton>
+
+        <NormalButton className={`${classes.btn}`} onClick={editToneClicked}>
+          {tCommon('edit')}
+          <br></br>
+          {tCommon('tone')}
+        </NormalButton>
+
         <NormalButton className={`${classes.btn}`} onClick={editPromptClicked}>
           {tCommon('edit')}
           <br></br>

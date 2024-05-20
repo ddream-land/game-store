@@ -14,5 +14,6 @@
   "loading": "加载中",
   "cancel": "取消",
   "description": "描述",
-  "optional": "选填"
+  "optional": "选填",
+  "tone": "音色"
 }

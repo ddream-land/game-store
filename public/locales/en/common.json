@@ -14,5 +14,6 @@
   "loading": "Loading",
   "cancel": "Cancel",
   "description": "Description",
-  "optional": "Optional"
+  "optional": "Optional",
+  "tone": "Tone"
 }
