@@ -24,5 +24,6 @@
   "live2dOffsetY": "OffsetY",
   "live2dFollowCursor": "Follow cursor",
   "live2dLipSync": "Lip sync",
-  "live2dClickAnimation": "Click animation"
+  "live2dClickAnimation": "Click animation",
+  "newTagTxt": "Tag"
 }
