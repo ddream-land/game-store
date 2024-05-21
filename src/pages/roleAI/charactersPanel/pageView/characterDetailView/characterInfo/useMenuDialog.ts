@@ -1,4 +1,5 @@
 import { deleteCard, exportCardPNG } from '@/api/characterCard/characterCard'
+import { isString } from '@/libs/isTypes'
 import { saveBlob } from '@/libs/saveBlob'
 import { useSetCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
@@ -39,11 +40,18 @@ export function useMenuDialog() {
       return
     }
 
+    const id = toast.loading(tCommon('loading'))
     try {
       const res = await exportCardPNG(charaCardInfo.id)
+
+      toast.dismiss(id)
+
       saveBlob(res.data, `${charaCardInfo.card.data.name}.png`)
-    } catch {
-      toast.error(tCommon('opFailed'))
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
+        id: id,
+      })
     }
   }
 
