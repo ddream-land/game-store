@@ -24,12 +24,17 @@ export function useMenuDialog() {
   }
 
   async function renameClicked() {
+    setMenuDialogOpened(false)
     navigate('editName')
   }
 
-  async function linkToWorldBookClicked() {}
+  async function linkToWorldBookClicked() {
+    setMenuDialogOpened(false)
+  }
 
   async function exportClicked() {
+    setMenuDialogOpened(false)
+
     if (!charaCardInfo) {
       return
     }
@@ -43,6 +48,8 @@ export function useMenuDialog() {
   }
 
   async function deleteClicked() {
+    setMenuDialogOpened(false)
+
     if (!charaCardInfo) {
       return
     }
