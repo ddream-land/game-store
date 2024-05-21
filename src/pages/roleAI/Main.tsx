@@ -31,7 +31,7 @@ export default function Main({ children }: { children: ReactNode }) {
       }
 
       if (bgUrl !== mainBgUrl) {
-        setMainBgUrl(bgUrl)
+        setMainBgUrl(`${bgUrl}/w2048`)
       }
     },
     [charaCardInfo]

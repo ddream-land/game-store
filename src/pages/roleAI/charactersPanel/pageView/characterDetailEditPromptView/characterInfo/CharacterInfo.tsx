@@ -1,14 +1,11 @@
 import classes from './CharacterInfo.module.scss'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
+import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
 
 export default CharacterInfo
 
 function CharacterInfo() {
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
-  if (!charaCardInfo) {
-    throw new Error(`Runtime error.`)
-  }
+  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
 
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')

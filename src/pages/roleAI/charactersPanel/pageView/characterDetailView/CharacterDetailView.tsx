@@ -23,7 +23,9 @@ function CharacterDetailView() {
     return
   }
 
-  const avatarUrl = `${charaCardInfo.pngUrlOrBase64}` ?? '/imgs/default-avatar3.png'
+  const avatarUrl = charaCardInfo.pngUrlOrBase64
+    ? `${charaCardInfo.pngUrlOrBase64}/w512`
+    : '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
 

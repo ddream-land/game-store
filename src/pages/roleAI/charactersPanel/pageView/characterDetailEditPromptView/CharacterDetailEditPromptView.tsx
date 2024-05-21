@@ -20,7 +20,9 @@ function CharacterDetailEditView() {
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const tabsArea = useRef<TabsAreaRef | null>(null)
-  const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
+  const avatarUrl = charaCardInfo.pngUrlOrBase64
+    ? `${charaCardInfo.pngUrlOrBase64}/w512`
+    : '/imgs/default-avatar3.png'
   let avatarFile: File | undefined
 
   async function onSave() {
