@@ -1,25 +1,26 @@
 import OSS from 'ali-oss'
 import { request } from '../request'
-import { OssTokenDto } from './resDto'
+import { OssTokenData } from './resDto'
 import generateId from '@/core/generateId'
 import { sleep } from '@/libs/sleep'
+import { DataDto } from '../dtoBase'
 
 export async function ossToken() {
-  return await request<OssTokenDto>({
+  return await request<DataDto<OssTokenData>>({
     url: `/api/sts/get`,
     method: 'post',
   })
 }
 
-export async function prepearOssClient(): Promise<[OSS, OssTokenDto]> {
+export async function prepearOssClient(): Promise<[OSS, DataDto<OssTokenData>]> {
   const token = await ossToken()
 
   const client = new OSS({
-    region: token.resp.Region,
-    accessKeyId: token.resp.Credentials.AccessKeyId,
-    accessKeySecret: token.resp.Credentials.AccessKeySecret,
-    stsToken: token.resp.Credentials.SecurityToken,
-    bucket: token.resp.Bucket,
+    region: token.data.Region,
+    accessKeyId: token.data.Credentials.AccessKeyId,
+    accessKeySecret: token.data.Credentials.AccessKeySecret,
+    stsToken: token.data.Credentials.SecurityToken,
+    bucket: token.data.Bucket,
     secure: true,
   })
 
@@ -68,5 +69,5 @@ export async function uploadLive2dZip(file: File): Promise<[string, string]> {
     }
   }
 
-  return [modelname, `${token.resp.Endpoint}/${live2dJsonUrl}`]
+  return [modelname, `${token.data.Endpoint}/${live2dJsonUrl}`]
 }

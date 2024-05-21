@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import classes from './NameDescriptionSettingView.module.scss'
+import { useEffect, useRef, useState } from 'react'
+import classes from './CharacterNameSettingView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
@@ -10,15 +10,20 @@ import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import { cloneDeep } from 'lodash'
-import { Input, Textarea, cn } from '@nextui-org/react'
+import { Input, cn } from '@nextui-org/react'
 
-export default NameDescriptionSettingView
+export default CharacterNameSettingView
 
-function NameDescriptionSettingView() {
+function CharacterNameSettingView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
   const [currentCharaCardData, setCurrentCharaCardData] = useState(
     cloneDeep(charaCardInfo.card.data)
   )
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(function () {
+    inputRef.current && inputRef.current.focus()
+  }, [])
 
   const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
   const { t: tCommon } = useTranslation('common')
@@ -30,13 +35,6 @@ function NameDescriptionSettingView() {
     setCurrentCharaCardData({
       ...currentCharaCardData,
       name: val,
-    })
-  }
-
-  async function onDescChange(val: string) {
-    setCurrentCharaCardData({
-      ...currentCharaCardData,
-      description: val,
     })
   }
 
@@ -65,7 +63,7 @@ function NameDescriptionSettingView() {
   }
 
   return (
-    <div className={`${classes.nameDescriptionSettingView} w-full h-full relative`}>
+    <div className={`${classes.characterNameSettingView} w-full h-full relative bg-white`}>
       <div
         className={`${classes.charaImg} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
@@ -74,9 +72,10 @@ function NameDescriptionSettingView() {
       ></div>
 
       <div className={`${classes.detail}  absolute bottom-0 w-full flex flex-col`}>
-        <div className={`${classes.top} flex flex-row justify-between`}>
+        <div className={`${classes.top} h-full flex flex-row justify-between`}>
           <div className={`${classes.name} flex-none z-0`}>
             <Input
+              ref={inputRef}
               value={currentCharaCardData.name}
               onValueChange={onNameChange}
               className="max-w-xs"
@@ -108,24 +107,6 @@ function NameDescriptionSettingView() {
             />
           </div>
           <div className={`${classes.editFlag}`}></div>
-        </div>
-
-        <div className={`${classes.desc} flex-1 z-0 overflow-hidden flex flex-col`}>
-          <div className={`${classes.title} flex-none`}>{`${tCommon('description')}(${tCommon(
-            'optional'
-          )})`}</div>
-          <div className={`${classes.line} flex-none`}></div>
-          <div className={`${classes.content} flex-1`}>
-            <Textarea
-              value={currentCharaCardData.description}
-              onValueChange={onDescChange}
-              disableAutosize={true}
-              className={`${classes.textarea} h-full w-full`}
-              classNames={{
-                input: 'scrollbar-override',
-              }}
-            />
-          </div>
         </div>
       </div>
 

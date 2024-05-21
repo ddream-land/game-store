@@ -9,7 +9,7 @@ import CharacterDetailEditCoverView from '@/pages/roleAI/charactersPanel/pageVie
 import CharacterDetailEditToneView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditToneView/CharacterDetailEditToneView'
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 import AvatarLive2dSettingView from '@/pages/roleAI/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
-import NameDescriptionSettingView from '@/pages/roleAI/charactersPanel/pageView/NameDescriptionSettingView/NameDescriptionSettingView'
+import CharacterNameSettingView from '@/pages/roleAI/charactersPanel/pageView/characterNameSettingView/CharacterNameSettingView'
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
                 path: '/:language/detail/editName',
                 element: (
                   <PageView>
-                    <NameDescriptionSettingView></NameDescriptionSettingView>
+                    <CharacterNameSettingView></CharacterNameSettingView>
                   </PageView>
                 ),
               },
