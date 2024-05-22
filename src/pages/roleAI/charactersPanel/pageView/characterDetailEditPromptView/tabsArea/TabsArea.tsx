@@ -132,6 +132,7 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
             className={`${classes.textarea} h-full w-full`}
             classNames={{
               input: 'scrollbar-override',
+              inputWrapper: 'p-0',
             }}
           />
         )
@@ -144,6 +145,7 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
             className={`${classes.textarea} h-full w-full`}
             classNames={{
               input: 'scrollbar-override',
+              inputWrapper: 'p-0',
             }}
           />
         )

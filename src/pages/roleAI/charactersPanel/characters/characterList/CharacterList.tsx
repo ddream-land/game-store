@@ -25,7 +25,7 @@ function CharacterList({ characterSelected }: CharacterListProps) {
     // max length is 3
     const tagsElements = (tags ?? []).slice(0, 3).map(function (tag, index) {
       return (
-        <div key={tag} className={`${classes.tag} flex-1 truncate`}>
+        <div key={index} className={`${classes.tag} flex-1 truncate`}>
           {tag}
         </div>
       )
