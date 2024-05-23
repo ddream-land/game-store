@@ -1,7 +1,7 @@
 import { EventSourceMessage, fetchEventSource } from '@microsoft/fetch-event-source'
 import { HTTP_TIMEOUT } from '@/constant/env'
 
-enum ClaudeStreamingMessageEventType {
+export enum ClaudeStreamingMessageEventType {
   Start = 'message_start',
   Delta = 'message_delta',
   Stop = 'message_stop',
@@ -40,8 +40,6 @@ export async function requestStream(
       onOpen && (await onOpen(response))
     },
     onmessage(eventSourceMsg) {
-      console.log(eventSourceMsg)
-
       switch (eventSourceMsg.event) {
         case ClaudeStreamingMessageEventType.Stop: {
           onEnd && onEnd()

@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import Live2dExtensionModel from './Live2dExtensionModel'
 
 class PixiApp extends PIXI.Application {
   constructor(canvas: HTMLCanvasElement) {

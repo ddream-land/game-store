@@ -4,12 +4,7 @@ import PixiApp from './PixiApp'
 import { Cubism4ModelSettings, InternalModel, ModelSettings } from 'pixi-live2d-display'
 import { DEBUG_PREFIX, ModelId } from './constants'
 import Live2dExtensionModel from './Live2dExtensionModel'
-
-export type AddModelOption = {
-  dragglable?: boolean
-  followCursor?: boolean
-  autoInteract?: boolean
-}
+import { ModelInitOption } from './core'
 
 class Live2dExtensionManager {
   public pixiApp: PixiApp
@@ -41,7 +36,7 @@ class Live2dExtensionManager {
     document.removeEventListener('pointermove', this.pointerMoveFocus.bind(this))
   }
 
-  public async addModel(modelPath: string, option?: AddModelOption) {
+  public async addModel(modelPath: string, option?: ModelInitOption) {
     let model: Live2dExtensionModel<InternalModel> | undefined
     try {
       model = await Live2dExtensionModel.from(modelPath)
@@ -55,12 +50,39 @@ class Live2dExtensionManager {
 
     this.initModelOption(model, option)
 
-    //@ts-ignore
     this.pixiApp.stage.addChild(model)
 
     this.models[model.id] = model
 
     return model
+  }
+
+  private initModelOption(model: Live2dExtensionModel<InternalModel>, option?: ModelInitOption) {
+    const DEFAULT_OPTION = {
+      dragglable: true,
+      followCursor: true,
+      autoInteract: false,
+    }
+
+    const { dragglable, followCursor, autoInteract } = {
+      ...DEFAULT_OPTION,
+      ...(option ?? {}),
+    }
+
+    model.autoInteract = autoInteract
+    model.followCursor = followCursor
+
+    // Scale to canvas
+    model.scale.set(this.pixiApp.view.height / model.height)
+
+    dragglable ? model.setDragglable() : model.removeDragglable()
+
+    model.position.x = (this.pixiApp.view.width - model.width) / 2
+
+    // console.log(model.internalModel.settings)
+
+    // model.motion()
+    // model.showFrames()
   }
 
   public modelExistByModelPath(modelPath: string) {
@@ -102,34 +124,6 @@ class Live2dExtensionManager {
 
   public removeAll() {
     this.removeModels()
-  }
-
-  private initModelOption(model: Live2dExtensionModel<InternalModel>, option?: AddModelOption) {
-    const DEFAULT_OPTION = {
-      dragglable: true,
-      followCursor: true,
-      autoInteract: false,
-    }
-
-    const { dragglable, followCursor, autoInteract } = {
-      ...DEFAULT_OPTION,
-      ...(option ?? {}),
-    }
-
-    model.autoInteract = autoInteract
-    model.followCursor = followCursor
-
-    // Scale to canvas
-    model.scale.set(window.innerHeight / model.height)
-
-    dragglable ? model.setDragglable() : model.removeDragglable()
-
-    model.position.x = (this.pixiApp.view.width - model.width) / 2
-
-    // console.log(model.internalModel.settings)
-
-    // model.motion()
-    // model.showFrames()
   }
 
   private getUpdateIds(ids?: ModelId[]): ModelId[] {
