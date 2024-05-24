@@ -1,40 +1,33 @@
-import {
-  useChatHistory,
-  useSetChatHistory,
-} from '@/pages/roleAI/context/ChatHistoryContextProvider'
+import { useChatHistory } from '@/pages/roleAI/context/ChatHistoryContextProvider'
 import classes from './InputArea.module.scss'
 import { KeyboardEvent, useEffect, useRef, useState } from 'react'
-import { ChatMessage, chatMessage } from '@/core/ChatMessage'
 import { ChatRole } from '@/core/ChatRole'
 import { useSetCurrentCharacterCardInfoId } from '@/pages/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
-import { msgMacrosReplace } from '@/core/promptMessageGenerator'
-import { ChatCompletionReqDto, chatCompletionReqDto } from '@/api/chat/reqDto'
-import { chatCompletionStream } from '@/api/chat/chatCompletion'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 import ControlDialog from './controlDialog/ControlDialog'
 import { useNavigate } from 'react-router-dom'
 import { useSetTTSText } from '../../context/TTSContextProvider'
+import { useChatMessageOperate } from '../useChatMessageOperate'
 
 export default function InputArea() {
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')
 
   const textareaEl = useRef<HTMLTextAreaElement>(null)
-  const setChatMsg = useSetChatHistory()
-  const { chatHistory, last9Msg } = useChatHistory()
+  const { chatHistory } = useChatHistory()
   const [inputDisable, setInputDisable] = useState(false)
   const [newDialogVisible, setNewDialogVisible] = useState(false)
   const setCurrentCharacterCardInfoId = useSetCurrentCharacterCardInfoId()
   const navigate = useNavigate()
   const setTTSText = useSetTTSText()
 
-  const { charaCardInfo, charaPreMsg } = useCurrentCharacterCardInfo()
-  if (!charaCardInfo || !charaPreMsg) {
+  const { sendChatMsg, newChat, clearChatMsg, isChatMsgResponsing } = useChatMessageOperate()
+
+  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  if (!charaCardInfo) {
     return
   }
-
-  const [isChatMsgResponsing, setIsChatMsgResponsing] = useState(false)
 
   useEffect(
     function () {
@@ -45,7 +38,6 @@ export default function InputArea() {
       const lastMsg = chatHistory[chatHistory.length - 1]
       if (lastMsg.role === ChatRole.Assistant) {
         console.log('play tts')
-
         setTTSText(lastMsg.content)
       }
     },
@@ -58,54 +50,21 @@ export default function InputArea() {
     }
 
     setTTSText(() => undefined)
-
     setInputDisable(true)
-
-    const newUserMsg: ChatMessage = chatMessage(userMsg, ChatRole.User)
-
-    setChatMsg((msgs) => [...msgs, newUserMsg])
     textareaEl.current && (textareaEl.current.value = '')
 
-    const reqDto: ChatCompletionReqDto = chatCompletionReqDto(userMsg, last9Msg, charaPreMsg)
-    const newAssistantMsg: ChatMessage = chatMessage('', ChatRole.Assistant)
-    setChatMsg((msgs) => [...msgs, newAssistantMsg])
-
-    try {
-      await chatCompletionStream(reqDto, {
-        async onOpen(response) {
-          setIsChatMsgResponsing(true)
-        },
-        onEnd() {
-          setInputDisable(false)
-          setIsChatMsgResponsing(false)
-        },
-        onMessage(msg) {
-          setChatMsg(function (msgs) {
-            return msgs.map(function (m) {
-              return m.id === newAssistantMsg.id
-                ? {
-                    ...m,
-                    content: m.content + msg,
-                  }
-                : m
-            })
-          })
-        },
-        onClose() {
-          setInputDisable(false)
-          setIsChatMsgResponsing(false)
-        },
-        onError(err) {
-          console.log('error', err)
-          setInputDisable(false)
-          setIsChatMsgResponsing(false)
-        },
-      })
-    } catch (err) {
-      console.log('error', err)
-      setInputDisable(false)
-      setIsChatMsgResponsing(false)
-    }
+    sendChatMsg(userMsg, {
+      onClose() {
+        setInputDisable(false)
+      },
+      onEnd() {
+        setInputDisable(false)
+      },
+      onError(err) {
+        console.log('error', err)
+        setInputDisable(false)
+      },
+    })
   }
 
   async function sendBtnClicked() {
@@ -129,22 +88,15 @@ export default function InputArea() {
     setNewDialogVisible(false)
   }
 
-  function dialogNewChatBtnClicked() {
-    if (charaCardInfo) {
-      const chatMsg: ChatMessage = chatMessage(
-        msgMacrosReplace(charaCardInfo.card.data.first_mes, charaCardInfo.card),
-        ChatRole.Assistant
-      )
-      setChatMsg([chatMsg])
-    }
-
+  async function dialogNewChatBtnClicked() {
     dialogCloseBtnClicked()
+    await newChat()
   }
 
   function dialogCloseChatBtnClicked() {
-    setChatMsg([])
-    navigate(`/`)
+    clearChatMsg()
     setCurrentCharacterCardInfoId(undefined)
+    navigate(`/`)
     dialogCloseBtnClicked()
   }
 

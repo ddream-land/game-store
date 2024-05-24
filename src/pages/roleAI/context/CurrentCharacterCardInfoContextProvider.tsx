@@ -31,15 +31,15 @@ export function useCurrentCharacterCardInfo() {
   const { setCharacterCardInfoList, refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
   const charaCardInfo = useContext(CurrentCharacterCardInfoContext)
 
-  const charaPreMsg: AIChatMessage[] | undefined = useMemo(
-    function () {
-      if (!charaCardInfo) {
-        return
-      }
-      return preMsgGenerator(charaCardInfo.card)
-    },
-    [charaCardInfo]
-  )
+  // const charaPreMsg: AIChatMessage[] | undefined = useMemo(
+  //   function () {
+  //     if (!charaCardInfo) {
+  //       return
+  //     }
+  //     return preMsgGenerator(charaCardInfo.card)
+  //   },
+  //   [charaCardInfo]
+  // )
 
   async function uploadCurrentCharacterCardInfo(card: CharacterCardV2, avatar?: File) {
     const currentId = charaCardInfo?.id
@@ -58,7 +58,7 @@ export function useCurrentCharacterCardInfo() {
 
   return {
     charaCardInfo: charaCardInfo,
-    charaPreMsg,
+    // charaPreMsg,
     uploadCurrentCharacterCardInfo,
   }
 }

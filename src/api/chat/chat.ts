@@ -3,7 +3,7 @@ import { request } from '../request'
 import { historyMapping } from './mapping'
 import { History } from './resDto'
 
-export async function history(roleId: string) {
+export async function chatHistory(roleId: string) {
   const res = await request<DataDto<History[]>>({
     url: `/api/backends/chat-completions/history`,
     method: 'POST',

@@ -1,19 +1,32 @@
 import { ChatRole } from './ChatRole'
 
+export enum MessageSummaryState {
+  NotSummary = 1,
+  Summary = 2,
+}
+
 export type AIChatMessage = {
   role: ChatRole
   content: string
 }
 
 export type ChatMessage = AIChatMessage & {
-  id: number
+  id: string
   date: Date
+}
+
+export type NuwaChatMessage = ChatMessage & {
+  summaryState: MessageSummaryState
+  roleId: string
+  contents?: string[]
+  timestamp?: number
+  tokens?: number
 }
 
 let uid = Date.now()
 export function chatMessage(content: string, role: ChatRole = ChatRole.User): ChatMessage {
   const chatMsg: ChatMessage = {
-    id: uid++,
+    id: (uid++).toString(),
     role: role,
     content: content,
     date: new Date(),
@@ -22,18 +35,20 @@ export function chatMessage(content: string, role: ChatRole = ChatRole.User): Ch
   return chatMsg
 }
 
-export enum MessageSummaryState {
-  NotSummary = 1,
-  Summary = 2,
-}
+export function nuwaChatMessage(
+  content: string,
+  roleId: string,
+  role: ChatRole = ChatRole.User
+): NuwaChatMessage {
+  const chatMsg: NuwaChatMessage = {
+    id: (uid++).toString(),
+    role: role,
+    content: content,
+    date: new Date(),
 
-export type NuwaChatMessage = {
-  summary: MessageSummaryState
-  msgId: string
-  content: string
-  role: ChatRole
-  lastUpdate: Date
-  roleId: string
-  timestamp: number
-  uid: string
+    summaryState: MessageSummaryState.NotSummary,
+    roleId: roleId,
+  }
+
+  return chatMsg
 }

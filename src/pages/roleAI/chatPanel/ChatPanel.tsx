@@ -8,46 +8,49 @@ import { msgMacrosReplace } from '@/core/promptMessageGenerator'
 import InputArea from './inputArea/InputArea'
 import ChatHistory from './chatHistory/ChatHistory'
 import { useSetTTSText } from '../context/TTSContextProvider'
+import { chatHistory } from '@/api/chat/chat'
+import { MessageSummaryState, NuwaChatMessage } from '@/core/ChatMessage'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
   const currentDigitalLifeId = useCurrentCharacterCardInfoId()
-  const digitalLifeDetailList = useCharacterCardInfoList()
+  const characterCardInfoList = useCharacterCardInfoList()
   const setChatMsg = useSetChatHistory()
-  const setTTSText = useSetTTSText()
-
-  function clearChatMsgs() {
-    setChatMsg([])
-  }
 
   useEffect(
     function () {
-      clearChatMsgs()
+      setVisible(false)
+      setChatMsg([])
       if (currentDigitalLifeId === undefined) {
-        setVisible(false)
         return
       }
 
-      const lifeDetail = digitalLifeDetailList.find((x) => x.id === currentDigitalLifeId)
-
-      if (!lifeDetail) {
+      const characterCard = characterCardInfoList.find((x) => x.id === currentDigitalLifeId)
+      if (!characterCard) {
         throw new Error(`Runtime error.`)
       }
 
-      const firstMsg = msgMacrosReplace(lifeDetail.card.data.first_mes, lifeDetail.card)
+      ;(async function () {
+        const histories = await chatHistory(characterCard.id)
+        if (histories && histories.length) {
+          setChatMsg(histories)
+        } else {
+          const firstMsg = msgMacrosReplace(characterCard.card.data.first_mes, characterCard.card)
+          const nuwaFirstMsg: NuwaChatMessage = {
+            role: ChatRole.Assistant,
+            content: firstMsg,
+            id: Date.now().toString(),
+            date: new Date(),
 
-      setTTSText(firstMsg)
+            summaryState: MessageSummaryState.NotSummary,
+            roleId: characterCard.id,
+          }
 
-      setChatMsg([
-        {
-          role: ChatRole.Assistant,
-          content: firstMsg,
-          id: Date.now(),
-          date: new Date(),
-        },
-      ])
+          setChatMsg([nuwaFirstMsg])
+        }
 
-      setVisible(true)
+        setVisible(true)
+      })()
     },
     [currentDigitalLifeId]
   )

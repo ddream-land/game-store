@@ -1,6 +1,7 @@
 import { HTTP_TIMEOUT } from '@/constant/env'
 import { isObject } from '@/libs/isTypes'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -86,8 +87,10 @@ service.interceptors.response.use(
     }
 
     if (isObject(res.data) && 'code' in res.data) {
-      if (res.data.code === 604) {
-        alert('登录过期')
+      const code = res.data.code
+      const msg = res.data.msg
+      if (code === 604) {
+        toast.error('Login timeout')
       }
     }
 
