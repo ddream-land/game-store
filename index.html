@@ -14,9 +14,11 @@
         return 555
       }
 
-      function vpTest3() {
+      function vpTest3(msg) {
         document.body.style.backgroundColor = 'green'
-        return 333
+        if (window.playMsg) {
+          window.playMsg(msg)
+        }
       }
     </script>
   </head>
