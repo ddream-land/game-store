@@ -12,7 +12,9 @@
       function vpTest3(msg) {
         document.body.style.backgroundColor = 'green'
         if (window.playMsg) {
+          document.body.style.backgroundColor = 'red'
           window.playMsg(msg)
+          document.body.style.backgroundColor = 'gray'
         }
       }
 
