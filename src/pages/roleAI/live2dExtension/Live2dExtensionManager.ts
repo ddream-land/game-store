@@ -41,7 +41,7 @@ class Live2dExtensionManager {
     try {
       model = await Live2dExtensionModel.from(modelPath)
     } catch (err) {
-      throw new Error(`Load model failed.`)
+      throw new Error(`Load model failed.  ${modelPath}. ${err}`)
     }
     // model.st_character = character
     // model.st_model_path = model_path
@@ -51,6 +51,21 @@ class Live2dExtensionManager {
     this.initModelOption(model, option)
 
     this.pixiApp.stage.addChild(model)
+
+    // const mouthValue = Math.sin(performance.now() / 200) / 2 + 0.5
+    // console.log(mouthValue)
+
+    // console.log(model.internalModel.coreModel)
+
+    // let y = 0
+    // model.internalModel.motionManager.update = (m: object, now: number) => {
+      // model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', y)
+      // y = y == 0 ? 1 : 0
+
+      // model.internalModel.coreModel.setParameterValueById('ParamA', 1)
+
+      // return true
+    // }
 
     this.models[model.id] = model
 

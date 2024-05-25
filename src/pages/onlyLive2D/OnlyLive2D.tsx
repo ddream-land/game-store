@@ -72,6 +72,11 @@ export default function OnlyLive2D() {
     //@ts-ignore
     window.playMsg = setTTSText
 
+    //@ts-ignore
+    window.vpTest = function () {
+      console.log('vp test')
+    }
+
     return function () {
       audio?.removeEventListener('ended', onAudioPlayEnded)
     }

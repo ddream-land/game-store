@@ -21,7 +21,7 @@ export default function Main({ children }: { children: ReactNode }) {
       if (nuwaBg && !nuwaBg.disable) {
         switch (nuwaBg.version) {
           case NuwaExtensionVersion.V1: {
-            bgUrl = nuwaBg.url
+            bgUrl = `${nuwaBg.url}/w2048`
             break
           }
           default: {
@@ -31,7 +31,7 @@ export default function Main({ children }: { children: ReactNode }) {
       }
 
       if (bgUrl !== mainBgUrl) {
-        setMainBgUrl(`${bgUrl}/w2048`)
+        setMainBgUrl(bgUrl)
       }
     },
     [charaCardInfo]
