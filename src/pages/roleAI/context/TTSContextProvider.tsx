@@ -39,10 +39,35 @@ export function TTSContextProvider({ children }: { children: ReactNode }) {
       }
 
       audio.load()
-      audio.play()
+      ;(async function () {
+        try {
+          await audio.play()
+        } catch (err) {}
+      })()
     },
     [ttsSrc]
   )
+
+  function onAudioPlayEnded() {
+    const audio = audioEl.current
+    if (!audio) {
+      return
+    }
+
+    if (!audio.paused) {
+      audio.pause()
+    }
+    audio.currentTime = 0
+  }
+
+  useEffect(function () {
+    const audio = audioEl.current
+    audio?.addEventListener('ended', onAudioPlayEnded)
+
+    return function () {
+      audio?.removeEventListener('ended', onAudioPlayEnded)
+    }
+  }, [])
 
   return (
     <TTSTextContext.Provider value={ttsText}>
