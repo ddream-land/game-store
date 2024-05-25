@@ -72,12 +72,6 @@ export default function OnlyLive2D() {
     //@ts-ignore
     window.playMsg = setTTSText
 
-    //@ts-ignore
-    window.vpTest = function () {
-      console.log('vp test')
-      return 123
-    }
-
     return function () {
       audio?.removeEventListener('ended', onAudioPlayEnded)
     }
@@ -85,10 +79,10 @@ export default function OnlyLive2D() {
 
   return (
     <>
-      <Live2dExt defaultModelUrl={url}></Live2dExt>
+      {/* <Live2dExt defaultModelUrl={url}></Live2dExt> */}
 
-      <audio ref={audioEl} autoPlay={true} className="hidden">
-        <source src={ttsSrc}></source>
+      <audio ref={audioEl} autoPlay={true} className="" controls={true}>
+        <source src={ttsSrc} content=""></source>
       </audio>
     </>
   )
