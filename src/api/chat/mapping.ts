@@ -17,6 +17,7 @@ export function historyMapping(dto: History[]): NuwaChatMessage[] {
       summaryState: item.summary,
       roleId: item.role_id,
       timestamp: item.timestamp,
+      tokens: item.tokens,
     })
   }
 

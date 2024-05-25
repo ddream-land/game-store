@@ -47,6 +47,11 @@
         border-color: transparent transparent transparent var(--acolor);
       }
 
+      &.disable {
+        color: rgba(0, 0, 0, 0.2) !important;
+        cursor: not-allowed;
+      }
+
       &.re {
       }
       &.new {

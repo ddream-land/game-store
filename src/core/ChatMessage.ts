@@ -20,7 +20,7 @@ export type NuwaChatMessage = AIChatMessage & {
     tokens: number
   }[]
   timestamp?: number
-  tokens?: number
+  tokens: number
 }
 
 let uid = Date.now()
@@ -28,6 +28,7 @@ let uid = Date.now()
 export function nuwaChatMessage(
   content: string,
   roleId: string,
+  tokens: number = 0,
   role: ChatRole = ChatRole.User
 ): NuwaChatMessage {
   const chatMsg: NuwaChatMessage = {
@@ -38,6 +39,7 @@ export function nuwaChatMessage(
 
     summaryState: MessageSummaryState.NotSummary,
     roleId: roleId,
+    tokens,
   }
 
   return chatMsg

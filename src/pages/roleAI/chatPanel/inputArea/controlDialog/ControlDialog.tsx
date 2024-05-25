@@ -7,6 +7,8 @@ export type ControlDialogProps = Readonly<{
   closeChat: () => void
   continueMsg: () => void
   closeDialog: () => void
+  regenerateEnable: boolean
+  continueEnable: boolean
 }>
 
 export default function ControlDialog({
@@ -15,6 +17,8 @@ export default function ControlDialog({
   closeChat,
   continueMsg,
   closeDialog,
+  regenerateEnable,
+  continueEnable,
 }: ControlDialogProps) {
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')
@@ -26,13 +30,27 @@ export default function ControlDialog({
           <div onClick={closeDialog} className={`${classes.close} cursor-pointer`}></div>
         </div>
         <div className={`${classes.content} flex flex-row flex-wrap justify-center items-center`}>
-          <div onClick={regenerate} className={`${classes.re} ${classes.btn} cursor-pointer`}>
+          <div
+            onClick={() => {
+              regenerateEnable && regenerate()
+            }}
+            className={`${classes.re} ${classes.btn} ${
+              regenerateEnable ? '' : classes.disable
+            } cursor-pointer`}
+          >
             {t('regenerate')} &nbsp;
           </div>
-          <div onClick={newChat} className={`${classes.new} ${classes.btn} cursor-pointer`}>
+          <div onClick={newChat} className={`${classes.new} ${classes.btn}  cursor-pointer`}>
             {t('newConversation')} &nbsp;
           </div>
-          <div onClick={continueMsg} className={`${classes.con} ${classes.btn} cursor-pointer`}>
+          <div
+            onClick={() => {
+              continueEnable && continueMsg()
+            }}
+            className={`${classes.con} ${classes.btn} ${
+              continueEnable ? '' : classes.disable
+            } cursor-pointer`}
+          >
             {tCommon('continue')} &nbsp;
           </div>
           <div onClick={closeChat} className={`${classes.clo} ${classes.btn} cursor-pointer`}>

@@ -32,12 +32,15 @@ export function useChatMessageOperate() {
       return
     }
 
-    const newUserMsg: NuwaChatMessage = nuwaChatMessage(msg, charaCardInfo.id, ChatRole.User)
+    setIsChatMsgResponsing(true)
+
+    const newUserMsg: NuwaChatMessage = nuwaChatMessage(msg, charaCardInfo.id, 0, ChatRole.User)
     setChatMsg((msgs) => [...msgs, newUserMsg])
 
     const newAssistantMsg: NuwaChatMessage = nuwaChatMessage(
       '',
       charaCardInfo.id,
+      0,
       ChatRole.Assistant
     )
     setChatMsg((msgs) => [...msgs, newAssistantMsg])
@@ -140,6 +143,8 @@ export function useChatMessageOperate() {
       return
     }
 
+    setIsChatMsgResponsing(true)
+
     const latestMsgId = latestMsg.id
 
     const reqDto: ChatCompletionReqDto = {
@@ -153,16 +158,16 @@ export function useChatMessageOperate() {
       await chatCompletionStream(reqDto, {
         onMsgId(msgId: string, replyMsgId: string, msgTime: number, replyMsgTime: number) {},
         onOutputTokens(tokens) {
-          // setChatMsg(function (msgs) {
-          //   return msgs.map(function (m) {
-          //     return m.id === newAssistantMsg.id
-          //       ? {
-          //           ...m,
-          //           tokens: tokens,
-          //         }
-          //       : m
-          //   })
-          // })
+          setChatMsg(function (msgs) {
+            return msgs.map(function (m) {
+              return m.id === latestMsgId
+                ? {
+                    ...m,
+                    tokens: tokens,
+                  }
+                : m
+            })
+          })
         },
         async onOpen(response) {
           setIsChatMsgResponsing(true)
@@ -219,6 +224,8 @@ export function useChatMessageOperate() {
     if (latestMsg.role !== ChatRole.Assistant) {
       return
     }
+
+    setIsChatMsgResponsing(true)
 
     const latestMsgId = latestMsg.id
 
@@ -350,15 +357,12 @@ export function useChatMessageOperate() {
     }
 
     const firstMsg = msgMacrosReplace(charaCardInfo.card.data.first_mes, charaCardInfo.card)
-    const nuwaFirstMsg: NuwaChatMessage = {
-      role: ChatRole.Assistant,
-      content: firstMsg,
-      id: Date.now().toString(),
-      date: new Date(),
-
-      summaryState: MessageSummaryState.NotSummary,
-      roleId: charaCardInfo.id,
-    }
+    const nuwaFirstMsg: NuwaChatMessage = nuwaChatMessage(
+      firstMsg,
+      charaCardInfo.id,
+      0,
+      ChatRole.Assistant
+    )
 
     setChatMsg([nuwaFirstMsg])
   }

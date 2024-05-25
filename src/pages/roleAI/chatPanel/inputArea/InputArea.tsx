@@ -9,6 +9,7 @@ import ControlDialog from './controlDialog/ControlDialog'
 import { useNavigate } from 'react-router-dom'
 import { useSetTTSText } from '../../context/TTSContextProvider'
 import { useChatMessageOperate } from '../useChatMessageOperate'
+import { useChatMessageState } from '../useChatMessageState'
 
 export default function InputArea() {
   const { t: tCommon } = useTranslation('common')
@@ -16,9 +17,10 @@ export default function InputArea() {
 
   const textareaEl = useRef<HTMLTextAreaElement>(null)
   const { chatHistory } = useChatHistory()
-  const [inputDisable, setInputDisable] = useState(false)
-  const [newDialogVisible, setNewDialogVisible] = useState(false)
+  const [controlDialogVisible, setControlDialogVisible] = useState(false)
   const setTTSText = useSetTTSText()
+
+  const { regenerateEnable, continueEnable } = useChatMessageState()
 
   const {
     sendChatMsg,
@@ -51,25 +53,14 @@ export default function InputArea() {
   )
 
   async function sendChat(userMsg?: string) {
-    if (!userMsg || inputDisable) {
+    if (!userMsg || isChatMsgResponsing) {
       return
     }
 
     setTTSText(() => undefined)
-    setInputDisable(true)
     textareaEl.current && (textareaEl.current.value = '')
 
-    sendChatMsg(userMsg, {
-      onClose() {
-        setInputDisable(false)
-      },
-      onEnd() {
-        setInputDisable(false)
-      },
-      onError(err) {
-        setInputDisable(false)
-      },
-    })
+    sendChatMsg(userMsg)
   }
 
   async function sendBtnClicked() {
@@ -86,11 +77,14 @@ export default function InputArea() {
   }
 
   function newBtnClicked() {
-    setNewDialogVisible(!newDialogVisible)
+    if (isChatMsgResponsing) {
+      return
+    }
+    setControlDialogVisible(true)
   }
 
   function dialogCloseBtnClicked() {
-    setNewDialogVisible(false)
+    setControlDialogVisible(false)
   }
 
   async function dialogNewChatBtnClicked() {
@@ -105,40 +99,18 @@ export default function InputArea() {
 
   function dialogContinueMsgClicked() {
     setTTSText(() => undefined)
-    setInputDisable(true)
     textareaEl.current && (textareaEl.current.value = '')
     dialogCloseBtnClicked()
 
-    continueChatMsg({
-      onClose() {
-        setInputDisable(false)
-      },
-      onEnd() {
-        setInputDisable(false)
-      },
-      onError(err) {
-        setInputDisable(false)
-      },
-    })
+    continueChatMsg()
   }
 
   function dialogRegenerateClicked() {
     setTTSText(() => undefined)
-    setInputDisable(true)
     textareaEl.current && (textareaEl.current.value = '')
     dialogCloseBtnClicked()
 
-    regenerateChatMsg({
-      onClose() {
-        setInputDisable(false)
-      },
-      onEnd() {
-        setInputDisable(false)
-      },
-      onError(err) {
-        setInputDisable(false)
-      },
-    })
+    regenerateChatMsg()
   }
 
   return (
@@ -155,26 +127,32 @@ export default function InputArea() {
               ref={textareaEl}
               onKeyDown={onKeyDownEnter}
               rows={1}
-              className={`${inputDisable ? ' cursor-not-allowed' : ''} w-full h-full box-border`}
+              className={`${
+                isChatMsgResponsing ? ' cursor-not-allowed' : ''
+              } w-full h-full box-border`}
             ></textarea>
           </div>
           <div
             onClick={sendBtnClicked}
             className={`${classes.btn} ${classes.send} ${
-              inputDisable ? ' cursor-not-allowed' : ''
-            } cursor-pointer bg-no-repeat bg-center flex-none`}
+              isChatMsgResponsing ? ' cursor-not-allowed' : 'cursor-pointer'
+            } bg-no-repeat bg-center flex-none`}
           >
             {' '}
           </div>
         </div>
         <div
           onClick={newBtnClicked}
-          className={`${classes.new} cursor-pointer flex-none flex justify-center items-center`}
+          className={`${classes.new} ${
+            isChatMsgResponsing ? ' cursor-not-allowed' : 'cursor-pointer'
+          } flex-none flex justify-center items-center`}
         >
           +
         </div>
-        {newDialogVisible && (
+        {controlDialogVisible && (
           <ControlDialog
+            regenerateEnable={regenerateEnable}
+            continueEnable={continueEnable}
             regenerate={dialogRegenerateClicked}
             continueMsg={dialogContinueMsgClicked}
             newChat={dialogNewChatBtnClicked}

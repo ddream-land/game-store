@@ -9,7 +9,7 @@ import InputArea from './inputArea/InputArea'
 import ChatHistory from './chatHistory/ChatHistory'
 import { useSetTTSText } from '../context/TTSContextProvider'
 import { chatHistory } from '@/api/chat/chat'
-import { MessageSummaryState, NuwaChatMessage } from '@/core/ChatMessage'
+import { NuwaChatMessage, nuwaChatMessage } from '@/core/ChatMessage'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
@@ -31,15 +31,12 @@ export default function ChatPanel() {
       }
 
       const firstMsg = msgMacrosReplace(characterCard.card.data.first_mes, characterCard.card)
-      const nuwaFirstMsg: NuwaChatMessage = {
-        role: ChatRole.Assistant,
-        content: firstMsg,
-        id: Date.now().toString(),
-        date: new Date(),
-
-        summaryState: MessageSummaryState.NotSummary,
-        roleId: characterCard.id,
-      }
+      const nuwaFirstMsg: NuwaChatMessage = nuwaChatMessage(
+        firstMsg,
+        characterCard.id,
+        0,
+        ChatRole.Assistant
+      )
 
       ;(async function () {
         const histories = await chatHistory(characterCard.id)

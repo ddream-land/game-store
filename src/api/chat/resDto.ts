@@ -7,4 +7,5 @@ export type History = {
   role_id: string
   timestamp: number
   uid: string
+  tokens: number
 }
