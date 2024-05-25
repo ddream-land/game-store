@@ -10,30 +10,20 @@ export type AIChatMessage = {
   content: string
 }
 
-export type ChatMessage = AIChatMessage & {
+export type NuwaChatMessage = AIChatMessage & {
   id: string
   date: Date
-}
-
-export type NuwaChatMessage = ChatMessage & {
   summaryState: MessageSummaryState
   roleId: string
-  contents?: string[]
+  contents?: {
+    content: string
+    tokens: number
+  }[]
   timestamp?: number
   tokens?: number
 }
 
 let uid = Date.now()
-export function chatMessage(content: string, role: ChatRole = ChatRole.User): ChatMessage {
-  const chatMsg: ChatMessage = {
-    id: (uid++).toString(),
-    role: role,
-    content: content,
-    date: new Date(),
-  }
-
-  return chatMsg
-}
 
 export function nuwaChatMessage(
   content: string,

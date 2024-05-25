@@ -48,8 +48,8 @@ import { ChatRole } from '@/core/ChatRole'
 // }
 
 export type ChatCompletionReqDto = {
-  content: string
   role_id: string
+  content?: string
   new_conversion?: boolean
   renew_msg?: {
     msg_id: string

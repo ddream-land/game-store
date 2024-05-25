@@ -35,14 +35,18 @@ export async function chatCompletionStream(
     onOutputTokens,
   }: NuwaRequestStreamEvent
 ) {
-  setTimeout(function () {
+  const timeout = setTimeout(function () {
     onEnd && onEnd()
+    clearTimeout(timeout)
   }, HTTP_TIMEOUT * 5)
 
   const url = getFullUrl(`/api/backends/chat-completions/chat`)
 
   await fetchEventSource(url, {
     body: JSON.stringify(reqDto),
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
     signal: AbortSignal.timeout(HTTP_TIMEOUT),
     async onopen(response) {
@@ -58,6 +62,7 @@ export async function chatCompletionStream(
           break
         }
         case NuwaStreamingMessageEventTypes.Stop: {
+          clearTimeout(timeout)
           onEnd && onEnd()
           break
         }
@@ -95,15 +100,17 @@ export async function chatCompletionStream(
         }
 
         default: {
+          clearTimeout(timeout)
           throw new Error(`Knonwn event type: ${eventSourceMsg.event}`)
         }
       }
     },
     onclose() {
-      console.log('close')
+      clearTimeout(timeout)
       onClose && onClose()
     },
     onerror(err) {
+      clearTimeout(timeout)
       console.log('error')
       onError && onError(err)
     },

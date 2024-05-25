@@ -1,0 +1,39 @@
+.assistMsg {
+  margin-top: 18px;
+
+  .content {
+    white-space: pre-wrap;
+    padding: 18px;
+    max-width: 80%;
+
+    border-radius: 24px 24px 24px 0px;
+    background: rgba(255, 255, 255, 0.7);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .switchMsg {
+    width: 69px;
+    height: 36px;
+    border-radius: 56px;
+    background: rgba(255, 255, 255, 1);
+    bottom: -18px;
+    right: 40px;
+
+    .arrow {
+      color: rgba(0, 0, 0, 0.8);
+      &:hover {
+        color: rgba(0, 0, 0, 1);
+        font-weight: 600;
+      }
+
+      &.disable {
+        color: rgba(0, 0, 0, 0.2) !important;
+      }
+    }
+  }
+}

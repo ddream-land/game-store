@@ -2,46 +2,12 @@ import { useChatHistory } from '@/pages/roleAI/context/ChatHistoryContextProvide
 import classes from './ChatHistory.module.scss'
 import { ChatRole } from '@/core/ChatRole'
 import { useEffect, useRef } from 'react'
+import UserMsg from './UserMsg/UserMsg'
+import AssistantMsg from './AssistantMsg/AssistantMsg'
 
 export default function ChatHistory() {
   const { chatHistory } = useChatHistory()
   const chatContainer = useRef<HTMLDivElement>(null)
-
-  function msgRoleClassName(role: ChatRole) {
-    switch (role) {
-      case ChatRole.User: {
-        return classes.user
-      }
-      case ChatRole.Assistant: {
-        return classes.asst
-      }
-      case ChatRole.System: {
-        return classes.sys
-      }
-      default: {
-        return ''
-      }
-    }
-  }
-
-  const elements = chatHistory
-    .filter(function (msg) {
-      return msg.role !== ChatRole.System
-    })
-    .map(function (msg) {
-      return (
-        <div
-          key={msg.id}
-          className={`${classes.msg} w-full flex ${
-            msg.role === ChatRole.User ? 'flex-row-reverse' : 'flex-row'
-          }`}
-        >
-          <div className={`${classes.content} ${msgRoleClassName(msg.role)} w-full`}>
-            {msg.content}
-          </div>
-        </div>
-      )
-    })
 
   useEffect(
     function () {
@@ -59,7 +25,19 @@ export default function ChatHistory() {
       ref={chatContainer}
       className={`${classes.chatHistory} w-full h-full overflow-y-auto scrollbar-override transition-all flex`}
     >
-      <div className={`${classes.msgs} w-full mt-auto`}>{elements}</div>
+      <div className={`${classes.msgs} w-full mt-auto`}>
+        {chatHistory
+          .filter(function (msg) {
+            return msg.role !== ChatRole.System
+          })
+          .map(function (msg) {
+            if (msg.role === ChatRole.User) {
+              return <UserMsg key={msg.id} msg={msg}></UserMsg>
+            } else if (msg.role === ChatRole.Assistant) {
+              return <AssistantMsg key={msg.id} msg={msg}></AssistantMsg>
+            }
+          })}
+      </div>
     </div>
   )
 }

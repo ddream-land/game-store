@@ -30,22 +30,22 @@ export default function ChatPanel() {
         throw new Error(`Runtime error.`)
       }
 
+      const firstMsg = msgMacrosReplace(characterCard.card.data.first_mes, characterCard.card)
+      const nuwaFirstMsg: NuwaChatMessage = {
+        role: ChatRole.Assistant,
+        content: firstMsg,
+        id: Date.now().toString(),
+        date: new Date(),
+
+        summaryState: MessageSummaryState.NotSummary,
+        roleId: characterCard.id,
+      }
+
       ;(async function () {
         const histories = await chatHistory(characterCard.id)
         if (histories && histories.length) {
-          setChatMsg(histories)
+          setChatMsg([nuwaFirstMsg, ...histories])
         } else {
-          const firstMsg = msgMacrosReplace(characterCard.card.data.first_mes, characterCard.card)
-          const nuwaFirstMsg: NuwaChatMessage = {
-            role: ChatRole.Assistant,
-            content: firstMsg,
-            id: Date.now().toString(),
-            date: new Date(),
-
-            summaryState: MessageSummaryState.NotSummary,
-            roleId: characterCard.id,
-          }
-
           setChatMsg([nuwaFirstMsg])
         }
 

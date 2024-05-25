@@ -18,11 +18,17 @@ export default function InputArea() {
   const { chatHistory } = useChatHistory()
   const [inputDisable, setInputDisable] = useState(false)
   const [newDialogVisible, setNewDialogVisible] = useState(false)
-  const setCurrentCharacterCardInfoId = useSetCurrentCharacterCardInfoId()
-  const navigate = useNavigate()
   const setTTSText = useSetTTSText()
 
-  const { sendChatMsg, newChat, clearChatMsg, isChatMsgResponsing } = useChatMessageOperate()
+  const {
+    sendChatMsg,
+    newChat,
+    clearChatMsg,
+    regenerateChatMsg,
+    continueChatMsg,
+    closeChat,
+    isChatMsgResponsing,
+  } = useChatMessageOperate()
 
   const { charaCardInfo } = useCurrentCharacterCardInfo()
   if (!charaCardInfo) {
@@ -61,7 +67,6 @@ export default function InputArea() {
         setInputDisable(false)
       },
       onError(err) {
-        console.log('error', err)
         setInputDisable(false)
       },
     })
@@ -94,15 +99,47 @@ export default function InputArea() {
   }
 
   function dialogCloseChatBtnClicked() {
-    clearChatMsg()
-    setCurrentCharacterCardInfoId(undefined)
-    navigate(`/`)
     dialogCloseBtnClicked()
+    closeChat()
   }
 
-  function dialogContinueMsg() {}
+  function dialogContinueMsgClicked() {
+    setTTSText(() => undefined)
+    setInputDisable(true)
+    textareaEl.current && (textareaEl.current.value = '')
+    dialogCloseBtnClicked()
 
-  function dialogRegenerate() {}
+    continueChatMsg({
+      onClose() {
+        setInputDisable(false)
+      },
+      onEnd() {
+        setInputDisable(false)
+      },
+      onError(err) {
+        setInputDisable(false)
+      },
+    })
+  }
+
+  function dialogRegenerateClicked() {
+    setTTSText(() => undefined)
+    setInputDisable(true)
+    textareaEl.current && (textareaEl.current.value = '')
+    dialogCloseBtnClicked()
+
+    regenerateChatMsg({
+      onClose() {
+        setInputDisable(false)
+      },
+      onEnd() {
+        setInputDisable(false)
+      },
+      onError(err) {
+        setInputDisable(false)
+      },
+    })
+  }
 
   return (
     <>
@@ -138,8 +175,8 @@ export default function InputArea() {
         </div>
         {newDialogVisible && (
           <ControlDialog
-            regenerate={dialogRegenerate}
-            continueMsg={dialogContinueMsg}
+            regenerate={dialogRegenerateClicked}
+            continueMsg={dialogContinueMsgClicked}
             newChat={dialogNewChatBtnClicked}
             closeChat={dialogCloseChatBtnClicked}
             closeDialog={dialogCloseBtnClicked}

@@ -7,11 +7,18 @@ import { useNavigateBack } from '@/router/useNavigateBack'
 import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
 import { Switch, cn } from '@nextui-org/react'
 
-function AutoPlaySwitch() {
+type AutoPlaySwitchProps = Readonly<{
+  isSelected: boolean
+  onValueChange: (isSelected: boolean) => void
+}>
+
+function AutoPlaySwitch({ isSelected, onValueChange }: AutoPlaySwitchProps) {
   const { t: tCommon } = useTranslation('common')
 
   return (
     <Switch
+      isSelected={isSelected}
+      onValueChange={onValueChange}
       size="lg"
       className={`ml-4`}
       classNames={{
@@ -83,7 +90,7 @@ function CharacterDetailEditToneView() {
       <div className={`${classes.settings} flex flex-col mt-16 px-4`}>
         <div className={`${classes.autoPlay}`}>
           <span className={`${classes.desc}`}>{tCommon('autoPlay')}</span>
-          <AutoPlaySwitch></AutoPlaySwitch>
+          {/* <AutoPlaySwitch></AutoPlaySwitch> */}
         </div>
       </div>
     </div>

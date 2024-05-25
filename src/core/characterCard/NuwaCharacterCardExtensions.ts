@@ -9,6 +9,14 @@ export interface NuwaExtensionConfigBase {
   disable?: boolean
 }
 
+export interface NuwaBackgroundExtensionConfig extends NuwaExtensionConfigBase {
+  url: string
+}
+
+export type NuwaBackgroundExtension = {
+  nuwa_bg?: NuwaBackgroundExtensionConfig
+}
+
 export interface NuwaVoiceExtensionConfig extends NuwaExtensionConfigBase {
   type: string
   sex: string
@@ -20,12 +28,12 @@ export type NuwaVoiceExtension = {
   nuwa_voice?: NuwaVoiceExtensionConfig
 }
 
-export interface NuwaBackgroundExtensionConfig extends NuwaExtensionConfigBase {
-  url: string
+export interface NuwaVoicesExtensionConfig extends NuwaExtensionConfigBase {
+  list: NuwaVoiceExtensionConfig[]
 }
 
-export type NuwaAvatarExtension = {
-  nuwa_avatar?: NuwaAvatarExtensionConfig
+export type NuwaVoicesExtension = {
+  nuwa_voices?: NuwaVoicesExtensionConfig
 }
 
 export interface NuwaAvatarExtensionConfig extends NuwaExtensionConfigBase {
@@ -34,8 +42,20 @@ export interface NuwaAvatarExtensionConfig extends NuwaExtensionConfigBase {
   name?: string
 }
 
-export type NuwaBackgroundExtension = {
-  nuwa_bg?: NuwaBackgroundExtensionConfig
+export type NuwaAvatarExtension = {
+  nuwa_avatar?: NuwaAvatarExtensionConfig
 }
 
-export type NuwaExtensions = NuwaVoiceExtension & NuwaBackgroundExtension & NuwaAvatarExtension
+export interface NuwaAvatarsExtensionConfig extends NuwaExtensionConfigBase {
+  list: NuwaAvatarExtensionConfig[]
+}
+
+export type NuwaAvatarsExtension = {
+  nuwa_avatars?: NuwaAvatarsExtensionConfig
+}
+
+export type NuwaExtensions = NuwaBackgroundExtension &
+  NuwaVoiceExtension &
+  NuwaVoicesExtension &
+  NuwaAvatarExtension &
+  NuwaAvatarsExtension

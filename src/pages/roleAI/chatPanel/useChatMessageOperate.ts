@@ -6,24 +6,18 @@ import { ChatCompletionReqDto } from '@/api/chat/reqDto'
 import { chatCompletionStream } from '@/api/chat/chatCompletion'
 import { msgMacrosReplace } from '@/core/promptMessageGenerator'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSetCurrentCharacterCardInfoId } from '../context/CurrentCharacterCardInfoIdContextProvider'
+import { newChat as newChatReq } from '@/api/chat/chat'
+import toast from 'react-hot-toast'
 
 export function useChatMessageOperate() {
+  const navigate = useNavigate()
+  const setCurrentCharacterCardInfoId = useSetCurrentCharacterCardInfoId()
   const { charaCardInfo } = useCurrentCharacterCardInfo()
   const setChatMsg = useSetChatHistory()
   const { chatHistory } = useChatHistory()
   const [isChatMsgResponsing, setIsChatMsgResponsing] = useState(false)
-
-  function isNewChat() {
-    if (chatHistory.length <= 0) {
-      return true
-    } else {
-      const firstMsg = chatHistory[0]
-      if (firstMsg.role === ChatRole.Assistant) {
-        return true
-      }
-    }
-    return false
-  }
 
   async function sendChatMsg(
     msg: string,
@@ -51,9 +45,6 @@ export function useChatMessageOperate() {
     const reqDto: ChatCompletionReqDto = {
       content: msg,
       role_id: charaCardInfo.id,
-    }
-    if (isNewChat()) {
-      reqDto.new_conversion = true
     }
 
     try {
@@ -101,7 +92,7 @@ export function useChatMessageOperate() {
           setIsChatMsgResponsing(false)
           option && option.onEnd && option.onEnd()
         },
-        onMessage(msg) {
+        onMessage(index, msg) {
           setChatMsg(function (msgs) {
             return msgs.map(function (m) {
               return m.id === newAssistantMsg.id
@@ -130,9 +121,231 @@ export function useChatMessageOperate() {
     }
   }
 
+  async function continueChatMsg(option?: {
+    onOpen?: (response: Response) => Promise<void>
+    onClose?: () => void
+    onEnd?: () => void
+    onError?: (err: any) => number | null | undefined | void
+  }) {
+    if (!charaCardInfo) {
+      return
+    }
+    if (!chatHistory || chatHistory.length <= 1) {
+      // first msg can not continue
+      return
+    }
+
+    const latestMsg = chatHistory[chatHistory.length - 1]
+    if (latestMsg.role !== ChatRole.Assistant) {
+      return
+    }
+
+    const latestMsgId = latestMsg.id
+
+    const reqDto: ChatCompletionReqDto = {
+      role_id: charaCardInfo.id,
+      continue_msg: {
+        msg_id: latestMsgId,
+      },
+    }
+
+    try {
+      await chatCompletionStream(reqDto, {
+        onMsgId(msgId: string, replyMsgId: string, msgTime: number, replyMsgTime: number) {},
+        onOutputTokens(tokens) {
+          // setChatMsg(function (msgs) {
+          //   return msgs.map(function (m) {
+          //     return m.id === newAssistantMsg.id
+          //       ? {
+          //           ...m,
+          //           tokens: tokens,
+          //         }
+          //       : m
+          //   })
+          // })
+        },
+        async onOpen(response) {
+          setIsChatMsgResponsing(true)
+          option && option.onOpen && (await option.onOpen(response))
+        },
+        onEnd() {
+          setIsChatMsgResponsing(false)
+          option && option.onEnd && option.onEnd()
+        },
+        onMessage(index, msg) {
+          setChatMsg(function (msgs) {
+            return msgs.map(function (m) {
+              return m.id === latestMsgId
+                ? {
+                    ...m,
+                    content: m.content + msg,
+                  }
+                : m
+            })
+          })
+        },
+        onClose() {
+          setIsChatMsgResponsing(false)
+          option && option.onClose && option.onClose()
+        },
+        onError(err) {
+          setIsChatMsgResponsing(false)
+          console.log('error', err)
+          option && option.onError && option.onError(err)
+        },
+      })
+    } catch (err) {
+      setIsChatMsgResponsing(false)
+      console.log('error', err)
+      option && option.onError && option.onError(err)
+    }
+  }
+
+  async function regenerateChatMsg(option?: {
+    onOpen?: (response: Response) => Promise<void>
+    onClose?: () => void
+    onEnd?: () => void
+    onError?: (err: any) => number | null | undefined | void
+  }) {
+    if (!charaCardInfo) {
+      return
+    }
+    if (!chatHistory || chatHistory.length <= 1) {
+      // first msg can not regenerate
+      return
+    }
+
+    const latestMsg = chatHistory[chatHistory.length - 1]
+    if (latestMsg.role !== ChatRole.Assistant) {
+      return
+    }
+
+    const latestMsgId = latestMsg.id
+
+    const reqDto: ChatCompletionReqDto = {
+      role_id: charaCardInfo.id,
+      renew_msg: {
+        msg_id: latestMsgId,
+      },
+    }
+
+    setChatMsg(
+      chatHistory.map(function (msg) {
+        if (msg.id === latestMsgId) {
+          // if no contents, push old content to contents list
+          const contents = latestMsg.contents
+            ? latestMsg.contents
+            : [
+                {
+                  content: msg.content,
+                  tokens: msg.tokens ?? 0,
+                },
+              ]
+          return {
+            ...msg,
+            contents: contents,
+            // clear content
+            content: '',
+          }
+        } else {
+          return msg
+        }
+      })
+    )
+
+    function pushRegenerateMsgToContentsList() {
+      setChatMsg(function (msgs) {
+        return msgs.map(function (m) {
+          if (m.id === latestMsgId) {
+            const content = m.content
+            const contents = [...(m.contents ?? [])]
+            if (!(m.contents ?? []).some((x) => x.content === content)) {
+              // AI reply content not duplicated
+              contents.push({
+                content: m.content,
+                tokens: m.tokens ?? 0,
+              })
+            }
+            return {
+              ...m,
+              contents,
+            }
+          } else {
+            return m
+          }
+        })
+      })
+    }
+
+    try {
+      await chatCompletionStream(reqDto, {
+        onMsgId(msgId: string, replyMsgId: string, msgTime: number, replyMsgTime: number) {},
+        onOutputTokens(tokens) {
+          setChatMsg(function (msgs) {
+            return msgs.map(function (m) {
+              return m.id === latestMsgId
+                ? {
+                    ...m,
+                    tokens: tokens,
+                  }
+                : m
+            })
+          })
+        },
+        async onOpen(response) {
+          setIsChatMsgResponsing(true)
+          option && option.onOpen && (await option.onOpen(response))
+        },
+        onEnd() {
+          // Only end signal can push list
+          pushRegenerateMsgToContentsList()
+          setIsChatMsgResponsing(false)
+          option && option.onEnd && option.onEnd()
+        },
+        onMessage(index, msg) {
+          setChatMsg(function (msgs) {
+            return msgs.map(function (m) {
+              return m.id === latestMsgId
+                ? {
+                    ...m,
+                    content: m.content + msg,
+                  }
+                : m
+            })
+          })
+        },
+        onClose() {
+          setIsChatMsgResponsing(false)
+          option && option.onClose && option.onClose()
+        },
+        onError(err) {
+          setIsChatMsgResponsing(false)
+          console.log('error', err)
+          option && option.onError && option.onError(err)
+        },
+      })
+    } catch (err) {
+      setIsChatMsgResponsing(false)
+      console.log('error', err)
+      option && option.onError && option.onError(err)
+    }
+  }
+
+  function closeChat() {
+    clearChatMsg()
+    setCurrentCharacterCardInfoId(undefined)
+    navigate(`/`)
+  }
+
   async function newChat() {
     if (!charaCardInfo) {
       setChatMsg([])
+      return
+    }
+
+    const res = await newChatReq(charaCardInfo.id)
+    if (res.code !== 0) {
+      toast.error(res.msg ?? 'Start new chat error.')
       return
     }
 
@@ -157,7 +370,10 @@ export function useChatMessageOperate() {
   return {
     clearChatMsg,
     sendChatMsg,
+    closeChat,
     newChat,
+    continueChatMsg,
+    regenerateChatMsg,
     isChatMsgResponsing,
   }
 }

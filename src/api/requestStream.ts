@@ -1,5 +1,6 @@
 import { EventSourceMessage, fetchEventSource } from '@microsoft/fetch-event-source'
 import { HTTP_TIMEOUT } from '@/constant/env'
+import './fetchInterceptors'
 
 export enum ClaudeStreamingMessageEventType {
   Start = 'message_start',
@@ -25,7 +26,8 @@ export async function requestStream(
   body: Record<string, any> | null | undefined,
   { onOpen, onMessage, onClose, onEnd, onError, onContentEnd }: RequestStreamEvent
 ) {
-  setTimeout(function () {
+  const timeout = setTimeout(function () {
+    clearTimeout(timeout)
     onEnd && onEnd()
   }, HTTP_TIMEOUT * 5)
 
@@ -42,6 +44,7 @@ export async function requestStream(
     onmessage(eventSourceMsg) {
       switch (eventSourceMsg.event) {
         case ClaudeStreamingMessageEventType.Stop: {
+          clearTimeout(timeout)
           onEnd && onEnd()
           break
         }
@@ -74,18 +77,19 @@ export async function requestStream(
         }
 
         default: {
+          clearTimeout(timeout)
           throw new Error(`Knonwn event type: ${eventSourceMsg.event}`)
         }
       }
     },
     onclose() {
+      clearTimeout(timeout)
       console.log('close')
-
       onClose && onClose()
     },
     onerror(err) {
+      clearTimeout(timeout)
       console.log('error')
-
       onError && onError(err)
     },
   })

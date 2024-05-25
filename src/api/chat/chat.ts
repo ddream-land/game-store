@@ -14,3 +14,15 @@ export async function chatHistory(roleId: string) {
 
   return historyMapping(res.data)
 }
+
+export async function newChat(roleId: string) {
+  const res = await request<DtoBase>({
+    url: `/api/backends/chat-completions/reset_chat`,
+    method: 'POST',
+    data: {
+      role_id: roleId,
+    },
+  })
+
+  return res
+}
