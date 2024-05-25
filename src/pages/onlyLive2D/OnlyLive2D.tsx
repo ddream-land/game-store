@@ -55,8 +55,12 @@ export default function OnlyLive2D() {
       return
     }
 
+    console.log('audio play ended')
+
     if ((window as any).webkit && (window as any).webkit.messageHandlers) {
+      console.log('audio play end to webkit')
       ;(window as any)?.webkit?.messageHandlers?.playMsgEnded?.postMessage()
+      console.log('audio play end to webkit success')
     }
 
     if (!audio.paused) {
