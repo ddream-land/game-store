@@ -65,23 +65,40 @@ export default function OnlyLive2D() {
     audio.currentTime = 0
   }
 
+  function globalClick() {
+    const audio = audioEl.current
+    if (audio) {
+      audio.load()
+      ;(async function () {
+        try {
+          await audio.play()
+        } catch (err) {}
+      })()
+    }
+
+    document.removeEventListener('click', globalClick)
+  }
+
   useEffect(function () {
     const audio = audioEl.current
     audio?.addEventListener('ended', onAudioPlayEnded)
+
+    document.addEventListener('click', globalClick)
 
     //@ts-ignore
     window.playMsg = setTTSText
 
     return function () {
+      document.removeEventListener('click', globalClick)
       audio?.removeEventListener('ended', onAudioPlayEnded)
     }
   }, [])
 
   return (
     <>
-      {/* <Live2dExt defaultModelUrl={url}></Live2dExt> */}
+      <Live2dExt defaultModelUrl={url}></Live2dExt>
 
-      <audio ref={audioEl} autoPlay={true} className="" controls={true}>
+      <audio ref={audioEl} autoPlay={true} className="hidden" controls={true}>
         <source src={ttsSrc} content=""></source>
       </audio>
     </>
