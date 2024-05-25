@@ -9,17 +9,14 @@
     <title>Role AI | Nuwa</title>
 
     <script type="text/javascript">
-      window.vpTest2 = function () {
-        alert(111)
-        return 555
-      }
-
       function vpTest3(msg) {
         document.body.style.backgroundColor = 'green'
         if (window.playMsg) {
           window.playMsg(msg)
         }
       }
+
+      window.vpTest2 = vpTest3
     </script>
   </head>
   <body>
