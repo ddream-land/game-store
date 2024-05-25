@@ -66,6 +66,8 @@ export default function OnlyLive2D() {
   }
 
   function globalClick() {
+    console.log('global click')
+
     const audio = audioEl.current
     if (audio) {
       audio.load()
