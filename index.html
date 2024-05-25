@@ -11,11 +11,13 @@
     <script type="text/javascript">
       function vpPlayMsg(msg) {
         if (window.playMsg) {
-          console.log('start play')
+          console.log('call play')
           window.playMsg(msg)
-          console.log('start success')
+          console.log('call play success')
         }
       }
+
+      window.vpTest2 = vpPlayMsg
     </script>
   </head>
   <body>

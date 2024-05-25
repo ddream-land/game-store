@@ -39,11 +39,15 @@ export default function OnlyLive2D() {
         return
       }
 
+      console.log('start auto play')
       audio.load()
       ;(async function () {
         try {
           await audio.play()
-        } catch (err) {}
+          console.log('start auto play success')
+        } catch (err) {
+          console.log('auto play err', err)
+        }
       })()
     },
     [ttsSrc]
@@ -69,37 +73,37 @@ export default function OnlyLive2D() {
     audio.currentTime = 0
   }
 
-  function globalClick() {
-    console.log('global click')
+  // function globalClick() {
+  //   console.log('global click')
 
-    const audio = audioEl.current
-    if (audio) {
-      audio.load()
-      ;(async function () {
-        try {
-          console.log('global play start')
-          await audio.play()
-          console.log('global play success')
-        } catch (err) {
-          console.log('global play err', err)
-        }
-      })()
-    }
+  //   const audio = audioEl.current
+  //   if (audio) {
+  //     audio.load()
+  //     ;(async function () {
+  //       try {
+  //         console.log('global play start')
+  //         await audio.play()
+  //         console.log('global play success')
+  //       } catch (err) {
+  //         console.log('global play err', err)
+  //       }
+  //     })()
+  //   }
 
-    document.removeEventListener('click', globalClick)
-  }
+  // document.removeEventListener('click', globalClick)
+  // }
 
   useEffect(function () {
     const audio = audioEl.current
     audio?.addEventListener('ended', onAudioPlayEnded)
 
-    document.addEventListener('click', globalClick)
+    // document.addEventListener('click', globalClick)
 
     //@ts-ignore
     window.playMsg = setTTSText
 
     return function () {
-      document.removeEventListener('click', globalClick)
+      // document.removeEventListener('click', globalClick)
       audio?.removeEventListener('ended', onAudioPlayEnded)
     }
   }, [])
