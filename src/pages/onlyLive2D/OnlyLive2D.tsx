@@ -106,9 +106,9 @@ export default function OnlyLive2D() {
 
   return (
     <>
-      <Live2dExt defaultModelUrl={url}></Live2dExt>
+      {/* <Live2dExt defaultModelUrl={url}></Live2dExt> */}
 
-      <audio ref={audioEl} autoPlay={true} className="hidden" controls={true}>
+      <audio ref={audioEl} autoPlay={true} className="" controls={true}>
         <source src={ttsSrc} content=""></source>
       </audio>
     </>
