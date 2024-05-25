@@ -71,8 +71,12 @@ export default function OnlyLive2D() {
       audio.load()
       ;(async function () {
         try {
+          console.log('global play start')
           await audio.play()
-        } catch (err) {}
+          console.log('global play success')
+        } catch (err) {
+          console.log('global play err', err)
+        }
       })()
     }
 
