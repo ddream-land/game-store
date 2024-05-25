@@ -75,6 +75,7 @@ export default function OnlyLive2D() {
     //@ts-ignore
     window.vpTest = function () {
       console.log('vp test')
+      return 123
     }
 
     return function () {
