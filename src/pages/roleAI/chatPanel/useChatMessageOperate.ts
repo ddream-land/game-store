@@ -34,6 +34,38 @@ export function useChatMessageOperate() {
 
     setIsChatMsgResponsing(true)
 
+    const reqDto: ChatCompletionReqDto = {
+      content: msg,
+      role_id: charaCardInfo.id,
+    }
+
+    if (chatHistory && chatHistory.length > 1) {
+      // first msg
+      const latestMsg = chatHistory[chatHistory.length - 1]
+      if (latestMsg.role === ChatRole.Assistant) {
+        if (latestMsg.contents && latestMsg.contents.length > 0) {
+          reqDto.update_msg = {
+            msg_id: latestMsg.id,
+            content: latestMsg.content,
+            tokens: latestMsg.tokens,
+          }
+          setChatMsg(function (msgs) {
+            return msgs.map(function (m) {
+              if (m.id === latestMsg.id) {
+                const contents = undefined
+                return {
+                  ...m,
+                  contents,
+                }
+              } else {
+                return m
+              }
+            })
+          })
+        }
+      }
+    }
+
     const newUserMsg: NuwaChatMessage = nuwaChatMessage(msg, charaCardInfo.id, 0, ChatRole.User)
     setChatMsg((msgs) => [...msgs, newUserMsg])
 
@@ -44,11 +76,6 @@ export function useChatMessageOperate() {
       ChatRole.Assistant
     )
     setChatMsg((msgs) => [...msgs, newAssistantMsg])
-
-    const reqDto: ChatCompletionReqDto = {
-      content: msg,
-      role_id: charaCardInfo.id,
-    }
 
     try {
       await chatCompletionStream(reqDto, {
@@ -152,6 +179,27 @@ export function useChatMessageOperate() {
       continue_msg: {
         msg_id: latestMsgId,
       },
+    }
+
+    if (latestMsg.contents && latestMsg.contents.length > 0) {
+      reqDto.update_msg = {
+        msg_id: latestMsgId,
+        content: latestMsg.content,
+        tokens: latestMsg.tokens,
+      }
+      setChatMsg(function (msgs) {
+        return msgs.map(function (m) {
+          if (m.id === latestMsgId) {
+            const contents = undefined
+            return {
+              ...m,
+              contents,
+            }
+          } else {
+            return m
+          }
+        })
+      })
     }
 
     try {
