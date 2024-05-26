@@ -62,8 +62,9 @@ export default function OnlyLive2D() {
     console.log('audio play ended')
 
     if ((window as any).webkit && (window as any).webkit.messageHandlers) {
+      document.body.style.backgroundColor = 'gray'
       console.log('audio play end to webkit')
-      ;(window as any)?.webkit?.messageHandlers?.playMsgEnded?.postMessage()
+      ;(window as any).webkit.messageHandlers.playMsgEnded.postMessage()
       console.log('audio play end to webkit success')
     }
 
