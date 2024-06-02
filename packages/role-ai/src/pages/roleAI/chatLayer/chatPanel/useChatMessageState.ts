@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useChatHistory } from '../context/ChatHistoryContextProvider'
 import { ChatRole } from '@/core/ChatRole'
+import { useChatHistory } from '../../context/ChatHistoryContextProvider'
 
 export function useChatMessageState() {
   const { chatHistory } = useChatHistory()

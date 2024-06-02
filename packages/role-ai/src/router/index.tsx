@@ -1,15 +1,15 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom'
 import App from '@/App'
 import RoleAI from '@/pages/roleAI/RoleAI'
-import PageView from '@/pages/roleAI/charactersPanel/pageView/PageView'
-import CharacterDetailView from '@/pages/roleAI/charactersPanel/pageView/characterDetailView/CharacterDetailView'
-import CharacterDetailEditPromptView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditPromptView/CharacterDetailEditPromptView'
-import CharacterDetailEditAvatarView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditAvatarView/CharacterDetailEditAvatarView'
-import CharacterDetailEditCoverView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditCoverView/CharacterDetailEditCoverView'
-import CharacterDetailEditToneView from '@/pages/roleAI/charactersPanel/pageView/characterDetailEditToneView/CharacterDetailEditToneView'
+import PageView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/PageView'
+import CharacterDetailView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterDetailView/CharacterDetailView'
+import CharacterDetailEditPromptView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterDetailEditPromptView/CharacterDetailEditPromptView'
+import CharacterDetailEditAvatarView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterDetailEditAvatarView/CharacterDetailEditAvatarView'
+import CharacterDetailEditCoverView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterDetailEditCoverView/CharacterDetailEditCoverView'
+import CharacterDetailEditToneView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterDetailEditToneView/CharacterDetailEditToneView'
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
-import AvatarLive2dSettingView from '@/pages/roleAI/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
-import CharacterNameSettingView from '@/pages/roleAI/charactersPanel/pageView/characterNameSettingView/CharacterNameSettingView'
+import AvatarLive2dSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
+import CharacterNameSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterNameSettingView/CharacterNameSettingView'
 
 const router = createBrowserRouter([
   {

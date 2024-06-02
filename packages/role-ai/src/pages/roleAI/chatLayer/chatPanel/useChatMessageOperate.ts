@@ -1,15 +1,15 @@
 import { MessageSummaryState, NuwaChatMessage, nuwaChatMessage } from '@/core/ChatMessage'
-import { useCurrentCharacterCardInfo } from '../context/CurrentCharacterCardInfoContextProvider'
 import { ChatRole } from '@/core/ChatRole'
-import { useChatHistory, useSetChatHistory } from '../context/ChatHistoryContextProvider'
 import { ChatCompletionReqDto } from '@/api/chat/reqDto'
 import { chatCompletionStream } from '@/api/chat/chatCompletion'
 import { msgMacrosReplace } from '@/core/promptMessageGenerator'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSetCurrentCharacterCardInfoId } from '../context/CurrentCharacterCardInfoIdContextProvider'
 import { newChat as newChatReq } from '@/api/chat/chat'
 import toast from 'react-hot-toast'
+import { useSetCurrentCharacterCardInfoId } from '../../context/CurrentCharacterCardInfoIdContextProvider'
+import { useCurrentCharacterCardInfo } from '../../context/CurrentCharacterCardInfoContextProvider'
+import { useChatHistory, useSetChatHistory } from '../../context/ChatHistoryContextProvider'
 
 export function useChatMessageOperate() {
   const navigate = useNavigate()

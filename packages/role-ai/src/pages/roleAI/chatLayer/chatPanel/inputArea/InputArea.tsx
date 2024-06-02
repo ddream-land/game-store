@@ -7,9 +7,9 @@ import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentChara
 import { useTranslation } from 'react-i18next'
 import ControlDialog from './controlDialog/ControlDialog'
 import { useNavigate } from 'react-router-dom'
-import { useSetTTSText } from '../../context/TTSContextProvider'
 import { useChatMessageOperate } from '../useChatMessageOperate'
 import { useChatMessageState } from '../useChatMessageState'
+import { useSetTTSText } from '@/pages/roleAI/context/TTSContextProvider'
 
 export default function InputArea() {
   const { t: tCommon } = useTranslation('common')

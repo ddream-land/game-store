@@ -5,10 +5,9 @@ import router from './router/index.tsx'
 import { RouterProvider } from 'react-router-dom'
 import { NextUIProvider } from '@nextui-org/react'
 import './index.scss'
+import '@ddreamland/common/style.css'
 
-ReactDOM.createRoot(
-  document.getElementById('root')!
-).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Suspense fallback={<div>Loading...</div>}>
       <NextUIProvider className="w-full h-full bg-transparent">

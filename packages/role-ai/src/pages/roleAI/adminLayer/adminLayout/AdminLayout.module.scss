@@ -1,0 +1,28 @@
+.adminLayout {
+  &.mask {
+    backdrop-filter: blur(10px);
+  }
+
+  .panel {
+    width: 611px;
+    padding: 50px;
+    // background-color: rgba(100, 100, 100, 0.3);
+    transition: width 0.2s;
+
+    &.minify {
+      width: 500px;
+    }
+
+    .siderbar {
+      min-height: 78px;
+    }
+    .characters {
+      height: 800px;
+      transition: all 0.3s;
+
+      &.minify {
+        height: 165px;
+      }
+    }
+  }
+}

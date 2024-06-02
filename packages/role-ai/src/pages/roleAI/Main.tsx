@@ -38,7 +38,10 @@ export default function Main({ children }: { children: ReactNode }) {
   )
 
   return (
-    <div className={`${classes.main} w-full h-full flex flex-row box-border`} style={mainStyle}>
+    <div
+      className={`${classes.main} w-full h-full relative flex flex-row box-border`}
+      style={mainStyle}
+    >
       {children}
     </div>
   )

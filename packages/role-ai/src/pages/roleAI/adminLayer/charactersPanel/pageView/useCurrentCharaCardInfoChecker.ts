@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useCurrentCharacterCardInfo } from '../../context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentCharacterCardInfo } from '../../../context/CurrentCharacterCardInfoContextProvider'
 import { useNavigate } from 'react-router-dom'
 
 export function useCurrentCharaCardInfoChecker() {
