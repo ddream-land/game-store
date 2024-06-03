@@ -2,6 +2,10 @@ import classes from './AdminLayout.module.scss'
 import { DDLSidebar } from '@ddreamland/common'
 import { useMouseHoverOp } from './useMouseHoverOp'
 import { useState } from 'react'
+import Characters from '../charactersPanel/characters/Characters'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useSetCurrentCharacterCardInfoId } from '../../context/CurrentCharacterCardInfoIdContextProvider'
+import MinimizedOverview from '../charactersPanel/minimizedOverview/MinimizedOverview'
 
 export interface AdminLayoutProps {
   readonly children?: React.ReactNode
@@ -12,6 +16,14 @@ function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpened, setSidebarOpened] = useState(false)
 
   const showMask = !minify || sidebarOpened
+
+  const navigate = useNavigate()
+  const setCurrent = useSetCurrentCharacterCardInfoId()
+
+  function onCharaSelected(id: string) {
+    setCurrent(id)
+    navigate(`detail`)
+  }
 
   return (
     <div
@@ -45,8 +57,19 @@ function AdminLayout({ children }: AdminLayoutProps) {
           onMouseLeave={mouseOutofPanel}
           className={`${classes.characters} ${
             minify ? classes.minify : ''
-          } w-full flex-none bg-slate-600 pointer-events-auto`}
-        ></div>
+          } w-full relative flex-none bg-slate-600 pointer-events-auto`}
+        >
+          <Characters
+            className={`${!minify ? 'block' : 'hidden'}`}
+            characterSelected={onCharaSelected}
+          ></Characters>
+
+          {minify && <MinimizedOverview></MinimizedOverview>}
+
+          <div className={`${!minify ? '' : 'hidden'}`}>
+            <Outlet></Outlet>
+          </div>
+        </div>
       </div>
     </div>
   )

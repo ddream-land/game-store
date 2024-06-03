@@ -7,7 +7,6 @@ import { ChatRole } from '@/core/ChatRole'
 import { msgMacrosReplace } from '@/core/promptMessageGenerator'
 import InputArea from './inputArea/InputArea'
 import ChatHistory from './chatHistory/ChatHistory'
-import { useSetTTSText } from '../context/TTSContextProvider'
 import { chatHistory } from '@/api/chat/chat'
 import { NuwaChatMessage, nuwaChatMessage } from '@/core/ChatMessage'
 

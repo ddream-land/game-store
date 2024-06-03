@@ -1,6 +1,7 @@
 .adminLayout {
   &.mask {
     backdrop-filter: blur(10px);
+    pointer-events: auto;
   }
 
   .panel {
@@ -16,9 +17,12 @@
     .siderbar {
       min-height: 78px;
     }
+
     .characters {
       height: 800px;
       transition: all 0.3s;
+      background: rgba(18, 19, 21, 1);
+      border-radius: 16px;
 
       &.minify {
         height: 165px;
