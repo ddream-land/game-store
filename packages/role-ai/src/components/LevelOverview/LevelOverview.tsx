@@ -1,4 +1,5 @@
 import classes from './LevelOverview.module.scss'
+import { Progress } from '@nextui-org/react'
 
 export type LevelOverviewProps = Readonly<{
   levelIconUrl: string
@@ -24,11 +25,23 @@ export default function LevelOverview({
           <div className={`${classes.level}`}>{levelName}</div>
           <div className={`${classes.xp}`}>
             <span>{`${xpCurrent}xp`}</span>
-            <span>/</span>
-            <span>{`${xpTotal}xp`}</span>
+            <span className=" opacity-30">/</span>
+            <span className=" opacity-30">{`${xpTotal}xp`}</span>
           </div>
         </div>
-        <div className={`${classes.desc} truncate`}>{}</div>
+        <div className={`${classes.progress} flex flex-row justify-between`}>
+          <Progress
+            aria-label={xpCurrent.toString()}
+            value={(xpCurrent / xpTotal) * 100}
+            radius="sm"
+            className="w-full"
+            classNames={{
+              base: 'w-full h-full relative',
+              track: 'w-full h-full rounded-lg bg-[#666]',
+              indicator: `bg-[#B5FF3A] ${classes.addLight}`,
+            }}
+          />
+        </div>
       </div>
     </div>
   )

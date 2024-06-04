@@ -46,6 +46,7 @@ function AdminLayout({ children }: AdminLayoutProps) {
                 'zh-CN': 'Role AI',
               },
             }}
+            minifyTimeout={0}
             onPanelSizeChange={(toFull) => {
               setSidebarOpened(toFull)
             }}

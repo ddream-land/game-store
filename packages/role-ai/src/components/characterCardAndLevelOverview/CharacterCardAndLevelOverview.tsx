@@ -27,7 +27,7 @@ export default function CharacterCardAndLevelOverview({
 
   return (
     <div className={`${classes.cardAndLevel} w-[400px] h-[165px]`} style={style}>
-      <div className={`${classes.info} flex-1 flex flex-col justify-between`}>
+      <div className={`${classes.info} h-full flex-1 flex flex-col justify-between`}>
         <CharacterCardOverview
           name={name}
           description={description}

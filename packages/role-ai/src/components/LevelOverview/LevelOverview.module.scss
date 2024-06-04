@@ -1,20 +1,45 @@
 .levelOverview {
   .info {
     .name {
-      font-family: Roboto;
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 20px;
-      text-align: left;
-      color: rgba(255, 255, 255, 1);
+      margin-top: 2px;
+
+      .level {
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        text-align: left;
+        color: white;
+      }
+
+      .xp {
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+        color: white;
+      }
     }
-    .desc {
-      font-family: Roboto;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 14px;
-      text-align: left;
-      color: rgba(255, 255, 255, 1);
+
+    .progress {
+      margin-top: 10px;
+      height: 4px;
+
+      .addLight {
+        &::after {
+          content: '';
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          right: 0;
+          background: radial-gradient(
+            circle at center,
+            rgba(255, 255, 255, 1) 0,
+            rgba(255, 255, 255, 0.6) 50%,
+            transparent 100%
+          );
+        }
+      }
     }
   }
 }

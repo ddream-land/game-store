@@ -25,5 +25,6 @@
   "live2dFollowCursor": "视线跟随鼠标",
   "live2dLipSync": "唇形语音同步",
   "live2dClickAnimation": "点击动画",
-  "newTagTxt": "Tag"
+  "newTagTxt": "Tag",
+  "chatWithAINow": "现在开始聊天吧!"
 }
