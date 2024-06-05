@@ -13,7 +13,7 @@ export function useMouseHoverOp(minifyTimeout: number = 2000) {
   function mouseOutofPanel() {
     MINIFY_PANEL_TIMER_SIGNAL && clearTimeout(MINIFY_PANEL_TIMER_SIGNAL)
     MINIFY_PANEL_TIMER_SIGNAL = window.setTimeout(() => {
-      setMinify(true)
+      // setMinify(true)
     }, minifyTimeout)
   }
 

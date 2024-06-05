@@ -1,0 +1,60 @@
+.sidePanel {
+  border-right: solid 1px rgba(10, 11, 13, 1);
+
+  .user {
+    width: 46px;
+    height: 46px;
+    border-radius: 23px;
+    border: 1.6px solid rgba(113, 113, 113, 1);
+
+    .flag {
+      width: 16px;
+      height: 16px;
+      background: url('/imgs/user-flag.png');
+    }
+  }
+
+  .op {
+    .text {
+      font-family: Roboto;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .square {
+      .icon {
+        background: url('/imgs/square.png');
+      }
+    }
+    .upload {
+      .icon {
+        background: url('/imgs/upload2.png');
+      }
+    }
+    .create {
+      .icon {
+        background: url('/imgs/create.png');
+      }
+    }
+  }
+
+  .setting {
+    width: 38px;
+    height: 45px;
+
+    .icon {
+      background: url('/imgs/setting2.png');
+    }
+
+    .text {
+      font-family: Roboto;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
