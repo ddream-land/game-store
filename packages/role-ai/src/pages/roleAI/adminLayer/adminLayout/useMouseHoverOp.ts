@@ -3,7 +3,7 @@ import { useState } from 'react'
 let MINIFY_PANEL_TIMER_SIGNAL: number | undefined
 
 export function useMouseHoverOp(minifyTimeout: number = 2000) {
-  const [minify, setMinify] = useState(false)
+  const [minify, setMinify] = useState(true)
 
   function mouseOnPanel() {
     MINIFY_PANEL_TIMER_SIGNAL && clearTimeout(MINIFY_PANEL_TIMER_SIGNAL)
@@ -13,7 +13,7 @@ export function useMouseHoverOp(minifyTimeout: number = 2000) {
   function mouseOutofPanel() {
     MINIFY_PANEL_TIMER_SIGNAL && clearTimeout(MINIFY_PANEL_TIMER_SIGNAL)
     MINIFY_PANEL_TIMER_SIGNAL = window.setTimeout(() => {
-      // setMinify(true)
+      setMinify(true)
     }, minifyTimeout)
   }
 
