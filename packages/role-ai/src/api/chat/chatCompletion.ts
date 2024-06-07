@@ -36,9 +36,11 @@ export async function chatCompletionStream(
   }: NuwaRequestStreamEvent
 ) {
   const timeout = setTimeout(function () {
+    console.log('stream timeout ended.')
+
     onEnd && onEnd()
     clearTimeout(timeout)
-  }, HTTP_TIMEOUT * 5)
+  }, HTTP_TIMEOUT * 10)
 
   const url = getFullUrl(`/api/backends/chat-completions/chat`)
 

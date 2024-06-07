@@ -1,5 +1,6 @@
 import classes from './ControlDialog.module.scss'
 import { useTranslation } from 'react-i18next'
+import { DDLSplitLine } from '@ddreamland/common'
 
 export type ControlDialogProps = Readonly<{
   regenerate: () => void
@@ -26,10 +27,7 @@ export default function ControlDialog({
   return (
     <>
       <div className={`${classes.controlDialog} absolute`}>
-        <div className={`${classes.header} flex justify-end`}>
-          <div onClick={closeDialog} className={`${classes.close} cursor-pointer`}></div>
-        </div>
-        <div className={`${classes.content} flex flex-row flex-wrap justify-center items-center`}>
+        <div className={`${classes.content} flex flex-col justify-center items-center`}>
           <div
             onClick={() => {
               regenerateEnable && regenerate()
@@ -38,11 +36,12 @@ export default function ControlDialog({
               regenerateEnable ? '' : classes.disable
             } cursor-pointer`}
           >
-            {t('regenerate')} &nbsp;
+            <span className={`${classes.icon}`}></span> <span>{t('regenerate')}</span>
           </div>
-          <div onClick={newChat} className={`${classes.new} ${classes.btn}  cursor-pointer`}>
+          <DDLSplitLine className=""></DDLSplitLine>
+          {/* <div onClick={newChat} className={`${classes.new} ${classes.btn} cursor-pointer`}>
             {t('newConversation')} &nbsp;
-          </div>
+          </div> */}
           <div
             onClick={() => {
               continueEnable && continueMsg()
@@ -51,10 +50,11 @@ export default function ControlDialog({
               continueEnable ? '' : classes.disable
             } cursor-pointer`}
           >
-            {tCommon('continue')} &nbsp;
+            <span className={`${classes.icon}`}></span> <span>{tCommon('continue')}</span>
           </div>
+          <DDLSplitLine className=""></DDLSplitLine>
           <div onClick={closeChat} className={`${classes.clo} ${classes.btn} cursor-pointer`}>
-            {t('hideConversation')} &nbsp;
+            <span className={`${classes.icon}`}></span> <span>{t('endConversation')}</span>
           </div>
         </div>
       </div>

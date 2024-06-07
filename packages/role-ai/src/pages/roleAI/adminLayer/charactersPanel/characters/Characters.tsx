@@ -26,12 +26,12 @@ function Characters({ characterSelected, className }: CharactersProps) {
       <div className="flex-none">
         <SidePanel></SidePanel>
       </div>
-      <div className="flex-1 overflow-hidden">
-        <div className={`${classes.overview} w-full p-[10px]`}>
+      <div className="flex-1 overflow-hidden flex flex-col">
+        <div className={`${classes.overview} w-full p-[10px] flex-none`}>
           <CharacterCardAndLevelOverview
             bgColor="rgba(44, 44, 50, 1)"
-            name="Cyperpunk.V"
-            description="The quick brown fox jumps over the ..."
+            name={charaCardInfo?.card.data.name ?? 'Cyperpunk.V'}
+            description={charaCardInfo?.card.data.creator_notes ?? ''}
             avatarUrl={
               charaCardInfo?.pngUrlOrBase64
                 ? `${charaCardInfo.pngUrlOrBase64}/w350`
@@ -43,8 +43,8 @@ function Characters({ characterSelected, className }: CharactersProps) {
             xpTotal={1400}
           ></CharacterCardAndLevelOverview>
         </div>
-        <div className={`${classes.tabs} w-full h-[40px]`}>
-          <Tabs
+        <div className={`${classes.tabs} w-full h-[40px] mt-[21px] flex-none bg-gray-500`}>
+          {/* <Tabs
             aria-label="Tabs"
             radius="full"
             className=""
@@ -67,21 +67,12 @@ function Characters({ characterSelected, className }: CharactersProps) {
           >
             <Tab key="all" title="All" />
             <Tab key="nft" title="NFT" />
-          </Tabs>
+          </Tabs> */}
         </div>
-        <CharacterList characterSelected={characterSelected}></CharacterList>
+        <div className={`${classes.list} mt-[18px] flex-1 overflow-hidden`}>
+          <CharacterList characterSelected={characterSelected}></CharacterList>
+        </div>
       </div>
     </div>
   )
 }
-// return (
-//   <div className={`${classes.characters} ${className ?? ''} flex flex-col h-full w-full`}>
-//     <div className="flex-none">
-//       <HeaderInfo></HeaderInfo>
-//     </div>
-//     <div className="flex-1 overflow-hidden">
-//       <CharacterList characterSelected={characterSelected}></CharacterList>
-//     </div>
-//   </div>
-// )
-// }

@@ -13,10 +13,10 @@ export default function MinimizedOverview({}: MinimizedOverviewProps) {
 
   const content = charaCardInfo ? (
     <CharacterCardAndLevelOverview
-      name="Cyperpunk.V"
-      description="The quick brown fox jumps over the ..."
+      name={charaCardInfo.card.data.name}
+      description={charaCardInfo.card.data.creator_notes}
       avatarUrl={
-        charaCardInfo.pngUrlOrBase64
+        charaCardInfo?.pngUrlOrBase64
           ? `${charaCardInfo.pngUrlOrBase64}/w350`
           : `/imgs/default-avatar5.png`
       }

@@ -13,7 +13,7 @@ export default function CharacterCardOverview({
 }: CharacterCardOverviewProps) {
   return (
     <div className={`${classes.cardOverview} w-full h-[54px] flex flex-row gap-9`}>
-      <div className={`${classes.info} flex-1 flex flex-col`}>
+      <div className={`${classes.info} flex-1 flex flex-col overflow-hidden`}>
         <div className={`${classes.name}`}>{name}</div>
         <div className={`${classes.desc} mt-2 truncate`}>{description}</div>
       </div>

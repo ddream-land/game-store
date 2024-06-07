@@ -76,11 +76,11 @@ export default function InputArea() {
     await sendChat(textareaEl.current?.value)
   }
 
-  function newBtnClicked() {
+  function menuClicked() {
     if (isChatMsgResponsing) {
       return
     }
-    setControlDialogVisible(true)
+    setControlDialogVisible(!controlDialogVisible)
   }
 
   function dialogCloseBtnClicked() {
@@ -136,19 +136,22 @@ export default function InputArea() {
             onClick={sendBtnClicked}
             className={`${classes.btn} ${classes.send} ${
               isChatMsgResponsing ? ' cursor-not-allowed' : 'cursor-pointer'
-            } bg-no-repeat bg-center flex-none`}
+            } bg-no-repeat bg-center flex-none hidden`}
           >
             {' '}
           </div>
         </div>
         <div
-          onClick={newBtnClicked}
-          className={`${classes.new} ${
+          onClick={menuClicked}
+          className={`${classes.menuBtn} ${
             isChatMsgResponsing ? ' cursor-not-allowed' : 'cursor-pointer'
-          } flex-none flex justify-center items-center`}
+          } ${
+            controlDialogVisible ? classes.opened : ''
+          } flex-none flex justify-center items-center relative`}
         >
-          +
+          <div className={`${classes.icon} w-[24px] h-[24px]`}></div>
         </div>
+
         {controlDialogVisible && (
           <ControlDialog
             regenerateEnable={regenerateEnable}
