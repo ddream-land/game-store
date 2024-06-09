@@ -1,0 +1,99 @@
+.userPanel {
+  background: #1c1e22;
+  border: 1px solid #242424;
+  box-shadow: 0px 4px 10px 0px #00000040;
+
+  .user {
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 23px;
+      border: 1.6px solid rgba(113, 113, 113, 1);
+    }
+
+    .username {
+      .name {
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0.07em;
+        text-align: left;
+        color: rgba(255, 255, 255, 1);
+      }
+      .flag {
+        width: 16px;
+        height: 16px;
+        background: url('/imgs/user-flag.png');
+      }
+    }
+
+    .info {
+      .type {
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+        text-align: left;
+        color: #ffb240;
+      }
+
+      .expire {
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 12px;
+        text-align: left;
+        color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+  .balance {
+    border-radius: 6px;
+    border: 1px solid;
+    border-image-source: linear-gradient(
+      137.71deg,
+      rgba(255, 255, 255, 0.15) 16.61%,
+      rgba(255, 255, 255, 0) 76.19%
+    );
+
+    .title {
+      font-family: Roboto;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 14px;
+      text-align: left;
+      color: #2d1a70;
+    }
+
+    .token {
+      font-family: Poppins;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 34px;
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .icon {
+      background-image: url('/imgs/token-icon.png');
+    }
+
+    .topUp {
+      font-family: Roboto;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  }
+  .logout {
+    border: 1px solid #303030;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+  }
+}

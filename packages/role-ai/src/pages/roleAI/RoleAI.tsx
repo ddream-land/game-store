@@ -1,3 +1,4 @@
+'use client'
 import Main from './Main'
 import { RoleAIContextProvider } from './context/RoleAIContextProvider'
 

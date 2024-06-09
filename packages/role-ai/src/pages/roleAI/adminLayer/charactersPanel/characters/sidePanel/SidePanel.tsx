@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { createCard } from '@/api/characterCard/characterCard'
 import { useSetCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
 import { isString } from '@/libs/isTypes'
+import UserPanel from './UserPanel/UserPanel'
 
 export default SidePanel
 
@@ -66,6 +67,8 @@ function SidePanel() {
           }}
         >
           <div className={`${classes.flag} absolute bottom-0 -right-1`}></div>
+
+          <UserPanel className={`${classes.userPanel}`}></UserPanel>
         </div>
         <div className={`${classes.op} flex flex-col mt-10 gap-6`}>
           <div
@@ -112,14 +115,3 @@ function SidePanel() {
     </div>
   )
 }
-// return (
-//   <div className={`${classes.characters} ${className ?? ''} flex flex-col h-full w-full`}>
-//     <div className="flex-none">
-//       <HeaderInfo></HeaderInfo>
-//     </div>
-//     <div className="flex-1 overflow-hidden">
-//       <CharacterList characterSelected={characterSelected}></CharacterList>
-//     </div>
-//   </div>
-// )
-// }

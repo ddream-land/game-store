@@ -45,8 +45,10 @@ function CharacterList({ characterSelected, characterChat }: CharacterListProps)
       <div
         key={id}
         onClick={(e) => onItemClicked(id)}
-        className={`${classes.item} cursor-pointer mb-3 flex flex-row`}
+        className={`${classes.item} cursor-pointer mb-3 flex flex-row relative overflow-hidden`}
       >
+        <div className={`${classes.nftFlag} absolute w-[60px] h-[22px] top-0 right-0`}></div>
+
         <div
           className={`${classes.avatar} w-[80px] h-[92px] rounded bg-[rgba(103, 103, 103, 1)] flex-none overflow-hidden`}
         >

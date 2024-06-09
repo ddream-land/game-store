@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "packageManager": "pnpm@8.15.6",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -13,7 +12,8 @@
   "dependencies": {
     "@ddreamland/common": "^0.0.12",
     "@microsoft/fetch-event-source": "^2.0.1",
-    "@nextui-org/react": "^2.3.6",
+    "@nextui-org/react": "2.3.6",
+    "@pixi/constants": "6.5.2",
     "@pixi/core": "6.5.2",
     "@pixi/filter-ascii": "4.2.0",
     "@pixi/filter-crt": "4.2.0",

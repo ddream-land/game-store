@@ -23,5 +23,8 @@
   "autoPlay": "Autoplay",
   "setting": "Setting",
   "chat": "Chat",
-  "chatting": "Chatting"
+  "chatting": "Chatting",
+  "logout": "Log Out",
+  "balance": "Balance",
+  "topUp": "Top-up"
 }

@@ -23,5 +23,8 @@
   "autoPlay": "自动播放",
   "setting": "设置",
   "chat": "聊天",
-  "chatting": "聊天中"
+  "chatting": "聊天中",
+  "logout": "登出",
+  "balance": "余额",
+  "topUp": "充值"
 }
