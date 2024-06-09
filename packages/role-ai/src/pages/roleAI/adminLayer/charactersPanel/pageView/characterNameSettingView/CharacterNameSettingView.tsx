@@ -7,7 +7,7 @@ import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecke
 import { useNavigateBack } from '@/router/useNavigateBack'
 import toast from 'react-hot-toast'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import { cloneDeep } from 'lodash'
 import { Input, cn } from '@nextui-org/react'
@@ -25,7 +25,7 @@ function CharacterNameSettingView() {
     inputRef.current && inputRef.current.focus()
   }, [])
 
-  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
+  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
 

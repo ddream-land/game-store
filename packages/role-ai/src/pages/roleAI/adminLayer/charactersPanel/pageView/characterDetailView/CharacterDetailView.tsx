@@ -2,7 +2,7 @@ import { MouseEvent, WheelEvent, useEffect, useState } from 'react'
 import classes from './CharacterDetailView.module.scss'
 import CharacterInfo from './characterInfo/CharacterInfo'
 import TabsArea from './tabsArea/TabsArea'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import BackButton from '@/components/backButton/BackButton'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useNavigateBack } from '@/router/useNavigateBack'
@@ -11,7 +11,7 @@ export default CharacterDetailView
 
 function CharacterDetailView() {
   const navigate = useNavigate()
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
 
   useEffect(function () {
     if (!charaCardInfo) {

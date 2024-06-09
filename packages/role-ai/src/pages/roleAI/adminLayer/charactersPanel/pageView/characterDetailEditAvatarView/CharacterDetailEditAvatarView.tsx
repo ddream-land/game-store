@@ -17,7 +17,7 @@ import {
   NuwaExtensionVersion,
 } from '@/core/characterCard/NuwaCharacterCardExtensions'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
 import { Outlet, useNavigate } from 'react-router-dom'
@@ -26,7 +26,7 @@ export default CharacterDetailEditAvatarView
 
 function CharacterDetailEditAvatarView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
+  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const live2dInputEl = useRef<HTMLInputElement>(null)
   const vrmInputEl = useRef<HTMLInputElement>(null)

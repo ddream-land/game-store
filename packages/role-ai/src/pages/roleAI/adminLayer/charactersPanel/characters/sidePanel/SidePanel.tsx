@@ -4,7 +4,7 @@ import { DDLSplitLine } from '@ddreamland/common'
 import { ChangeEvent, useRef } from 'react'
 import toast from 'react-hot-toast'
 import { createCard } from '@/api/characterCard/characterCard'
-import { useSetCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
+import { useSetCharacterInfoList } from '@/pages/roleAI/context/CharacterInfoListContextProvider'
 import { isString } from '@/libs/isTypes'
 import UserPanel from './UserPanel/UserPanel'
 
@@ -13,7 +13,7 @@ export default SidePanel
 function SidePanel() {
   const { t: tCommon } = useTranslation('common')
   const { t: tRoleAI } = useTranslation('roleAI')
-  const { setCharacterCardInfoList, refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
+  const { refreshCharacterInfoList } = useSetCharacterInfoList()
 
   const userAvatar = `/imgs/default-user.png`
 
@@ -40,7 +40,7 @@ function SidePanel() {
         toast.success(tCommon('uploaded'), {
           id: id,
         })
-        await refreshCharacterCardInfoList()
+        await refreshCharacterInfoList()
       } else {
         throw new Error(res.msg)
       }

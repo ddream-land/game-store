@@ -1,8 +1,8 @@
 import { deleteCard, exportCardPNG } from '@/api/characterCard/characterCard'
 import { isString } from '@/libs/isTypes'
 import { saveBlob } from '@/libs/saveBlob'
-import { useSetCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useSetCharacterInfoList } from '@/pages/roleAI/context/CharacterInfoListContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { useEffect, useState, MouseEvent } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom'
 
 export function useMenuDialog() {
   const [menuDialogOpened, setMenuDialogOpened] = useState(false)
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
-  const { refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const { refreshCharacterInfoList } = useSetCharacterInfoList()
   const navigate = useNavigate()
   const { t: tCommon } = useTranslation('common')
 
@@ -70,7 +70,7 @@ export function useMenuDialog() {
         id: id,
       })
       navigate('/')
-      await refreshCharacterCardInfoList()
+      await refreshCharacterInfoList()
     } else {
       toast(tCommon('opFailed'), {
         id: id,

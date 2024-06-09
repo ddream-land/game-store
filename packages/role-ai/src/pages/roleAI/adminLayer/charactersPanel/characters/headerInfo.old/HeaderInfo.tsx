@@ -1,14 +1,14 @@
 import {
-  useCharacterCardInfoList,
-  useSetCharacterCardInfoList,
-} from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
+  useCharacterInfoList,
+  useSetCharacterInfoList,
+} from '@/pages/roleAI/context/CharacterInfoListContextProvider'
 import classes from './HeaderInfo.module.scss'
 import { useRef, ChangeEvent, useEffect } from 'react'
 import { extractChunks } from '@/libs/pngChunks'
 import { readCharacterCardFromChunks } from '@/core/characterCard/characterCard'
 import { toBase64 } from '@/libs/fileBase64Encode'
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 import { createCard } from '@/api/characterCard/characterCard'
 import toast from 'react-hot-toast'
@@ -22,9 +22,9 @@ let uid = Date.now()
 function HeaderInfo({}: HeaderInfoProps) {
   const { t } = useTranslation('roleAI')
   const { t: tCommon } = useTranslation('common')
-  const characterCardInfoList = useCharacterCardInfoList()
-  const { setCharacterCardInfoList, refreshCharacterCardInfoList } = useSetCharacterCardInfoList()
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const characterCardInfoList = useCharacterInfoList()
+  const { setCharacterInfoList, refreshCharacterInfoList } = useSetCharacterInfoList()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
 
   const titleDesc = charaCardInfo ? t('conversationWith') : tCommon('select')
 
@@ -56,7 +56,7 @@ function HeaderInfo({}: HeaderInfoProps) {
         id: (uid++).toString(),
       }
 
-      setCharacterCardInfoList([...characterCardInfoList, cardInfo])
+      setCharacterInfoList([...characterCardInfoList, cardInfo])
     } catch {}
   }
 
@@ -74,7 +74,7 @@ function HeaderInfo({}: HeaderInfoProps) {
         toast.success(tCommon('uploaded'), {
           id: id,
         })
-        await refreshCharacterCardInfoList()
+        await refreshCharacterInfoList()
       } else {
         throw new Error(res.msg)
       }

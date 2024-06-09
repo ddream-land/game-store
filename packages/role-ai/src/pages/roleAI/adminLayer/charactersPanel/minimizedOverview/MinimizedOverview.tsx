@@ -1,12 +1,12 @@
 import classes from './MinimizedOverview.module.scss'
 import SelectPrompt from './selectPrompt/SelectPrompt'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import CharacterCardAndLevelOverview from '@/components/characterCardAndLevelOverview/CharacterCardAndLevelOverview'
 
 export interface MinimizedOverviewProps {}
 
 export default function MinimizedOverview({}: MinimizedOverviewProps) {
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
 
   const level = 2
   const levelIconUrl = `/imgs/lv${level.toString().padStart(2, '0')}.png`

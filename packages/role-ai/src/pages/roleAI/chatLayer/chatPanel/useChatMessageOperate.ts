@@ -7,14 +7,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { newChat as newChatReq } from '@/api/chat/chat'
 import toast from 'react-hot-toast'
-import { useSetCurrentCharacterCardInfoId } from '../../context/CurrentCharacterCardInfoIdContextProvider'
-import { useCurrentCharacterCardInfo } from '../../context/CurrentCharacterCardInfoContextProvider'
+import { useSetCurrentChatCharacterId } from '../../context/CurrentChatCharacterIdContextProvider'
+import { useCurrentChatCharacterInfo } from '../../context/CurrentChatCharacterInfoContextProvider'
 import { useChatHistory, useSetChatHistory } from '../../context/ChatHistoryContextProvider'
 
 export function useChatMessageOperate() {
   const navigate = useNavigate()
-  const setCurrentCharacterCardInfoId = useSetCurrentCharacterCardInfoId()
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const setCurrentCharacterCardInfoId = useSetCurrentChatCharacterId()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
   const setChatMsg = useSetChatHistory()
   const { chatHistory } = useChatHistory()
   const [isChatMsgResponsing, setIsChatMsgResponsing] = useState(false)

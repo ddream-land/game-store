@@ -18,14 +18,14 @@ import {
   NuwaExtensionVersion,
   NuwaExtensions,
 } from '@/core/characterCard/NuwaCharacterCardExtensions'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 
 export default CharacterDetailEditCoverView
 
 function CharacterDetailEditCoverView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
+  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const imgInputEl = useRef<HTMLInputElement>(null)

@@ -3,7 +3,7 @@ import CharacterList from './characterList/CharacterList'
 import SidePanel from './sidePanel/SidePanel'
 import { useTranslation } from 'react-i18next'
 import CharacterCardAndLevelOverview from '@/components/characterCardAndLevelOverview/CharacterCardAndLevelOverview'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { Tabs, Tab, cn } from '@nextui-org/react'
 import { DataSource } from '@/core/DataSource'
 
@@ -16,7 +16,7 @@ export default Characters
 
 function Characters({ characterSelected, className }: CharactersProps) {
   const { t: tCommon } = useTranslation('common')
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
 
   const level = 2
   const levelIconUrl = `/imgs/lv${level.toString().padStart(2, '0')}.png`
@@ -51,7 +51,7 @@ function Characters({ characterSelected, className }: CharactersProps) {
           } flex-none px-[10px] py-[2px]`}
         >
           <Tabs
-            aria-label="Charactor datasource"
+            aria-label="Character datasource"
             size="sm"
             radius="full"
             className=""

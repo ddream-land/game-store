@@ -4,7 +4,7 @@ import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
 import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
 import { useNavigateBack } from '@/router/useNavigateBack'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { Switch, cn } from '@nextui-org/react'
 
 type AutoPlaySwitchProps = Readonly<{
@@ -71,7 +71,7 @@ export default CharacterDetailEditToneView
 
 function CharacterDetailEditToneView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
+  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
 

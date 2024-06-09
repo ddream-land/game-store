@@ -4,7 +4,7 @@ import { useMouseHoverOp } from './useMouseHoverOp'
 import { useState } from 'react'
 import Characters from '../charactersPanel/characters/Characters'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useSetCurrentCharacterCardInfoId } from '../../context/CurrentCharacterCardInfoIdContextProvider'
+import { useSetCurrentChatCharacterId } from '../../context/CurrentChatCharacterIdContextProvider'
 import MinimizedOverview from '../charactersPanel/minimizedOverview/MinimizedOverview'
 
 export interface AdminLayoutProps {
@@ -18,7 +18,7 @@ function AdminLayout({ children }: AdminLayoutProps) {
   const showMask = !minify || sidebarOpened
 
   const navigate = useNavigate()
-  const setCurrent = useSetCurrentCharacterCardInfoId()
+  const setCurrent = useSetCurrentChatCharacterId()
 
   function onCharaSelected(id: string) {
     setCurrent(id)

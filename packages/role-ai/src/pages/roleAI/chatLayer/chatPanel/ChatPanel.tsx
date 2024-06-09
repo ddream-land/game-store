@@ -1,8 +1,8 @@
 import classes from './ChatPanel.module.scss'
-import { useCurrentCharacterCardInfoId } from '@/pages/roleAI/context/CurrentCharacterCardInfoIdContextProvider'
+import { useCurrentChatCharacterId } from '@/pages/roleAI/context/CurrentChatCharacterIdContextProvider'
 import { useEffect, useState } from 'react'
 import { useSetChatHistory } from '@/pages/roleAI/context/ChatHistoryContextProvider'
-import { useCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
+import { useCharacterInfoList } from '@/pages/roleAI/context/CharacterInfoListContextProvider'
 import { ChatRole } from '@/core/ChatRole'
 import { msgMacrosReplace } from '@/core/promptMessageGenerator'
 import InputArea from './inputArea/InputArea'
@@ -12,8 +12,8 @@ import { NuwaChatMessage, nuwaChatMessage } from '@/core/ChatMessage'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
-  const currentDigitalLifeId = useCurrentCharacterCardInfoId()
-  const characterCardInfoList = useCharacterCardInfoList()
+  const currentDigitalLifeId = useCurrentChatCharacterId()
+  const characterCardInfoList = useCharacterInfoList()
   const setChatMsg = useSetChatHistory()
 
   useEffect(

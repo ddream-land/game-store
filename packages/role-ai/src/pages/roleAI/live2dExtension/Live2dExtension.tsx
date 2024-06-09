@@ -5,7 +5,7 @@ import {
   useLive2dExtension,
   useSetLive2dExtension,
 } from '../context/Live2dExtensionContextProvider'
-import { useCurrentCharacterCardInfo } from '../context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '../context/CurrentChatCharacterInfoContextProvider'
 import { NuwaExtensionVersion } from '@/core/characterCard/NuwaCharacterCardExtensions'
 import { CharacterAvatarType } from '@/core/CharacterAvatar'
 
@@ -19,7 +19,7 @@ function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { setLive2dExtensionManager } = useSetLive2dExtension()
   const { managerRef } = useLive2dExtension()
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
 
   useEffect(
     function () {

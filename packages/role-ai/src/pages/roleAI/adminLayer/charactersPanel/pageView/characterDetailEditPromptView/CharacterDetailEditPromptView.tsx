@@ -8,7 +8,7 @@ import { useNavigateBack } from '@/router/useNavigateBack'
 import TabsArea, { TabsAreaRef } from './tabsArea/TabsArea'
 import toast from 'react-hot-toast'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
-import { useCurrentCharacterCardInfo } from '@/pages/roleAI/context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import CharacterInfo from './characterInfo/CharacterInfo'
 
@@ -16,7 +16,7 @@ export default CharacterDetailEditView
 
 function CharacterDetailEditView() {
   const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentCharacterCardInfo()
+  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const tabsArea = useRef<TabsAreaRef | null>(null)

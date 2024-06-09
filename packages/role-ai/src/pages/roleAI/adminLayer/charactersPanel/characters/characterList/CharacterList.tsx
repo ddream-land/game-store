@@ -1,4 +1,4 @@
-import { useCharacterCardInfoList } from '@/pages/roleAI/context/CharacterCardInfoListContextProvider'
+import { useCharacterInfoList } from '@/pages/roleAI/context/CharacterInfoListContextProvider'
 import classes from './CharacterList.module.scss'
 import { useTranslation } from 'react-i18next'
 
@@ -12,7 +12,7 @@ export default CharacterList
 function CharacterList({ characterSelected, characterChat }: CharacterListProps) {
   const { t: tCommon } = useTranslation('common')
 
-  const cardList = useCharacterCardInfoList()
+  const cardList = useCharacterInfoList()
 
   function onItemClicked(id: string) {
     characterSelected && characterSelected(id)

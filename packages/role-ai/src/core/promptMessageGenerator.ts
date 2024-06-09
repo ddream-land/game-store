@@ -2,11 +2,11 @@ import { AIChatMessage } from './ChatMessage'
 import { ChatRole } from './ChatRole'
 import { CharacterCardV2 } from './characterCard/characterCardV2'
 
-export function msgMacrosReplace(msg: string, charactorCard: CharacterCardV2): string {
+export function msgMacrosReplace(msg: string, characterCard: CharacterCardV2): string {
   let result = msg
   // Legacy non-macro substitutions
   result = result.replace(/<USER>/gi, 'User')
-  result = result.replace(/<BOT>/gi, charactorCard.data.name)
+  result = result.replace(/<BOT>/gi, characterCard.data.name)
 
   // Short circuit if there are no macros
   if (!result.includes('{{')) {
@@ -16,12 +16,12 @@ export function msgMacrosReplace(msg: string, charactorCard: CharacterCardV2): s
   result = result.replace(/{{user}}/gi, 'User')
   //  result = result.replace(/{{charPrompt}}/gi, );
   //  result = result.replace(/{{charJailbreak}}/gi, );
-  result = result.replace(/{{char}}/gi, charactorCard.data.name)
-  result = result.replace(/{{description}}/gi, charactorCard.data.description)
-  result = result.replace(/{{scenario}}/gi, charactorCard.data.scenario)
-  result = result.replace(/{{personality}}/gi, charactorCard.data.personality)
+  result = result.replace(/{{char}}/gi, characterCard.data.name)
+  result = result.replace(/{{description}}/gi, characterCard.data.description)
+  result = result.replace(/{{scenario}}/gi, characterCard.data.scenario)
+  result = result.replace(/{{personality}}/gi, characterCard.data.personality)
   //  result = result.replace(/{{persona}}/gi, );
-  result = result.replace(/{{mesExamples}}/gi, charactorCard.data.mes_example)
+  result = result.replace(/{{mesExamples}}/gi, characterCard.data.mes_example)
   //  result = result.replace(/{{lastMessageId}}/gi, );
   //  result = result.replace(/{{lastMessage}}/gi, );
   //  result = result.replace(/{{lastCharMessage}}/gi, );
@@ -30,66 +30,66 @@ export function msgMacrosReplace(msg: string, charactorCard: CharacterCardV2): s
   return result
 }
 
-export function preMsgGenerator(charactorCard: CharacterCardV2): AIChatMessage[] {
+export function preMsgGenerator(characterCard: CharacterCardV2): AIChatMessage[] {
   const preMsg: { role: ChatRole; content: string }[] = []
 
   const mainMsg = `rite {{char}}'s next reply in a fictional chat between {{char}} and {{user}}. Write 1 reply only in internet RP style, italicize actions, and avoid quotation marks. Use markdown. Be proactive, creative, and drive the plot and conversation forward. Write at least 1 paragraph, up to 4. Always stay in character and avoid repetition.`
   mainMsg &&
     preMsg.push({
       role: ChatRole.System,
-      content: msgMacrosReplace(mainMsg, charactorCard),
+      content: msgMacrosReplace(mainMsg, characterCard),
     })
 
   // const wordInfoMsg = ``
   // preMsg.push({
   //   role: ChatRole.System,
-  //   content: msgMacrosReplace(wordInfoMsg, charactorCard),
+  //   content: msgMacrosReplace(wordInfoMsg, characterCard),
   // })
 
   // const personaDescriptionMsg = ``
   // preMsg.push({
   //   role: ChatRole.System,
-  //   content: msgMacrosReplace(personaDescriptionMsg, charactorCard),
+  //   content: msgMacrosReplace(personaDescriptionMsg, characterCard),
   // })
 
-  const description = charactorCard.data.description
+  const description = characterCard.data.description
   description &&
     preMsg.push({
       role: ChatRole.System,
-      content: msgMacrosReplace(description, charactorCard),
+      content: msgMacrosReplace(description, characterCard),
     })
 
-  const personality = charactorCard.data.personality
+  const personality = characterCard.data.personality
   personality &&
     preMsg.push({
       role: ChatRole.System,
-      content: msgMacrosReplace(personality, charactorCard),
+      content: msgMacrosReplace(personality, characterCard),
     })
 
-  const scenario = charactorCard.data.scenario
+  const scenario = characterCard.data.scenario
   scenario &&
     preMsg.push({
       role: ChatRole.System,
-      content: msgMacrosReplace(scenario, charactorCard),
+      content: msgMacrosReplace(scenario, characterCard),
     })
 
-  // const NSFW = charactorCard.data.
+  // const NSFW = characterCard.data.
   // preMsg.push({
   //   role: ChatRole.System,
-  //   content: msgMacrosReplace(NSFW, charactorCard),
+  //   content: msgMacrosReplace(NSFW, characterCard),
   // })
 
-  const mes_example = charactorCard.data.mes_example
+  const mes_example = characterCard.data.mes_example
   mes_example &&
     preMsg.push({
       role: ChatRole.System,
-      content: msgMacrosReplace(mes_example, charactorCard),
+      content: msgMacrosReplace(mes_example, characterCard),
     })
 
-  // const mes_example = charactorCard.data.
+  // const mes_example = characterCard.data.
   // preMsg.push({
   //   role: ChatRole.System,
-  //   content: msgMacrosReplace(mes_example, charactorCard),
+  //   content: msgMacrosReplace(mes_example, characterCard),
   // })
 
   return preMsg

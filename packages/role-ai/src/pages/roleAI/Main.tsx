@@ -1,6 +1,6 @@
 import classes from './Main.module.scss'
 import { CSSProperties, ReactNode, useEffect, useState } from 'react'
-import { useCurrentCharacterCardInfo } from './context/CurrentCharacterCardInfoContextProvider'
+import { useCurrentChatCharacterInfo } from './context/CurrentChatCharacterInfoContextProvider'
 import { useLive2dExtension } from './context/Live2dExtensionContextProvider'
 import { NuwaExtensionVersion } from '@/core/characterCard/NuwaCharacterCardExtensions'
 
@@ -8,7 +8,7 @@ const DEFAULT_MAIN_BG = '/default-bg.jpg'
 
 export default function Main({ children }: { children: ReactNode }) {
   const [mainBgUrl, setMainBgUrl] = useState(DEFAULT_MAIN_BG)
-  const { charaCardInfo } = useCurrentCharacterCardInfo()
+  const { charaCardInfo } = useCurrentChatCharacterInfo()
 
   const mainStyle: CSSProperties = {
     backgroundImage: `url('${mainBgUrl}')`,
