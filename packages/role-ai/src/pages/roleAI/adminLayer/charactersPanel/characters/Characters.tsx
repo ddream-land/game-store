@@ -8,13 +8,14 @@ import { Tabs, Tab, cn } from '@nextui-org/react'
 import { DataSource } from '@/core/DataSource'
 
 export type CharactersProps = Readonly<{
-  characterSelected?: (id: string) => void
+  adminCharacterSelected?: (id: string) => void
+  chatCharacterSelected?: (id: string) => void
   className?: string
 }>
 
 export default Characters
 
-function Characters({ characterSelected, className }: CharactersProps) {
+function Characters({ adminCharacterSelected, chatCharacterSelected, className }: CharactersProps) {
   const { t: tCommon } = useTranslation('common')
   const { charaCardInfo } = useCurrentChatCharacterInfo()
 
@@ -71,7 +72,10 @@ function Characters({ characterSelected, className }: CharactersProps) {
           </Tabs>
         </div>
         <div className={`${classes.list} mt-[18px] flex-1 overflow-hidden`}>
-          <CharacterList characterSelected={characterSelected}></CharacterList>
+          <CharacterList
+            adminCharacterSelected={adminCharacterSelected}
+            chatCharacterSelected={chatCharacterSelected}
+          ></CharacterList>
         </div>
       </div>
     </div>

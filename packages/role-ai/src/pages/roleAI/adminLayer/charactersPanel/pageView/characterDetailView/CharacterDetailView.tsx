@@ -2,16 +2,28 @@ import { MouseEvent, WheelEvent, useEffect, useState } from 'react'
 import classes from './CharacterDetailView.module.scss'
 import CharacterInfo from './characterInfo/CharacterInfo'
 import TabsArea from './tabsArea/TabsArea'
-import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import BackButton from '@/components/backButton/BackButton'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useNavigateBack } from '@/router/useNavigateBack'
+import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
+import MenuButton from '@/components/menuButton/MenuButton'
+import { useMenuDialog } from './useMenuDialog'
+import MenuDialog from './MenuDialog/MenuDialog'
+import ChatButton from './chatButton/ChatButton'
 
 export default CharacterDetailView
 
 function CharacterDetailView() {
   const navigate = useNavigate()
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const { charaCardInfo } = useCurrentAdminCharacterInfo()
+  const {
+    menuDialogOpened,
+    openMenuDialog,
+    renameClicked,
+    linkToWorldBookClicked,
+    exportClicked,
+    deleteClicked,
+  } = useMenuDialog()
 
   useEffect(function () {
     if (!charaCardInfo) {
@@ -58,7 +70,7 @@ function CharacterDetailView() {
   return (
     <div onWheel={wheel} className={`${classes.characterDetailView} w-full h-full relative`}>
       <div
-        className={`${classes['life-img']} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
+        className={`${classes.lifeImg} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
           backgroundColor: `rgba(120, 120, 120, 1)`,
           backgroundImage: `url('${avatarUrl}')`,
@@ -68,12 +80,13 @@ function CharacterDetailView() {
       </div>
 
       <div
-        className={`${classes['life-detail']} ${
+        className={`${classes.lifeDetail} ${
           fullDetail ? classes.full : ''
         } absolute bottom-0 w-full flex flex-col`}
       >
         <div className={`${classes.info} flex-none z-0`}>
           <CharacterInfo
+            fullDetail={fullDetail}
             editCoverClicked={editCoverClicked}
             editPromptClicked={editPromptClicked}
             editAvatarClicked={editAvatartClicked}
@@ -81,11 +94,29 @@ function CharacterDetailView() {
           ></CharacterInfo>
         </div>
         <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
-          <TabsArea></TabsArea>
+          <TabsArea fullDetail={fullDetail}></TabsArea>
         </div>
       </div>
 
-      <BackButton onClick={back}></BackButton>
+      <div className={`${classes.shadow} absolute top-[0px] left-[0px] right-[0px] h-[88px]`}></div>
+
+      <BackButton onClick={back} className=""></BackButton>
+
+      {!fullDetail && <ChatButton className="absolute top-[212px] right-[40px]"></ChatButton>}
+
+      <MenuButton
+        onClick={openMenuDialog}
+        className={`${classes.menuBtn} absolute top-[20px] right-[20px]`}
+      ></MenuButton>
+
+      {menuDialogOpened && (
+        <MenuDialog
+          onRenameClicked={renameClicked}
+          onDeleteClicked={deleteClicked}
+          onExportClicked={exportClicked}
+          onLinkToWorldBookClicked={linkToWorldBookClicked}
+        ></MenuDialog>
+      )}
 
       <Outlet></Outlet>
     </div>

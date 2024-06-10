@@ -1,53 +1,64 @@
 .characterInfo {
-  padding: 0 26px;
   color: rgba(255, 255, 255, 1);
 
-  .menu-btn {
-    top: 13px;
-    right: 26px;
+  .name {
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: rgba(255, 255, 255, 1);
   }
 
-  .name {
-    height: 36px;
-    box-sizing: content-box;
-    padding-top: 29px;
-    font-family: Inter;
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 36px;
+  .nft {
+    background-image: url('/imgs/nft.png');
   }
 
   .tags {
-    height: 16px;
-    margin-top: 10px;
-    font-family: Inter;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 14px;
-    letter-spacing: 0.01em;
+    font-family: Roboto;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 10px;
+    color: rgba(99, 138, 85, 1);
   }
 
   .desc {
-    height: 60px;
-    margin-top: 10px;
-    font-family: Inter;
+    font-family: Roboto;
     font-size: 12px;
-    font-weight: 700;
-    line-height: 14px;
+    font-weight: 400;
+    line-height: 16px;
     text-align: left;
+    color: rgba(142, 143, 143, 1);
   }
 
   .op {
-    margin-top: 10px;
-
     .btn {
-      background: rgba(0, 0, 0, 0.43) !important;
+      width: 103px;
+      height: 52px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(37, 38, 39, 0.8) !important;
       color: rgba(255, 255, 255, 1) !important;
-      font-family: Inter;
-      font-size: 12px !important;
-      font-weight: 500 !important;
-      line-height: 14px !important;
-      letter-spacing: 0.01em !important;
+      font-family: Roboto;
+      font-size: 10px !important;
+      font-weight: 400 !important;
+      line-height: 10px !important;
+      text-align: center !important;
+      display: flex;
+      flex-direction: column !important;
+
+      .bg {
+        background-image: url('/imgs/e-bg.png');
+      }
+      .avatar {
+        background-image: url('/imgs/e-avatar.png');
+      }
+      .oc {
+        background-image: url('/imgs/e-oc.png');
+      }
+      .voice {
+        background-image: url('/imgs/e-voice.png');
+      }
     }
   }
 }

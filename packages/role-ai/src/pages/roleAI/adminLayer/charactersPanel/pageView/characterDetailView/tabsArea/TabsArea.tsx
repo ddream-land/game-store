@@ -7,11 +7,13 @@ import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChe
 
 export default TabsArea
 
-function TabsArea() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { t } = useTranslation('roleAI')
+export type TabsAreaProps = Readonly<{
+  fullDetail?: boolean
+}>
 
-  charaCardInfo.card.data.scenario
+function TabsArea({ fullDetail }: TabsAreaProps) {
+  const { t } = useTranslation('roleAI')
+  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
   const [tabs] = useState([
@@ -20,7 +22,6 @@ function TabsArea() {
     { prop: 'first_mes', txt: t('greetingMsg') },
     { prop: 'mes_example', txt: t('msgExample') },
     { prop: 'scenario', txt: t('scenario') },
-    // { prop: 'tags', txt: t('tags') },
     // { prop: 'creator_notes', txt: t('creatorNote') }, only edit use
   ])
 
@@ -28,22 +29,18 @@ function TabsArea() {
     <Tabs
       onSelectionChange={(index: Key) => setCurrentTabIndex(index as number)}
       aria-label="Tabs"
-      radius="full"
-      className=""
+      color="primary"
+      variant="underlined"
+      className=" "
       classNames={{
-        tabList: 'bg-transparent',
-        tab: 'h-10 px-3 text-xs font-medium',
+        tabList: `bg-transparent w-full relative rounded-none border-b border-[#2C2F35]`,
+        tab: 'max-w-fit px-0 h-12 px-3 text-xs font-medium',
         tabContent: cn(
-          'group-data-[selected=true]:text-[#000]',
+          `group-data-[selected=true]:text-[${fullDetail ? '#5B61FF' : '#5DC66F'}]`,
           'group-data-[selected=true]:text-sm',
           'group-data-[selected=true]:font-semibold'
         ),
-        cursor: cn(
-          'group-data-[selected=true]:border-solid',
-          'group-data-[selected=true]:border-black',
-          'group-data-[selected=true]:border',
-          'group-data-[selected=true]:shadow-none'
-        ),
+        cursor: `w-1/3 h-[3px] rounded-t-[2px] bg-[#5DC66F] ${fullDetail ? 'hidden' : ''}`,
       }}
     >
       {tabs.map(function (tab, index) {
@@ -94,7 +91,6 @@ function TabsArea() {
       >
         {tabsEl}
       </div>
-      <div className={`${classes.line} flex-none`}></div>
       <div className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}>
         {getContent()}
       </div>

@@ -1,28 +1,33 @@
+import { MouseEvent } from 'react'
 import { useCharacterInfoList } from '@/pages/roleAI/context/CharacterInfoListContextProvider'
 import classes from './CharacterList.module.scss'
 import { useTranslation } from 'react-i18next'
+import { useCurrentChatCharacterId } from '@/pages/roleAI/context/CurrentChatCharacterIdContextProvider'
 
 export type CharacterListProps = Readonly<{
-  characterSelected?: (id: string) => void
-  characterChat?: (id: string) => void
+  adminCharacterSelected?: (id: string) => void
+  chatCharacterSelected?: (id: string) => void
 }>
 
 export default CharacterList
 
-function CharacterList({ characterSelected, characterChat }: CharacterListProps) {
+function CharacterList({ adminCharacterSelected, chatCharacterSelected }: CharacterListProps) {
   const { t: tCommon } = useTranslation('common')
 
+  const currentChatCharacterId = useCurrentChatCharacterId()
   const cardList = useCharacterInfoList()
 
-  function onItemClicked(id: string) {
-    characterSelected && characterSelected(id)
+  function onCharacterClicked(id: string) {
+    adminCharacterSelected && adminCharacterSelected(id)
   }
 
-  function onChatClicked(id: string) {
-    characterChat && characterChat(id)
+  function onCharacterChatClicked(e: MouseEvent<HTMLDivElement>, id: string) {
+    e.stopPropagation()
+
+    chatCharacterSelected && chatCharacterSelected(id)
   }
 
-  const lifeElementItems = cardList.map(function (card) {
+  const characterElements = cardList.map(function (card) {
     const name = card.card.data.name
     const avatarUrl = `${card.pngUrlOrBase64}/w350` ?? '/imgs/default-avatar3.png'
     const desc = card.card.data.description
@@ -30,7 +35,7 @@ function CharacterList({ characterSelected, characterChat }: CharacterListProps)
     const tags = card.card.data.tags
     const id = card.id
 
-    const isChatting = true
+    const isChatting = id === currentChatCharacterId
 
     // max length is 3
     const tagsElements = (tags ?? []).slice(0, 3).map(function (tag, index) {
@@ -44,7 +49,7 @@ function CharacterList({ characterSelected, characterChat }: CharacterListProps)
     return (
       <div
         key={id}
-        onClick={(e) => onItemClicked(id)}
+        onClick={(e) => onCharacterClicked(id)}
         className={`${classes.item} cursor-pointer mb-3 flex flex-row relative overflow-hidden`}
       >
         <div className={`${classes.nftFlag} absolute w-[60px] h-[22px] top-0 right-0`}></div>
@@ -68,6 +73,7 @@ function CharacterList({ characterSelected, characterChat }: CharacterListProps)
               className={`${classes.chatBtnContainer} h-[26px] w-[92px] flex-none flex justify-end`}
             >
               <div
+                onClick={(e) => onCharacterChatClicked(e, id)}
                 className={`${classes.chatBtn} h-[26px] ${
                   isChatting ? 'w-[92px] bg-[#5DC66F]' : 'w-[74px] bg-[#2E6EE6]'
                 } rounded-[13px] flex flex-row justify-center items-center`}
@@ -93,8 +99,8 @@ function CharacterList({ characterSelected, characterChat }: CharacterListProps)
   return (
     <div className={`${classes.characterList} h-full w-full pl-[10px]`}>
       <div className={`${classes.sum} flex-none hidden`}>共拥有103个数字生命</div>
-      <div className={`${classes.list} h-full overflow-y-auto overflow-x-auto scrollbar-override`}>
-        {lifeElementItems}
+      <div className={`${classes.list} h-full overflow-y-auto scrollbar-override`}>
+        {characterElements}
       </div>
     </div>
   )

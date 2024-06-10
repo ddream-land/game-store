@@ -18,6 +18,7 @@
   "description": "Description",
   "optional": "Optional",
   "tone": "Tone",
+  "voice": "Voice",
   "on": "On",
   "off": "Off",
   "autoPlay": "Autoplay",
