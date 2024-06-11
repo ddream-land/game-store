@@ -75,7 +75,7 @@ function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
   }, [])
 
   return (
-    <div className={`${classes.live2dExtension} absolute inset-0 bg-transparent`}>
+    <div className={`${classes.live2dExtension} fixed inset-0 bg-transparent`}>
       <canvas ref={canvasRef} className="absolute inset-0 bg-transparent"></canvas>
     </div>
   )

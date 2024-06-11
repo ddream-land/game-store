@@ -62,7 +62,6 @@ export default function OnlyLive2D() {
     console.log('audio play ended')
 
     if ((window as any).webkit && (window as any).webkit.messageHandlers) {
-      document.body.style.backgroundColor = 'gray'
       console.log('audio play end to webkit')
       ;(window as any).webkit.messageHandlers.playMsgEnded.postMessage()
       console.log('audio play end to webkit success')
@@ -111,9 +110,9 @@ export default function OnlyLive2D() {
 
   return (
     <>
-      {/* <Live2dExt defaultModelUrl={url}></Live2dExt> */}
+      <Live2dExt defaultModelUrl={url}></Live2dExt>
 
-      <audio ref={audioEl} autoPlay={true} className="" controls={true}>
+      <audio ref={audioEl} autoPlay={true} className="hidden" controls={true}>
         <source src={ttsSrc} content=""></source>
       </audio>
     </>
