@@ -8,7 +8,7 @@ const DEFAULT_MAIN_BG = '/default-bg.jpg'
 
 export default function Main({ children }: { children: ReactNode }) {
   const [mainBgUrl, setMainBgUrl] = useState(DEFAULT_MAIN_BG)
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const { chatCharaInfo } = useCurrentChatCharacterInfo()
 
   const mainStyle: CSSProperties = {
     backgroundImage: `url('${mainBgUrl}')`,
@@ -16,7 +16,7 @@ export default function Main({ children }: { children: ReactNode }) {
 
   useEffect(
     function () {
-      const nuwaBg = charaCardInfo?.card?.data?.extensions?.nuwa_bg
+      const nuwaBg = chatCharaInfo?.card?.data?.extensions?.nuwa_bg
       let bgUrl = DEFAULT_MAIN_BG
       if (nuwaBg && !nuwaBg.disable) {
         switch (nuwaBg.version) {
@@ -34,7 +34,7 @@ export default function Main({ children }: { children: ReactNode }) {
         setMainBgUrl(bgUrl)
       }
     },
-    [charaCardInfo]
+    [chatCharaInfo]
   )
 
   return (

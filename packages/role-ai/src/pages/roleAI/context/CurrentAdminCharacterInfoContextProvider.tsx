@@ -24,11 +24,11 @@ export function CurrentAdminCharacterInfoContextProvider({ children }: { childre
 
 export function useCurrentAdminCharacterInfo() {
   const { refreshCharacterInfoList } = useSetCharacterInfoList()
-  const charaCardInfo = useContext(CurrentAdminCharacterInfoContext)
+  const adminCharaInfo = useContext(CurrentAdminCharacterInfoContext)
 
-  async function uploadCurrentCharacterCardInfo(card: CharacterCardV2, avatar?: File) {
-    const currentId = charaCardInfo?.id
-    const currentAvatarUrl = charaCardInfo?.pngUrlOrBase64
+  async function uploadCurrentAdminCharaInfo(card: CharacterCardV2, avatar?: File) {
+    const currentId = adminCharaInfo?.id
+    const currentAvatarUrl = adminCharaInfo?.pngUrlOrBase64
     if (!currentId || !currentAvatarUrl) {
       return
     }
@@ -42,7 +42,7 @@ export function useCurrentAdminCharacterInfo() {
   }
 
   return {
-    charaCardInfo: charaCardInfo,
-    uploadCurrentCharacterCardInfo,
+    adminCharaInfo,
+    uploadCurrentAdminCharaInfo,
   }
 }

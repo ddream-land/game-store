@@ -3,21 +3,21 @@ import classes from './CharacterNameSettingView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { useNavigateBack } from '@/router/useNavigateBack'
 import toast from 'react-hot-toast'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
-import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import { cloneDeep } from 'lodash'
 import { Input, cn } from '@nextui-org/react'
+import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 
 export default CharacterNameSettingView
 
 function CharacterNameSettingView() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
   const [currentCharaCardData, setCurrentCharaCardData] = useState(
-    cloneDeep(charaCardInfo.card.data)
+    cloneDeep(adminCharaInfo.card.data)
   )
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -25,11 +25,11 @@ function CharacterNameSettingView() {
     inputRef.current && inputRef.current.focus()
   }, [])
 
-  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
+  const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
 
-  const avatarUrl = charaCardInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
+  const avatarUrl = adminCharaInfo.pngUrlOrBase64 ?? '/imgs/default-avatar3.png'
 
   async function onNameChange(val: string) {
     setCurrentCharaCardData({
@@ -42,15 +42,15 @@ function CharacterNameSettingView() {
     const id = toast.loading(tCommon('loading'))
 
     const newCard: CharacterCardV2 = {
-      spec: charaCardInfo.card.spec,
-      spec_version: charaCardInfo.card.spec_version,
+      spec: adminCharaInfo.card.spec,
+      spec_version: adminCharaInfo.card.spec_version,
       data: {
-        ...charaCardInfo.card.data,
+        ...adminCharaInfo.card.data,
         ...currentCharaCardData,
       },
     }
     try {
-      await uploadCurrentCharacterCardInfo(newCard)
+      await uploadCurrentAdminCharaInfo(newCard)
       toast.success(tCommon('opSuccess'), {
         id: id,
       })

@@ -2,10 +2,10 @@ import classes from './CharacterDetailEditToneView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { useNavigateBack } from '@/router/useNavigateBack'
-import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { Switch, cn } from '@nextui-org/react'
+import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 
 type AutoPlaySwitchProps = Readonly<{
   isSelected: boolean
@@ -70,8 +70,8 @@ function AutoPlaySwitch({ isSelected, onValueChange }: AutoPlaySwitchProps) {
 export default CharacterDetailEditToneView
 
 function CharacterDetailEditToneView() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
+  const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
 

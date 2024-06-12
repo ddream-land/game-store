@@ -3,7 +3,7 @@ import classes from './TabsArea.module.scss'
 import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
 import { useTranslation } from 'react-i18next'
 import { Tab, Tabs, Textarea, cn } from '@nextui-org/react'
-import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../../useCurrentAdminCharaInfoChecker'
 
 export default TabsArea
 
@@ -13,7 +13,7 @@ export type TabsAreaProps = Readonly<{
 
 function TabsArea({ fullDetail }: TabsAreaProps) {
   const { t } = useTranslation('roleAI')
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
   const [tabs] = useState([
@@ -36,7 +36,9 @@ function TabsArea({ fullDetail }: TabsAreaProps) {
         tabList: `bg-transparent w-full relative rounded-none border-b border-[#2C2F35]`,
         tab: 'max-w-fit px-0 h-12 px-3 text-xs font-medium',
         tabContent: cn(
-          `group-data-[selected=true]:text-[${fullDetail ? '#5B61FF' : '#5DC66F'}]`,
+          fullDetail
+            ? `group-data-[selected=true]:text-[#5B61FF]`
+            : `group-data-[selected=true]:text-[#5DC66F]`,
           'group-data-[selected=true]:text-sm',
           'group-data-[selected=true]:font-semibold'
         ),
@@ -51,7 +53,7 @@ function TabsArea({ fullDetail }: TabsAreaProps) {
 
   function getContent() {
     const prop = tabs[currentTabIndex].prop
-    const data = charaCardInfo?.card.data
+    const data = adminCharaInfo.card.data
     let content = ''
     if (data && isKey(data, prop)) {
       const val = data[prop]

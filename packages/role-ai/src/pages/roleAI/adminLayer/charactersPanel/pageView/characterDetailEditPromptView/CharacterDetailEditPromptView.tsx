@@ -3,25 +3,25 @@ import classes from './CharacterDetailEditPromptView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { useNavigateBack } from '@/router/useNavigateBack'
 import TabsArea, { TabsAreaRef } from './tabsArea/TabsArea'
 import toast from 'react-hot-toast'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
-import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import CharacterInfo from './characterInfo/CharacterInfo'
+import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 
 export default CharacterDetailEditView
 
 function CharacterDetailEditView() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
+  const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const tabsArea = useRef<TabsAreaRef | null>(null)
-  const avatarUrl = charaCardInfo.pngUrlOrBase64
-    ? `${charaCardInfo.pngUrlOrBase64}/w512`
+  const avatarUrl = adminCharaInfo.pngUrlOrBase64
+    ? `${adminCharaInfo.pngUrlOrBase64}/w512`
     : '/imgs/default-avatar3.png'
   let avatarFile: File | undefined
 
@@ -30,16 +30,16 @@ function CharacterDetailEditView() {
 
     const currentCharaCardData = tabsArea.current?.currentCharaCardData
     const newCard: CharacterCardV2 = {
-      spec: charaCardInfo.card.spec,
-      spec_version: charaCardInfo.card.spec_version,
+      spec: adminCharaInfo.card.spec,
+      spec_version: adminCharaInfo.card.spec_version,
       data: {
-        ...charaCardInfo.card.data,
+        ...adminCharaInfo.card.data,
         ...currentCharaCardData,
       },
     }
 
     try {
-      await uploadCurrentCharacterCardInfo(newCard, avatarFile)
+      await uploadCurrentAdminCharaInfo(newCard, avatarFile)
       toast.success(tCommon('opSuccess'), {
         id: id,
       })

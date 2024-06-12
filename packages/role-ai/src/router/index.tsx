@@ -9,7 +9,7 @@ import CharacterDetailEditCoverView from '@/pages/roleAI/adminLayer/charactersPa
 import CharacterDetailEditToneView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterDetailEditToneView/CharacterDetailEditToneView'
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 import AvatarLive2dSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
-import CharacterNameSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterNameSettingView/CharacterNameSettingView'
+// import CharacterNameSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterNameSettingView/CharacterNameSettingView'
 
 const router = createBrowserRouter([
   {
@@ -36,14 +36,14 @@ const router = createBrowserRouter([
                   </PageView>
                 ),
               },
-              {
-                path: '/:language/detail/editName',
-                element: (
-                  <PageView>
-                    <CharacterNameSettingView></CharacterNameSettingView>
-                  </PageView>
-                ),
-              },
+              // {
+              //   path: '/:language/detail/editName',
+              //   element: (
+              //     <PageView>
+              //       <CharacterNameSettingView></CharacterNameSettingView>
+              //     </PageView>
+              //   ),
+              // },
               {
                 path: '/:language/detail/editTone',
                 element: (

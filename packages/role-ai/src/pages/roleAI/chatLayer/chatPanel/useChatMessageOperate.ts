@@ -13,8 +13,8 @@ import { useChatHistory, useSetChatHistory } from '../../context/ChatHistoryCont
 
 export function useChatMessageOperate() {
   const navigate = useNavigate()
-  const setCurrentCharacterCardInfoId = useSetCurrentChatCharacterId()
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const setCurrentChatCharaId = useSetCurrentChatCharacterId()
+  const { chatCharaInfo } = useCurrentChatCharacterInfo()
   const setChatMsg = useSetChatHistory()
   const { chatHistory } = useChatHistory()
   const [isChatMsgResponsing, setIsChatMsgResponsing] = useState(false)
@@ -28,7 +28,7 @@ export function useChatMessageOperate() {
       onError?: (err: any) => number | null | undefined | void
     }
   ) {
-    if (!charaCardInfo) {
+    if (!chatCharaInfo) {
       return
     }
 
@@ -36,7 +36,7 @@ export function useChatMessageOperate() {
 
     const reqDto: ChatCompletionReqDto = {
       content: msg,
-      role_id: charaCardInfo.id,
+      role_id: chatCharaInfo.id,
     }
 
     if (chatHistory && chatHistory.length > 1) {
@@ -66,12 +66,12 @@ export function useChatMessageOperate() {
       }
     }
 
-    const newUserMsg: NuwaChatMessage = nuwaChatMessage(msg, charaCardInfo.id, 0, ChatRole.User)
+    const newUserMsg: NuwaChatMessage = nuwaChatMessage(msg, chatCharaInfo.id, 0, ChatRole.User)
     setChatMsg((msgs) => [...msgs, newUserMsg])
 
     const newAssistantMsg: NuwaChatMessage = nuwaChatMessage(
       '',
-      charaCardInfo.id,
+      chatCharaInfo.id,
       0,
       ChatRole.Assistant
     )
@@ -157,7 +157,7 @@ export function useChatMessageOperate() {
     onEnd?: () => void
     onError?: (err: any) => number | null | undefined | void
   }) {
-    if (!charaCardInfo) {
+    if (!chatCharaInfo) {
       return
     }
     if (!chatHistory || chatHistory.length <= 1) {
@@ -175,7 +175,7 @@ export function useChatMessageOperate() {
     const latestMsgId = latestMsg.id
 
     const reqDto: ChatCompletionReqDto = {
-      role_id: charaCardInfo.id,
+      role_id: chatCharaInfo.id,
       continue_msg: {
         msg_id: latestMsgId,
       },
@@ -260,7 +260,7 @@ export function useChatMessageOperate() {
     onEnd?: () => void
     onError?: (err: any) => number | null | undefined | void
   }) {
-    if (!charaCardInfo) {
+    if (!chatCharaInfo) {
       return
     }
     if (!chatHistory || chatHistory.length <= 1) {
@@ -278,7 +278,7 @@ export function useChatMessageOperate() {
     const latestMsgId = latestMsg.id
 
     const reqDto: ChatCompletionReqDto = {
-      role_id: charaCardInfo.id,
+      role_id: chatCharaInfo.id,
       renew_msg: {
         msg_id: latestMsgId,
       },
@@ -388,26 +388,26 @@ export function useChatMessageOperate() {
 
   function closeChat() {
     clearChatMsg()
-    setCurrentCharacterCardInfoId(undefined)
+    setCurrentChatCharaId(undefined)
     navigate(`/`)
   }
 
   async function newChat() {
-    if (!charaCardInfo) {
+    if (!chatCharaInfo) {
       setChatMsg([])
       return
     }
 
-    const res = await newChatReq(charaCardInfo.id)
+    const res = await newChatReq(chatCharaInfo.id)
     if (res.code !== 0) {
       toast.error(res.msg ?? 'Start new chat error.')
       return
     }
 
-    const firstMsg = msgMacrosReplace(charaCardInfo.card.data.first_mes, charaCardInfo.card)
+    const firstMsg = msgMacrosReplace(chatCharaInfo.card.data.first_mes, chatCharaInfo.card)
     const nuwaFirstMsg: NuwaChatMessage = nuwaChatMessage(
       firstMsg,
-      charaCardInfo.id,
+      chatCharaInfo.id,
       0,
       ChatRole.Assistant
     )

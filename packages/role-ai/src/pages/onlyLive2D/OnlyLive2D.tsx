@@ -45,6 +45,8 @@ export default function OnlyLive2D() {
         try {
           await audio.play()
           console.log('start auto play success')
+          //@ts-ignore
+          window.lmn.setLipSync(window.lmn.modelIds[0], true)
         } catch (err) {
           console.log('auto play err', err)
         }
@@ -66,6 +68,9 @@ export default function OnlyLive2D() {
       ;(window as any).webkit.messageHandlers.playMsgEnded.postMessage()
       console.log('audio play end to webkit success')
     }
+
+    //@ts-ignore
+    window.lmn.setLipSync(window.lmn.modelIds[0], false)
 
     if (!audio.paused) {
       audio.pause()

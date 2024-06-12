@@ -12,7 +12,7 @@ import { NuwaChatMessage, nuwaChatMessage } from '@/core/ChatMessage'
 
 export default function ChatPanel() {
   const [visible, setVisible] = useState(false)
-  const currentDigitalLifeId = useCurrentChatCharacterId()
+  const currentChatCharacterId = useCurrentChatCharacterId()
   const characterCardInfoList = useCharacterInfoList()
   const setChatMsg = useSetChatHistory()
 
@@ -20,11 +20,11 @@ export default function ChatPanel() {
     function () {
       setVisible(false)
       setChatMsg([])
-      if (currentDigitalLifeId === undefined) {
+      if (currentChatCharacterId === undefined) {
         return
       }
 
-      const characterCard = characterCardInfoList.find((x) => x.id === currentDigitalLifeId)
+      const characterCard = characterCardInfoList.find((x) => x.id === currentChatCharacterId)
       if (!characterCard) {
         throw new Error(`Runtime error.`)
       }
@@ -48,7 +48,7 @@ export default function ChatPanel() {
         setVisible(true)
       })()
     },
-    [currentDigitalLifeId]
+    [currentChatCharacterId]
   )
 
   return (

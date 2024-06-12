@@ -19,7 +19,7 @@ function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { setLive2dExtensionManager } = useSetLive2dExtension()
   const { managerRef } = useLive2dExtension()
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const { chatCharaInfo } = useCurrentChatCharacterInfo()
 
   useEffect(
     function () {
@@ -30,7 +30,7 @@ function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
 
       let live2dUrl: string | undefined
 
-      const nuwaAvatar = charaCardInfo?.card?.data?.extensions?.nuwa_avatar
+      const nuwaAvatar = chatCharaInfo?.card?.data?.extensions?.nuwa_avatar
       if (nuwaAvatar && !nuwaAvatar.disable) {
         if (nuwaAvatar.type === CharacterAvatarType.Live2D) {
           switch (nuwaAvatar.version) {
@@ -55,7 +55,7 @@ function Live2dExtension({ defaultModelUrl }: Live2dExtensionProps) {
         manager.removeAll()
       }
     },
-    [charaCardInfo]
+    [chatCharaInfo]
   )
 
   useEffect(function () {

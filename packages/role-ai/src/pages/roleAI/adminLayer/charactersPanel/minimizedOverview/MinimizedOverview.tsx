@@ -6,18 +6,18 @@ import CharacterCardAndLevelOverview from '@/components/characterCardAndLevelOve
 export interface MinimizedOverviewProps {}
 
 export default function MinimizedOverview({}: MinimizedOverviewProps) {
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const { chatCharaInfo } = useCurrentChatCharacterInfo()
 
   const level = 2
   const levelIconUrl = `/imgs/lv${level.toString().padStart(2, '0')}.png`
 
-  const content = charaCardInfo ? (
+  const content = chatCharaInfo ? (
     <CharacterCardAndLevelOverview
-      name={charaCardInfo.card.data.name}
-      description={charaCardInfo.card.data.creator_notes}
+      name={chatCharaInfo.card.data.name}
+      description={chatCharaInfo.card.data.creator_notes}
       avatarUrl={
-        charaCardInfo?.pngUrlOrBase64
-          ? `${charaCardInfo.pngUrlOrBase64}/w350`
+        chatCharaInfo?.pngUrlOrBase64
+          ? `${chatCharaInfo.pngUrlOrBase64}/w350`
           : `/imgs/default-avatar5.png`
       }
       levelIconUrl={levelIconUrl}

@@ -24,11 +24,11 @@ export function CurrentChatCharacterInfoContextProvider({ children }: { children
 
 export function useCurrentChatCharacterInfo() {
   const { refreshCharacterInfoList } = useSetCharacterInfoList()
-  const charaCardInfo = useContext(CurrentChatCharacterInfoContext)
+  const chatCharaInfo = useContext(CurrentChatCharacterInfoContext)
 
-  async function uploadCurrentCharacterCardInfo(card: CharacterCardV2, avatar?: File) {
-    const currentId = charaCardInfo?.id
-    const currentAvatarUrl = charaCardInfo?.pngUrlOrBase64
+  async function uploadCurrentChatCharaInfo(card: CharacterCardV2, avatar?: File) {
+    const currentId = chatCharaInfo?.id
+    const currentAvatarUrl = chatCharaInfo?.pngUrlOrBase64
     if (!currentId || !currentAvatarUrl) {
       return
     }
@@ -42,7 +42,6 @@ export function useCurrentChatCharacterInfo() {
   }
 
   return {
-    charaCardInfo: charaCardInfo,
-    uploadCurrentCharacterCardInfo,
+    chatCharaInfo,
   }
 }

@@ -2,7 +2,6 @@ import { useChatHistory } from '@/pages/roleAI/context/ChatHistoryContextProvide
 import classes from './InputArea.module.scss'
 import { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import { ChatRole } from '@/core/ChatRole'
-import { useSetCurrentChatCharacterId } from '@/pages/roleAI/context/CurrentChatCharacterIdContextProvider'
 import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { useTranslation } from 'react-i18next'
 import ControlDialog from './controlDialog/ControlDialog'
@@ -32,8 +31,8 @@ export default function InputArea() {
     isChatMsgResponsing,
   } = useChatMessageOperate()
 
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
-  if (!charaCardInfo) {
+  const { chatCharaInfo } = useCurrentChatCharacterInfo()
+  if (!chatCharaInfo) {
     return
   }
 

@@ -9,6 +9,7 @@ import { HitAreaFrames } from 'pixi-live2d-display/extra'
 import { ModelId } from './constants'
 import { Ticker } from '@pixi/ticker'
 import { Expression, ModelInitOption, MotionGroup } from './core'
+import { isArray } from '@/libs/isTypes'
 
 BaseModel.registerTicker(Ticker)
 
@@ -167,6 +168,47 @@ class Live2dExtensionModel<IM extends InternalModel = InternalModel> extends Bas
             return
           }
         }
+      }
+    }
+  }
+
+  private _lipSync = false
+  public get lipSync(): boolean {
+    return this._lipSync
+  }
+
+  private originUpdateFn?: (m: object, now: number) => boolean
+
+  public set lipSync(val: boolean) {
+    this._lipSync = val
+    if (this._lipSync) {
+      let lipSyncParameter = 'ParamMouthOpenY'
+      const manager = this.internalModel.motionManager
+      if ('lipSyncIds' in manager) {
+        const lipSyncIds = manager.lipSyncIds
+        if (lipSyncIds && isArray(lipSyncIds)) {
+          lipSyncParameter = lipSyncIds[0]
+        }
+      }
+
+      const coreModel = this.internalModel.coreModel
+      if ('_parameterIds' in coreModel) {
+      }
+
+      if ('setParameterValueById' in coreModel) {
+        this.originUpdateFn = this.internalModel.motionManager.update
+
+        const self = this
+        this.internalModel.motionManager.update = (m: object, now: number) => {
+          const mouthValue = Math.sin(now * 20) * 0.4 + 0.6
+          //@ts-ignore
+          self.internalModel.coreModel.setParameterValueById(lipSyncParameter, mouthValue)
+          return true
+        }
+      }
+    } else {
+      if (this.originUpdateFn) {
+        this.internalModel.motionManager.update = this.originUpdateFn
       }
     }
   }

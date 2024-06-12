@@ -12,7 +12,7 @@ import {
 import classes from './TabsArea.module.scss'
 import { isArray, isKey, isNumber, isString } from '@/libs/isTypes'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../../useCurrentAdminCharaInfoChecker'
 import { Button, Chip, Input, Tab, Tabs, Textarea, cn } from '@nextui-org/react'
 import { cloneDeep } from 'lodash'
 import { CharacteCardV2Data } from '@/core/characterCard/characterCardV2'
@@ -66,9 +66,9 @@ export type TabsAreaRef = {
 export default forwardRef<TabsAreaRef, TabsAreaProps>(TabsArea)
 
 function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
   const [currentCharaCardData, setCurrentCharaCardData] = useState(
-    cloneDeep(charaCardInfo.card.data)
+    cloneDeep(adminCharaInfo.card.data)
   )
 
   useImperativeHandle(ref, function () {

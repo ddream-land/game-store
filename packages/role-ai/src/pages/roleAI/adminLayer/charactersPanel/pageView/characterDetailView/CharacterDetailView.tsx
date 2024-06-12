@@ -10,33 +10,41 @@ import MenuButton from '@/components/menuButton/MenuButton'
 import { useMenuDialog } from './useMenuDialog'
 import MenuDialog from './MenuDialog/MenuDialog'
 import ChatButton from './chatButton/ChatButton'
+import RenameModal from './renameModal/RenameModal'
+import { useSetCurrentChatCharacterId } from '@/pages/roleAI/context/CurrentChatCharacterIdContextProvider'
 
 export default CharacterDetailView
 
 function CharacterDetailView() {
   const navigate = useNavigate()
-  const { charaCardInfo } = useCurrentAdminCharacterInfo()
+  const { adminCharaInfo } = useCurrentAdminCharacterInfo()
   const {
     menuDialogOpened,
+    renameModalOpened,
+    onRenameModalOpenChange,
+    onRenameSave,
     openMenuDialog,
     renameClicked,
+    callMeByClicked,
     linkToWorldBookClicked,
     exportClicked,
     deleteClicked,
   } = useMenuDialog()
 
+  const setCurrentChatId = useSetCurrentChatCharacterId()
+
   useEffect(function () {
-    if (!charaCardInfo) {
+    if (!adminCharaInfo) {
       navigate(`/`)
     }
   }, [])
 
-  if (!charaCardInfo) {
+  if (!adminCharaInfo) {
     return
   }
 
-  const avatarUrl = charaCardInfo.pngUrlOrBase64
-    ? `${charaCardInfo.pngUrlOrBase64}/w512`
+  const avatarUrl = adminCharaInfo.pngUrlOrBase64
+    ? `${adminCharaInfo.pngUrlOrBase64}/w512`
     : '/imgs/default-avatar3.png'
 
   const [fullDetail, setFullDetail] = useState(false)
@@ -69,6 +77,12 @@ function CharacterDetailView() {
 
   return (
     <div onWheel={wheel} className={`${classes.characterDetailView} w-full h-full relative`}>
+      <RenameModal
+        isOpen={renameModalOpened}
+        onOpenChange={onRenameModalOpenChange}
+        onSave={onRenameSave}
+      ></RenameModal>
+
       <div
         className={`${classes.lifeImg} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
         style={{
@@ -102,7 +116,12 @@ function CharacterDetailView() {
 
       <BackButton onClick={back} className=""></BackButton>
 
-      {!fullDetail && <ChatButton className="absolute top-[212px] right-[40px]"></ChatButton>}
+      {!fullDetail && (
+        <ChatButton
+          onClick={() => setCurrentChatId(adminCharaInfo.id)}
+          className="absolute top-[212px] right-[40px]"
+        ></ChatButton>
+      )}
 
       <MenuButton
         onClick={openMenuDialog}
@@ -115,6 +134,7 @@ function CharacterDetailView() {
           onDeleteClicked={deleteClicked}
           onExportClicked={exportClicked}
           onLinkToWorldBookClicked={linkToWorldBookClicked}
+          onCallMeByClicked={callMeByClicked}
         ></MenuDialog>
       )}
 

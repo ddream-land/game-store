@@ -2,7 +2,7 @@ import classes from './CharacterDetailEditAvatarView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import {
   CharacterAvatar,
@@ -17,16 +17,16 @@ import {
   NuwaExtensionVersion,
 } from '@/core/characterCard/NuwaCharacterCardExtensions'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
-import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { isString } from '@/libs/isTypes'
 import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 
 export default CharacterDetailEditAvatarView
 
 function CharacterDetailEditAvatarView() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
+  const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const live2dInputEl = useRef<HTMLInputElement>(null)
   const vrmInputEl = useRef<HTMLInputElement>(null)
@@ -197,18 +197,18 @@ function CharacterDetailEditAvatarView() {
         },
       }
       const newCard: CharacterCardV2 = {
-        spec: charaCardInfo.card.spec,
-        spec_version: charaCardInfo.card.spec_version,
+        spec: adminCharaInfo.card.spec,
+        spec_version: adminCharaInfo.card.spec_version,
         data: {
-          ...charaCardInfo.card.data,
+          ...adminCharaInfo.card.data,
           extensions: {
-            ...charaCardInfo.card.data.extensions,
+            ...adminCharaInfo.card.data.extensions,
             ...nuwaAvatarExtension,
           },
         },
       }
 
-      await uploadCurrentCharacterCardInfo(newCard)
+      await uploadCurrentAdminCharaInfo(newCard)
       toast.success(tCommon('opSuccess'), {
         id: id,
       })

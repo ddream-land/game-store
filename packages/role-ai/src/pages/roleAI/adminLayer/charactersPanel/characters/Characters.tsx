@@ -17,7 +17,7 @@ export default Characters
 
 function Characters({ adminCharacterSelected, chatCharacterSelected, className }: CharactersProps) {
   const { t: tCommon } = useTranslation('common')
-  const { charaCardInfo } = useCurrentChatCharacterInfo()
+  const { chatCharaInfo } = useCurrentChatCharacterInfo()
 
   const level = 2
   const levelIconUrl = `/imgs/lv${level.toString().padStart(2, '0')}.png`
@@ -29,14 +29,14 @@ function Characters({ adminCharacterSelected, chatCharacterSelected, className }
       </div>
       <div className={`${classes.mainRight} flex-1 overflow-hidden flex flex-col`}>
         <div className={`${classes.overview} w-full p-[10px] flex-none`}>
-          {charaCardInfo && (
+          {chatCharaInfo && (
             <CharacterCardAndLevelOverview
               bgColor="rgba(44, 44, 50, 1)"
-              name={charaCardInfo.card.data.name}
-              description={charaCardInfo.card.data.creator_notes}
+              name={chatCharaInfo.card.data.name}
+              description={chatCharaInfo.card.data.creator_notes}
               avatarUrl={
-                charaCardInfo?.pngUrlOrBase64
-                  ? `${charaCardInfo.pngUrlOrBase64}/w350`
+                chatCharaInfo?.pngUrlOrBase64
+                  ? `${chatCharaInfo.pngUrlOrBase64}/w350`
                   : `/imgs/default-avatar5.png`
               }
               levelIconUrl={levelIconUrl}
@@ -48,7 +48,7 @@ function Characters({ adminCharacterSelected, chatCharacterSelected, className }
         </div>
         <div
           className={`${classes.tabs} w-full h-[40px] ${
-            charaCardInfo ? 'mt-[21px]' : ''
+            chatCharaInfo ? 'mt-[21px]' : ''
           } flex-none px-[10px] py-[2px]`}
         >
           <Tabs

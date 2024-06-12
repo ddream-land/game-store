@@ -1,17 +1,17 @@
 import classes from './CharacterInfo.module.scss'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../../useCurrentAdminCharaInfoChecker'
 
 export default CharacterInfo
 
 function CharacterInfo() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
 
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')
 
-  const name = charaCardInfo.card.data.name
-  const desc = charaCardInfo.card.data.description
+  const name = adminCharaInfo.card.data.name
+  const desc = adminCharaInfo.card.data.description
 
   return (
     <div

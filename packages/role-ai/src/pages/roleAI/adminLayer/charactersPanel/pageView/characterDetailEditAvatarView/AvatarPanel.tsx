@@ -5,7 +5,7 @@ import {
   CharacterAvatarType,
   CharacterAvatarTypeContents,
 } from '@/core/CharacterAvatar'
-import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { Checkbox } from '@nextui-org/react'
 
 export default AvatarPanel
@@ -25,9 +25,9 @@ function AvatarPanel({
   onSettingClicked?: (type: CharacterAvatarType) => Promise<void>
   onSelectClicked?: (type: CharacterAvatarType, item: CharacterAvatar) => Promise<void>
 }) {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
 
-  const nuwaAvatar = charaCardInfo.card.data.extensions.nuwa_avatar
+  const nuwaAvatar = adminCharaInfo.card.data.extensions.nuwa_avatar
 
   function isActive(avatar: CharacterAvatarTypeContents, item: CharacterAvatar) {
     return (

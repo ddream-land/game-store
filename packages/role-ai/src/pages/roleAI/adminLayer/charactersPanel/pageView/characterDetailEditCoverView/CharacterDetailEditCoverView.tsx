@@ -2,7 +2,7 @@ import classes from './CharacterDetailEditCoverView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
-import { useCurrentCharaCardInfoChecker } from '../useCurrentCharaCardInfoChecker'
+import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { ChangeEvent, useEffect, useRef, useState, MouseEvent } from 'react'
 import { useNavigateBack } from '@/router/useNavigateBack'
 import { Background } from '@/core/Background'
@@ -18,14 +18,14 @@ import {
   NuwaExtensionVersion,
   NuwaExtensions,
 } from '@/core/characterCard/NuwaCharacterCardExtensions'
-import { useCurrentChatCharacterInfo } from '@/pages/roleAI/context/CurrentChatCharacterInfoContextProvider'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
+import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 
 export default CharacterDetailEditCoverView
 
 function CharacterDetailEditCoverView() {
-  const { charaCardInfo } = useCurrentCharaCardInfoChecker()
-  const { uploadCurrentCharacterCardInfo } = useCurrentChatCharacterInfo()
+  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
+  const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const imgInputEl = useRef<HTMLInputElement>(null)
@@ -96,18 +96,18 @@ function CharacterDetailEditCoverView() {
         },
       }
       const newCard: CharacterCardV2 = {
-        spec: charaCardInfo.card.spec,
-        spec_version: charaCardInfo.card.spec_version,
+        spec: adminCharaInfo.card.spec,
+        spec_version: adminCharaInfo.card.spec_version,
         data: {
-          ...charaCardInfo.card.data,
+          ...adminCharaInfo.card.data,
           extensions: {
-            ...charaCardInfo.card.data.extensions,
+            ...adminCharaInfo.card.data.extensions,
             ...nuwaBgExtension,
           },
         },
       }
 
-      await uploadCurrentCharacterCardInfo(newCard)
+      await uploadCurrentAdminCharaInfo(newCard)
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
