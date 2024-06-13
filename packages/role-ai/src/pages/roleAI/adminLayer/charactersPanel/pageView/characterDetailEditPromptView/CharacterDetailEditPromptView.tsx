@@ -17,6 +17,7 @@ function CharacterDetailEditView() {
   const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
   const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
+  const { t } = useTranslation('roleAI')
   const { back } = useNavigateBack()
   const tabsArea = useRef<TabsAreaRef | null>(null)
 
@@ -52,6 +53,11 @@ function CharacterDetailEditView() {
       className={`${classes.characterDetailEditPromptView} w-full h-full relative bg-[#121315] rounded-[12px]`}
     >
       <BackButton onClick={back}></BackButton>
+
+      <div className="absolute text-[#fff] h-[34px] top-[24px] left-1/2 -translate-x-1/2">
+        {tCommon('edit')} &nbsp;
+        {t('prompt')}
+      </div>
 
       <NormalButton
         onClick={onSave}
