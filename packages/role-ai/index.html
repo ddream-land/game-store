@@ -17,7 +17,13 @@
         }
       }
 
+      function lipSync(enable) {
+        window.lmn.setLipSync(window.lmn.modelIds[0], enable)
+      }
+
       window.vpTest2 = vpPlayMsg
+
+      window.lipSync = lipSync
     </script>
   </head>
   <body class="dark">
