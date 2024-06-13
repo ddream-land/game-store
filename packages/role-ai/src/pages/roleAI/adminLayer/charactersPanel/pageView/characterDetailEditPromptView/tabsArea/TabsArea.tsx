@@ -27,16 +27,17 @@ function TagChipInput({ value, onValueChange }: TagChipInputProps) {
     <Input
       value={value}
       onValueChange={onValueChange}
-      className=""
+      className="text-[#5DC66F]"
       classNames={{
         input: cn(
           'bg-transparent',
+          'text-[#5DC66F]',
           'data-[focus=true]:bg-transparent',
           'group-data-[focus=true]:bg-transparent',
           'data-[hover=true]:bg-transparent',
           'group-data-[hover=true]:bg-transparent',
-          'data-[has-value=true]:text-black',
-          'group-data-[has-value=true]:text-black'
+          'data-[has-value=true]:text-[#5DC66F]',
+          'group-data-[has-value=true]:text-[#5DC66F]'
         ),
         innerWrapper: cn(
           'bg-transparent',
@@ -94,22 +95,18 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
     <Tabs
       onSelectionChange={(index: Key) => setCurrentTabIndex(index as number)}
       aria-label="Tabs"
-      radius="full"
+      color="primary"
+      variant="underlined"
       className=""
       classNames={{
-        tabList: 'bg-transparent',
-        tab: 'h-10 px-3 text-xs font-medium',
+        tabList: 'bg-transparent w-full relative rounded-none border-b border-[#2C2F35]',
+        tab: 'max-w-fit px-0 h-12 px-3 text-xs font-medium',
         tabContent: cn(
-          'group-data-[selected=true]:text-[#000]',
+          'group-data-[selected=true]:text-[#5DC66F]',
           'group-data-[selected=true]:text-sm',
           'group-data-[selected=true]:font-semibold'
         ),
-        cursor: cn(
-          'group-data-[selected=true]:border-solid',
-          'group-data-[selected=true]:border-black',
-          'group-data-[selected=true]:border',
-          'group-data-[selected=true]:shadow-none'
-        ),
+        cursor: `w-1/3 h-[3px] rounded-t-[2px] bg-[#5DC66F]`,
       }}
     >
       {tabs.map(function (tab, index) {
@@ -129,10 +126,12 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
             value={val}
             onValueChange={onTextContenetChange}
             disableAutosize={true}
-            className={`${classes.textarea} h-full w-full`}
+            className={`${classes.textarea} h-full w-full bg-[#121315] text-[#a4a5a7]`}
             classNames={{
-              input: 'scrollbar-override',
-              inputWrapper: 'p-0',
+              inputWrapper: 'p-0 bg-[#121315]',
+              innerWrapper: 'bg-[#121315]',
+              input:
+                'scrollbar-override bg-[#121315] border-2 border-[#a4a5a7] p-[12px] rounded-[12px]',
             }}
           />
         )
@@ -142,10 +141,12 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
             value={val.toString()}
             onValueChange={onTextContenetChange}
             disableAutosize={true}
-            className={`${classes.textarea} h-full w-full`}
+            className={`${classes.textarea} h-full w-full bg-[#121315] text-[#a4a5a7]`}
             classNames={{
-              input: 'scrollbar-override',
-              inputWrapper: 'p-0',
+              inputWrapper: 'p-0 bg-[#121315]',
+              innerWrapper: 'bg-[#121315]',
+              input:
+                'scrollbar-override bg-[#121315] border-2 border-[#a4a5a7] p-[12px] rounded-[12px]',
             }}
           />
         )
@@ -159,7 +160,7 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
                   onClose={() => {
                     onTagItemRemove(index)
                   }}
-                  className="w-full max-w-none"
+                  className="w-full max-w-none text-[#5DC66F]"
                   variant="flat"
                 >
                   <TagChipInput
@@ -250,7 +251,6 @@ function TabsArea(props: TabsAreaProps, ref: ForwardedRef<TabsAreaRef>) {
       >
         {tabsEl}
       </div>
-      <div className={`${classes.line} flex-none`}></div>
       <div className={`${classes.content} w-full flex-1 text-ellipsis overflow-hidden`}>
         {contentNode()}
       </div>

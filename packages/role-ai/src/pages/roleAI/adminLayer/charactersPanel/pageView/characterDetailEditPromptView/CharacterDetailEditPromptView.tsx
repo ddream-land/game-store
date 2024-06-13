@@ -9,7 +9,6 @@ import TabsArea, { TabsAreaRef } from './tabsArea/TabsArea'
 import toast from 'react-hot-toast'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { isString } from '@/libs/isTypes'
-import CharacterInfo from './characterInfo/CharacterInfo'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 
 export default CharacterDetailEditView
@@ -20,16 +19,12 @@ function CharacterDetailEditView() {
   const { t: tCommon } = useTranslation('common')
   const { back } = useNavigateBack()
   const tabsArea = useRef<TabsAreaRef | null>(null)
-  const avatarUrl = adminCharaInfo.pngUrlOrBase64
-    ? `${adminCharaInfo.pngUrlOrBase64}/w512`
-    : '/imgs/default-avatar3.png'
-  let avatarFile: File | undefined
 
   async function onSave() {
     const id = toast.loading(tCommon('loading'))
 
     const currentCharaCardData = tabsArea.current?.currentCharaCardData
-    const newCard: CharacterCardV2 = {
+    const newAdminCard: CharacterCardV2 = {
       spec: adminCharaInfo.card.spec,
       spec_version: adminCharaInfo.card.spec_version,
       data: {
@@ -39,7 +34,7 @@ function CharacterDetailEditView() {
     }
 
     try {
-      await uploadCurrentAdminCharaInfo(newCard, avatarFile)
+      await uploadCurrentAdminCharaInfo(newAdminCard)
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
@@ -51,56 +46,23 @@ function CharacterDetailEditView() {
     }
   }
 
-  const pngInputEl = useRef<HTMLInputElement>(null)
-
-  async function pngImport(img: ChangeEvent<HTMLInputElement>) {
-    if (!pngInputEl.current || !pngInputEl.current.files) {
-      return
-    }
-    avatarFile = pngInputEl.current.files[0]
-    pngInputEl.current.value = ''
-  }
-
   return (
     <div
       onWheel={(e) => e.stopPropagation()}
-      className={`${classes.characterDetailEditPromptView} w-full h-full relative`}
+      className={`${classes.characterDetailEditPromptView} w-full h-full relative bg-[#121315] rounded-[12px]`}
     >
-      <div
-        className={`${classes.charaImg} absolute top-0 w-full bg-center bg-no-repeat bg-cover`}
-        style={{
-          backgroundImage: `url(${avatarUrl})`,
-        }}
-      ></div>
-
-      <div className={`${classes.detail}  absolute bottom-0 w-full flex flex-col`}>
-        <div className={`${classes.info} flex-none z-0`}>
-          <CharacterInfo></CharacterInfo>
-        </div>
-        <div className={`${classes.tabs} flex-1 z-0 overflow-hidden`}>
-          <TabsArea ref={tabsArea}></TabsArea>
-        </div>
-      </div>
-
       <BackButton onClick={back}></BackButton>
 
-      <NormalButton onClick={onSave} className={`${classes.save} absolute`} size={`small`}>
+      <NormalButton
+        onClick={onSave}
+        className={`${classes.save} absolute w-[78px] h-[34px] top-[20px] right-[20px] rounded-[8px] bg-[#2E6EE6]`}
+      >
         {tCommon('save')}
       </NormalButton>
 
-      <NormalButton
-        onClick={() => pngInputEl.current?.click()}
-        className={`${classes.upload} absolute`}
-        size={`small`}
-      ></NormalButton>
-      <input
-        ref={pngInputEl}
-        className="hidden"
-        type="file"
-        onChange={pngImport}
-        accept="image/png"
-        multiple={false}
-      />
+      <div className={`${classes.tabs} w-full h-full z-0 overflow-hidden pt-[75px]`}>
+        <TabsArea ref={tabsArea}></TabsArea>
+      </div>
     </div>
   )
 }
