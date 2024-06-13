@@ -28,7 +28,7 @@ function MenuDialog({
       }}
       className={`${classes.menuDialog} absolute w-[172px] rounded-[10px] bg-[#28292D] text-[#C0C0C0] py-[8px] top-[64px] right-[20px] flex flex-col items-start justify-between`}
     >
-      <div
+      {/* <div
         onClick={() => onCallMeByClicked && onCallMeByClicked()}
         className={`${classes.btn} cursor-pointer px-[12px] py-[8px] w-full flex-1 flex justify-start items-center hover:bg-[#323339]`}
       >
@@ -37,7 +37,7 @@ function MenuDialog({
           style={{ backgroundImage: `url('/imgs/user.png')` }}
         ></div>
         {t('callMeBy')}
-      </div>
+      </div> */}
       <div
         onClick={() => onRenameClicked && onRenameClicked()}
         className={`${classes.btn} cursor-pointer px-[12px] py-[8px] w-full flex-1 flex justify-start items-center hover:bg-[#323339]`}
@@ -48,7 +48,7 @@ function MenuDialog({
         ></div>
         {t('rename')}
       </div>
-      <div
+      {/* <div
         onClick={() => onLinkToWorldBookClicked && onLinkToWorldBookClicked()}
         className={`${classes.btn} cursor-pointer px-[12px] py-[8px] w-full flex-1 flex justify-start items-center hover:bg-[#323339]`}
       >
@@ -57,7 +57,7 @@ function MenuDialog({
           style={{ backgroundImage: `url('/imgs/link.png')` }}
         ></div>
         {t('linkToWorldBook')}
-      </div>
+      </div> */}
       <div
         onClick={() => onExportClicked && onExportClicked()}
         className={`${classes.btn} cursor-pointer px-[12px] py-[8px] w-full flex-1 flex justify-start items-center hover:bg-[#323339]`}
