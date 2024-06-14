@@ -1,104 +1,29 @@
 .characterDetailEditCoverView {
-  border-radius: 40px;
-  background-color: rgba(234, 234, 234, 0.9);
-
-  .op {
+  .addBtn {
+    width: 34px !important;
+    min-width: unset !important;
   }
 
-  .container {
-    .content {
-      .panel {
-        .header {
-          .title {
-            color: rgba(0, 0, 0, 1);
-            font-family: Inter;
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 23.6px;
-            letter-spacing: 0.01em;
-            text-align: left;
-          }
-          .add {
-            color: rgba(0, 0, 0, 1);
-            background: rgba(255, 255, 255, 0.5);
-            font-family: Inter;
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 16.52px;
-            letter-spacing: 0.01em;
-            text-align: center;
-          }
-        }
+  .bigBtn {
+    width: 78px !important;
+    min-width: unset !important;
+  }
 
-        .line {
-          width: 382px;
-          height: 0px;
-          border: solid rgba(0, 0, 0, 1) 0.5px;
-        }
+  .imgName {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: center;
+    color: rgb(160, 161, 161);
+  }
 
-        .listArea {
-          .list {
-            .item {
-              width: 48%;
-              height: 135px;
-              border-radius: 42px;
+  .current {
+    border: 3px solid #5b60fc;
+  }
 
-              &:hover {
-                .del {
-                  display: block;
-                }
-              }
-
-              .imgName {
-                height: 42px;
-                background: rgba(0, 0, 0, 0.1);
-                backdrop-filter: blur(2px);
-                color: white;
-                font-family: Inter;
-                font-size: 12px;
-                font-weight: 400;
-                line-height: 14px;
-                text-align: center;
-              }
-
-              .del {
-                width: 24px;
-                height: 24px;
-                background-color: rgba(0, 0, 0, 0.3);
-                border-radius: 4px;
-                display: none;
-
-                &::before {
-                  content: '';
-                  position: absolute;
-                  border-radius: 3px;
-                  background: #fff;
-                  bottom: 11px;
-                  left: 2px;
-                  height: 2px;
-                  width: 20px;
-                  transform: rotate(45deg);
-                }
-                &::after {
-                  content: '';
-                  position: absolute;
-                  border-radius: 3px;
-                  background: #fff;
-                  bottom: 11px;
-                  left: 2px;
-                  height: 2px;
-                  width: 20px;
-                  transform: rotate(-45deg);
-                }
-              }
-
-              img {
-                object-fit: cover;
-              }
-            }
-          }
-        }
-      }
-    }
+  .currentName {
+    background: #5b60fc;
+    color: #fff;
   }
 }

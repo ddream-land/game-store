@@ -33,7 +33,8 @@ function TabsArea({ fullDetail }: TabsAreaProps) {
       variant="underlined"
       className=" "
       classNames={{
-        tabList: `bg-transparent w-full relative rounded-none border-b border-[#2C2F35]`,
+        base: `w-full`,
+        tabList: `bg-transparent w-full justify-between relative rounded-none border-b border-[#2C2F35]`,
         tab: 'max-w-fit px-0 h-12 px-3 text-xs font-medium',
         tabContent: cn(
           fullDetail

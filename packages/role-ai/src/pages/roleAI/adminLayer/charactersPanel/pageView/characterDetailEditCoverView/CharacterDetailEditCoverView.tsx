@@ -20,6 +20,8 @@ import {
 } from '@/core/characterCard/NuwaCharacterCardExtensions'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
+import { DDLSplitLine } from '@ddreamland/common'
+import { Checkbox } from '@nextui-org/react'
 
 export default CharacterDetailEditCoverView
 
@@ -27,9 +29,12 @@ function CharacterDetailEditCoverView() {
   const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
   const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
+  const { t } = useTranslation('roleAI')
   const { back } = useNavigateBack()
   const imgInputEl = useRef<HTMLInputElement>(null)
   const [imgs, setImgs] = useState<Background[]>([])
+
+  const [editMode, setEditMode] = useState(false)
 
   function onAddImageClicked() {
     imgInputEl.current?.click()
@@ -60,15 +65,32 @@ function CharacterDetailEditCoverView() {
     }
   }
 
-  async function delImg(e: MouseEvent<HTMLDivElement>, id: string) {
+  let deleteIds: string[] = []
+
+  function onCheckValueChange(id: string, isSelected: boolean) {
+    if (isSelected && !deleteIds.includes(id)) {
+      deleteIds.push(id)
+    }
+    if (!isSelected && deleteIds.includes(id)) {
+      deleteIds = deleteIds.filter((v) => v !== id)
+    }
+  }
+
+  async function delImg(e: MouseEvent<HTMLDivElement>) {
     e.stopPropagation()
 
+    const delIds = [...deleteIds]
+    setEditMode(false)
+
     const toastId = toast.loading(tCommon('deleting'))
+
+    const len = delIds.length
     try {
-      const res = await deleteBackground(id)
-      if (res.code !== 0) {
-        throw new Error(res.msg)
+      for (let i = 0; i < len; i++) {
+        const id = delIds[i]
+        const res = await deleteBackground(id)
       }
+
       await refreshImgs()
       toast.success(tCommon('deleted'), {
         id: toastId,
@@ -76,7 +98,7 @@ function CharacterDetailEditCoverView() {
     } catch (err: any) {
       const msg = err?.message
       toast.error(isString(msg) ? msg : tCommon('opFailed'), {
-        id: id,
+        id: toastId,
       })
     }
   }
@@ -125,67 +147,128 @@ function CharacterDetailEditCoverView() {
     })()
   }, [])
 
+  useEffect(
+    function () {
+      if (!editMode) {
+        deleteIds = []
+      }
+    },
+    [editMode]
+  )
+
   return (
     <div
       onWheel={(e) => e.stopPropagation()}
-      className={`${classes.characterDetailEditCoverView} w-full h-full relative pointer-events-auto flex flex-col`}
+      className={`${classes.characterDetailEditCoverView} w-full h-full relative pointer-events-auto flex flex-col bg-[#121315] rounded-[12px]`}
     >
-      <div className={`${classes.op} flex-none`}>
-        <BackButton
-          color={`rgba(0,0,0,1)`}
-          bgColor={`rgba(255,255,255,1)`}
-          onClick={back}
-        ></BackButton>
+      <input
+        ref={imgInputEl}
+        className="hidden"
+        type="file"
+        onChange={imgImport}
+        accept="image/*"
+        multiple={false}
+      />
+
+      <BackButton onClick={back}></BackButton>
+
+      <div className="absolute text-[#fff] h-[34px] top-[24px] left-1/2 -translate-x-1/2">
+        {tCommon('edit')} &nbsp;
+        {t('cover')}
       </div>
 
-      <div className={`${classes.container} px-4 pt-12 pb-8 flex-1 overflow-hidden`}>
-        <div className={`${classes.content} h-full w-full`}>
-          <div className={`${classes.panel} h-full w-full flex flex-col mt-1`}>
-            <div
-              className={`${classes.header} flex-none flex flex-row justify-between items-center px-2`}
-            >
-              <div className={`${classes.title}`}>{tCommon('img')}</div>
-              <NormalButton onClick={onAddImageClicked} className={`${classes.add}`} size={`small`}>
-                +{' '}
-              </NormalButton>
-              <input
-                ref={imgInputEl}
-                className="hidden"
-                type="file"
-                onChange={imgImport}
-                accept="image/*"
-                multiple={false}
-              />
-            </div>
+      <NormalButton
+        onClick={onAddImageClicked}
+        className={`${classes.addBtn} ${
+          editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[20px] rounded-[8px]`}
+      >
+        +
+      </NormalButton>
 
-            <div className={`${classes.line} flex-none mt-4`}></div>
+      <NormalButton
+        onClick={() => {
+          setEditMode(true)
+        }}
+        className={`${classes.bigBtn} ${
+          editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[62px] rounded-[8px]`}
+      >
+        {tCommon('edit')}
+      </NormalButton>
 
-            <div className={`${classes.listArea} flex-1 overflow-hidden mt-8`}>
-              <div
-                className={`${classes.list} w-full h-full overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between content-start gap-3`}
-              >
-                {imgs.map(function (img) {
-                  return (
-                    <div
-                      key={img.id}
-                      onClick={() => onBackgroundClicked(img)}
-                      className={`${classes.item} overflow-hidden cursor-pointer relative`}
-                    >
-                      <img src={img.url} alt={img.name} className="w-full h-full" />
-                      <div
-                        className={`${classes.imgName} absolute bottom-0 left-0 right-0 flex justify-center items-center truncate`}
-                      >
-                        {img.name}
-                      </div>
-                      <div
-                        onClick={(e) => delImg(e, img.id)}
-                        className={`${classes.del} absolute top-4 right-4`}
-                      ></div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
+      <NormalButton
+        onClick={() => {
+          setEditMode(false)
+        }}
+        className={`${classes.bigBtn} ${
+          !editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[106px] rounded-[8px]`}
+      >
+        {tCommon('cancel')}
+      </NormalButton>
+
+      <NormalButton
+        onClick={delImg}
+        className={`${classes.bigBtn} ${
+          !editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[20px] rounded-[8px] bg-[#CD4646]`}
+      >
+        {tCommon('delete')}
+      </NormalButton>
+
+      <div className={`${classes.container} pt-[78px] flex flex-col overflow-hidden`}>
+        <DDLSplitLine className="flex-none"></DDLSplitLine>
+
+        <div className="flex-1 overflow-hidden mt-[6px]">
+          <div
+            className={`w-full h-full p-[24px] overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between content-start gap-6`}
+          >
+            {imgs.map(function (img) {
+              return (
+                <div
+                  key={img.id}
+                  onClick={() => onBackgroundClicked(img)}
+                  className={`overflow-hidden cursor-pointer relative flex flex-col justify-center items-center`}
+                >
+                  <div
+                    className={`${
+                      adminCharaInfo.card.data.extensions.nuwa_bg?.url === img.url
+                        ? classes.current
+                        : ''
+                    } w-[216px] h-[140px] rounded-[12px] overflow-hidden`}
+                  >
+                    <img src={img.url} alt={img.name} className="w-full h-full object-cover" />
+                  </div>
+
+                  <span
+                    className={`${classes.imgName} ${
+                      adminCharaInfo.card.data.extensions.nuwa_bg?.url === img.url
+                        ? classes.currentName
+                        : ''
+                    } max-w-[216px] mt-[10px] px-[10px] py-[4px] rounded-[12px] truncate`}
+                  >
+                    {img.name}
+                  </span>
+
+                  {editMode && (
+                    <Checkbox
+                      onValueChange={(isSelected: boolean) => {
+                        onCheckValueChange(img.id, isSelected)
+                      }}
+                      defaultSelected={false}
+                      color="default"
+                      className={`absolute top-3 left-3`}
+                      classNames={{
+                        base: ``,
+                        icon: 'color-[#111]',
+                        wrapper: 'bg-[#3D3F42] after:bg-[#5C61FF]',
+                      }}
+                    ></Checkbox>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
