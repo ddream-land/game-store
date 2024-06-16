@@ -11,3 +11,6 @@ export const DEFAULT_OPEN_TTS = import.meta.env.VITE_APP_DEFAULT_OPEN_TTS === 'f
 
 export const DEFAULT_OPEN_LIVE2D =
   import.meta.env.VITE_APP_DEFAULT_OPEN_LIVE2D === 'false' ? false : true
+
+export const KEEP_ROLE_PANEL_OPEN =
+  import.meta.env.VITE_APP_KEEP_ROLE_PANEL_OPEN === 'true' ? true : false

@@ -1,3 +1,4 @@
+import { KEEP_ROLE_PANEL_OPEN } from '@/constant/env'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
 type AdminPanelStateType = {
@@ -14,7 +15,7 @@ const SetAdminPanelStateContext = createContext<
 
 export function AdminPanelStateContextProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AdminPanelStateType>({
-    minify: false,
+    minify: KEEP_ROLE_PANEL_OPEN ? false : true,
   })
 
   return (
