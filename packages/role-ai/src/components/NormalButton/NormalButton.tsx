@@ -9,12 +9,7 @@ export type NormalButtonProps = {
   size?: 'small' | 'normal'
 }
 
-export default function NormalButton({
-  children,
-  onClick,
-  className,
-  size,
-}: NormalButtonProps) {
+export default function NormalButton({ children, onClick, className, size }: NormalButtonProps) {
   function classNames() {
     let sizeClassname = classes.normal
     switch (size) {
@@ -24,9 +19,7 @@ export default function NormalButton({
       }
     }
 
-    return `${className ?? ''} ${
-      classes.normalBtn
-    } ${sizeClassname}`
+    return `${className ?? ''} ${classes.normalBtn} ${sizeClassname}`
   }
 
   return (

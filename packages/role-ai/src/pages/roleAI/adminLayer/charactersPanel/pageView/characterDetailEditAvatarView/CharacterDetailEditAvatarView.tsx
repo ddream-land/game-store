@@ -21,6 +21,7 @@ import { isString } from '@/libs/isTypes'
 import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
+import { DDLSplitLine } from '@ddreamland/common'
 
 export default CharacterDetailEditAvatarView
 
@@ -28,8 +29,8 @@ function CharacterDetailEditAvatarView() {
   const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
   const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
+  const { t } = useTranslation('roleAI')
   const live2dInputEl = useRef<HTMLInputElement>(null)
-  const vrmInputEl = useRef<HTMLInputElement>(null)
   const [editMode, setEditMode] = useState(false)
   const [deleteIds, setDeleteIds] = useState<string[]>([])
   const { back } = useNavigateBack()
@@ -132,7 +133,6 @@ function CharacterDetailEditAvatarView() {
         break
       }
       case CharacterAvatarType.VRM: {
-        vrmInputEl.current && vrmInputEl.current.click()
         break
       }
       case CharacterAvatarType.Img: {
@@ -182,8 +182,6 @@ function CharacterDetailEditAvatarView() {
 
     live2dInputEl.current.value = ''
   }
-
-  async function onVrmImport(zip: ChangeEvent<HTMLInputElement>) {}
 
   async function onSelectClicked(type: CharacterAvatarType, item: CharacterAvatar) {
     const id = toast.loading(tCommon('loading'))
@@ -255,62 +253,64 @@ function CharacterDetailEditAvatarView() {
   return (
     <div
       onWheel={(e) => e.stopPropagation()}
-      className={`${classes.characterDetailEditAvatarView} w-full h-full relative pointer-events-auto flex flex-col`}
+      className={`${classes.characterDetailEditAvatarView} w-full h-full relative pointer-events-auto flex flex-col bg-[#121315] rounded-[12px]`}
     >
-      <div className={`${classes.op} flex-none`}>
-        <BackButton onClick={back}></BackButton>
+      <BackButton onClick={back}></BackButton>
 
-        {!editMode && (
-          <NormalButton
-            onClick={() => {
-              setEditMode(true)
-            }}
-            className={`${classes.editBtn} absolute`}
-            size={`small`}
-          ></NormalButton>
-        )}
-
-        {editMode && (
-          <div className={`${classes.editMode} absolute flex flex-row `}>
-            <NormalButton
-              onClick={() => {
-                setEditMode(false)
-              }}
-              className={`${classes.cancel} `}
-              size={`small`}
-            >
-              {tCommon('cancel')}
-            </NormalButton>
-            <NormalButton
-              onClick={onDelete}
-              className={`${classes.delete} ml-4`}
-              size={`small`}
-            ></NormalButton>
-          </div>
-        )}
+      <div className="absolute text-[#fff] h-[34px] top-[24px] left-1/2 -translate-x-1/2">
+        {tCommon('edit')} &nbsp;
+        {t('avatar')}
       </div>
 
-      <div className={`${classes.container} px-4 pt-20 pb-8 flex-1 overflow-hidden`}>
-        <div
-          className={`${classes.content} h-full w-full overflow-hidden overflow-y-scroll scrollbar-override`}
-        >
-          {avatars
-            .filter(function (avatar) {
-              return avatar.enable
-            })
-            .map(function (avatar, index) {
-              return (
-                <AvatarPanel
-                  key={index}
-                  avatar={avatar}
-                  checkMode={editMode}
-                  onAddClicked={onAddClicked}
-                  onSettingClicked={onSettingClicked}
-                  onSelectClicked={onSelectClicked}
-                  onValueChange={onDeleteChecked}
-                ></AvatarPanel>
-              )
-            })}
+      <NormalButton
+        onClick={() => onAddClicked(CharacterAvatarType.Live2D)}
+        className={`${classes.addBtn} ${
+          editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[20px] rounded-[8px]`}
+      >
+        +
+      </NormalButton>
+
+      <NormalButton
+        onClick={() => {
+          setEditMode(true)
+        }}
+        className={`${classes.bigBtn} ${
+          editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[62px] rounded-[8px]`}
+      >
+        {tCommon('edit')}
+      </NormalButton>
+
+      <NormalButton
+        onClick={() => {
+          setEditMode(false)
+        }}
+        className={`${classes.bigBtn} ${
+          !editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[106px] rounded-[8px]`}
+      >
+        {tCommon('cancel')}
+      </NormalButton>
+
+      <NormalButton
+        // onClick={}
+        className={`${classes.bigBtn} ${
+          !editMode && 'hidden'
+        } absolute h-[34px] top-[20px] right-[20px] rounded-[8px] bg-[#CD4646]`}
+      >
+        {tCommon('delete')}
+      </NormalButton>
+
+      <div className={`pt-[78px] flex flex-col overflow-hidden`}>
+        <DDLSplitLine className="flex-none"></DDLSplitLine>
+
+        <div className="flex-1 overflow-hidden mt-[6px]">
+          <div
+            className={`w-full h-full p-[24px] overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between content-start gap-6`}
+          >
+            123
+          </div>
         </div>
       </div>
 
@@ -319,14 +319,6 @@ function CharacterDetailEditAvatarView() {
         className="hidden"
         type="file"
         onChange={onLive2dImport}
-        accept=".zip"
-        multiple={false}
-      />
-      <input
-        ref={vrmInputEl}
-        className="hidden"
-        type="file"
-        onChange={onVrmImport}
         accept=".zip"
         multiple={false}
       />

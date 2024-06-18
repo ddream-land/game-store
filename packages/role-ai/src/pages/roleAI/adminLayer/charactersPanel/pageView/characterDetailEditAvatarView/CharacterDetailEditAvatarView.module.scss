@@ -1,49 +1,12 @@
 .characterDetailEditAvatarView {
-  border-radius: 40px;
-  background-color: rgba(234, 234, 234, 0.9);
+  .addBtn {
+    width: 34px !important;
+    min-width: unset !important;
+  }
 
-  .op {
-    .editBtn {
-      top: 24px;
-      right: 24px;
-      background-color: rgba(0, 0, 0, 1);
-      font-family: Inter;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 16.52px;
-      letter-spacing: 0.01em;
-      text-align: center;
-      background-image: url('/imgs/edit2.png');
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    .editMode {
-      top: 24px;
-      right: 24px;
-
-      .cancel {
-        background-color: rgba(255, 255, 2555, 1);
-        font-family: Inter;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 16.52px;
-        letter-spacing: 0.01em;
-        text-align: center;
-      }
-      .delete {
-        background-color: rgba(0, 0, 0, 1);
-        font-family: Inter;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 16.52px;
-        letter-spacing: 0.01em;
-        text-align: center;
-        background-image: url('/imgs/delete.png');
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-    }
+  .bigBtn {
+    width: 78px !important;
+    min-width: unset !important;
   }
 
   .container {
