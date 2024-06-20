@@ -42,7 +42,7 @@ function CreateorChoice({
 
   return (
     <div className={`w-full`}>
-      {/* <div className={`${classes.title}`}>{t('creatorChoice')}</div>
+      <div className={`${classes.title}`}>{t('creatorChoice')}</div>
 
       <div
         className={`${classes.listArea} ${
@@ -95,7 +95,7 @@ function CreateorChoice({
             )
           })}
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
