@@ -55,7 +55,7 @@ function AdminLayout({ children }: AdminLayoutProps) {
             title={{ name: 'Role AI' }}
             recordRecent={{
               key: 'RoleAI',
-              openUrl: '',
+              openUrl: 'https://roleai.nuwalabs.org/',
               name: {
                 en: 'Role AI',
                 'zh-CN': 'Role AI',

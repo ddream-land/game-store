@@ -18,7 +18,7 @@ function SidePanel() {
   const userAvatar = `/imgs/default-user.png`
 
   function gotoSquareClicked() {
-    window.location.href = `https://create.nuwalabs.org/`
+    window.open(`https://create.nuwalabs.org/`)
   }
 
   const pngInputEl = useRef<HTMLInputElement>(null)
