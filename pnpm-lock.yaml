@@ -115,8 +115,8 @@ importers:
   packages/role-ai:
     dependencies:
       '@ddreamland/common':
-        specifier: ^0.0.18
-        version: 0.0.18(@types/react@18.3.3)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)
+        specifier: ^0.0.19
+        version: 0.0.19(@types/react@18.3.3)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)
       '@microsoft/fetch-event-source':
         specifier: ^2.0.1
         version: 2.0.1
@@ -406,6 +406,9 @@ packages:
 
   '@ddreamland/common@0.0.18':
     resolution: {integrity: sha512-waOs1tjW7EzGmlLK/VXxley7xpCliHRFplupH7sIrx7yySH9N03uZKfvfPUA00lHcJWFXFJqw/B7tk9KOdaJAw==}
+
+  '@ddreamland/common@0.0.19':
+    resolution: {integrity: sha512-k9R73Lmo1OI7AYE7FzFwarde9yNN6K6VvDQNCzCXl2r3byq7NtkPAh1w21PRS4WMiiXMaJkxV7dfLCcwiOi55Q==}
 
   '@esbuild/aix-ppc64@0.20.2':
     resolution: {integrity: sha512-D+EBOJHXdNZcLJRBkhENNG8Wji2kgc9AZ9KiPr1JuZjsNtyHzrsfLRrY0tk2H2aoFu6RANO1y1iPPUCDYWkb5g==}
@@ -4495,6 +4498,29 @@ snapshots:
       to-fast-properties: 2.0.0
 
   '@ddreamland/common@0.0.18(@types/react@18.3.3)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)':
+    dependencies:
+      '@heroicons/react': 2.1.4(react@18.3.1)
+      '@nextui-org/react': 2.4.2(@types/react@18.3.3)(framer-motion@11.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)
+      axios: 1.7.2
+      framer-motion: 11.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      i18next: 23.11.5
+      i18next-browser-languagedetector: 8.0.0
+      js-md5: 0.8.3
+      react-i18next: 14.1.2(i18next@23.11.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      typescript-cookie: 1.0.6
+      use-immer: 0.10.0(immer@10.1.1)(react@18.3.1)
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
+      - debug
+      - immer
+      - react
+      - react-dom
+      - react-native
+      - tailwindcss
+
+  '@ddreamland/common@0.0.19(@types/react@18.3.3)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)':
     dependencies:
       '@heroicons/react': 2.1.4(react@18.3.1)
       '@nextui-org/react': 2.4.2(@types/react@18.3.3)(framer-motion@11.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)
