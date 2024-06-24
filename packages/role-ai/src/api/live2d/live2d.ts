@@ -1,5 +1,6 @@
+import { isString } from 'lodash'
 import { DtoBase, DataDto } from '../dtoBase'
-import { uploadLive2dZip } from '../oss/oss'
+import { prepearOssClient, uploadLive2dZip } from '../oss/oss'
 import { request, requestList } from '../request'
 import { Live2dInfo } from './resDto'
 
@@ -36,4 +37,44 @@ export async function deleteLive2d(id: string) {
   })
 
   return res
+}
+
+export async function ddreamFreeLive2ds() {
+  const freePkgBaseUrl = `https://live2doss.oss-accelerate.aliyuncs.com`
+
+  const res = await request<{
+    live2d: string[]
+  }>({
+    url: `${freePkgBaseUrl}/config.json`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  })
+
+  if (!res || !res.live2d || res.live2d.length <= 0) {
+    return []
+  }
+
+  const models: { name: string; url: string }[] = []
+  const len = res.live2d.length
+  for (let i = 0; i < len; i++) {
+    const item = res.live2d[i]
+    const url = `${freePkgBaseUrl}/${item}/${item}.model3.json`
+    try {
+      await request({
+        url,
+        method: 'HEAD',
+      })
+
+      models.push({
+        name: item,
+        url,
+      })
+    } catch {
+      // file may not exist
+    }
+  }
+
+  return models
 }

@@ -10,9 +10,9 @@ export enum CharacterAvatarType {
   Img = 'IMAGE',
 }
 
-export type CharacterAvatarTypeContents = {
-  type: CharacterAvatarType
-  typeName: string
-  enable: boolean
-  contents: CharacterAvatar[]
-}
+// export type CharacterAvatarTypeContents = {
+//   type: CharacterAvatarType
+//   typeName: string
+//   enable: boolean
+//   contents: CharacterAvatar[]
+// }

@@ -28,8 +28,10 @@ export type NuwaVoiceExtension = {
   nuwa_voice?: NuwaVoiceExtensionConfig
 }
 
+export type NuwaVoicesExtensionListItem = Omit<NuwaVoiceExtensionConfig, 'version' | 'disable'>
+
 export interface NuwaVoicesExtensionConfig extends NuwaExtensionConfigBase {
-  list: NuwaVoiceExtensionConfig[]
+  list: NuwaVoicesExtensionListItem[]
 }
 
 export type NuwaVoicesExtension = {
@@ -46,8 +48,10 @@ export type NuwaAvatarExtension = {
   nuwa_avatar?: NuwaAvatarExtensionConfig
 }
 
+export type NuwaAvatarsExtensionListItem = Omit<NuwaAvatarExtensionConfig, 'version' | 'disable'>
+
 export interface NuwaAvatarsExtensionConfig extends NuwaExtensionConfigBase {
-  list: NuwaAvatarExtensionConfig[]
+  list: NuwaAvatarsExtensionListItem[]
 }
 
 export type NuwaAvatarsExtension = {

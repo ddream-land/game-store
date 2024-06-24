@@ -4,13 +4,8 @@ import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
 import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import {
-  CharacterAvatar,
-  CharacterAvatarType,
-  CharacterAvatarTypeContents,
-} from '@/core/CharacterAvatar'
+import { CharacterAvatar, CharacterAvatarType } from '@/core/CharacterAvatar'
 import { useNavigateBack } from '@/router/useNavigateBack'
-import AvatarPanel from './AvatarPanel'
 import toast from 'react-hot-toast'
 import {
   NuwaAvatarExtension,
@@ -22,6 +17,9 @@ import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 import { DDLSplitLine } from '@ddreamland/common'
+import CreatorChoice from './creatorChoice/CreatorChoice'
+import LocalUploads from './localUploads/LocalUploads'
+import DdreamFreePkg from './ddreamFreePkg/DdreamFreePkg'
 
 export default CharacterDetailEditAvatarView
 
@@ -36,95 +34,12 @@ function CharacterDetailEditAvatarView() {
   const { back } = useNavigateBack()
   const navigate = useNavigate()
 
-  async function refreshList() {
-    const res = await getAllLive2d()
-
-    const live2dList: CharacterAvatarTypeContents = {
-      type: CharacterAvatarType.Live2D,
-      typeName: 'Live2D',
-      enable: true,
-      contents: (res.data ?? []).map(function (live2dInfo) {
-        return {
-          id: live2dInfo.id,
-          name: live2dInfo.name,
-          url: live2dInfo.url,
-        }
-      }),
-    }
-
-    const vrmList: CharacterAvatarTypeContents = {
-      type: CharacterAvatarType.VRM,
-      typeName: 'VRM',
-      enable: false,
-      contents: [
-        {
-          id: '1',
-          name: 'VRM111111111',
-          url: '/assets/live2d/Haru/Haru.model3.json',
-        },
-        {
-          id: '2',
-          name: 'VRM222222',
-          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-        },
-        {
-          id: '3',
-          name: 'VRM111111111',
-          url: '/assets/live2d/Haru/Haru.model3.json',
-        },
-        {
-          id: '4',
-          name: 'VRM222222',
-          url: '/assets/live2d/Hiyori/Hiyori.model3.json',
-        },
-      ],
-    }
-
-    const imgList: CharacterAvatarTypeContents = {
-      type: CharacterAvatarType.Img,
-      typeName: '图片',
-      enable: false,
-      contents: [
-        {
-          id: '11',
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          id: '22',
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-        {
-          id: '33',
-          name: 'QQQQQQQQQQQQQ',
-          url: '/imgs/default-avatar3.png',
-        },
-        {
-          id: '44',
-          name: 'WWWWWWWWWW',
-          url: '/main_ian-76649fb8_spec_v2.png',
-        },
-      ],
-    }
-
-    setAvatars([live2dList, vrmList, imgList])
-  }
-
-  useEffect(function () {
-    ;(async function () {
-      await refreshList()
-    })()
-  }, [])
-
   useEffect(
     function () {
       setDeleteIds([])
     },
     [editMode]
   )
-
-  const [avatars, setAvatars] = useState<CharacterAvatarTypeContents[]>([])
 
   async function onAddClicked(type: CharacterAvatarType) {
     switch (type) {
@@ -169,7 +84,7 @@ function CharacterDetailEditAvatarView() {
         throw new Error(res.msg)
       }
 
-      await refreshList()
+      // await refreshList()
       toast.success(tCommon('uploaded'), {
         id: id,
       })
@@ -183,7 +98,7 @@ function CharacterDetailEditAvatarView() {
     live2dInputEl.current.value = ''
   }
 
-  async function onSelectClicked(type: CharacterAvatarType, item: CharacterAvatar) {
+  async function onSelectClicked(type: CharacterAvatarType, item: Omit<CharacterAvatar, 'id'>) {
     const id = toast.loading(tCommon('loading'))
     try {
       const nuwaAvatarExtension: NuwaAvatarExtension = {
@@ -236,7 +151,7 @@ function CharacterDetailEditAvatarView() {
         const id = deleteIds[i]
         await deleteLive2d(id)
       }
-      await refreshList()
+      // await refreshList()
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
@@ -309,7 +224,29 @@ function CharacterDetailEditAvatarView() {
           <div
             className={`w-full h-full p-[24px] overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between content-start gap-6`}
           >
-            123
+            <CreatorChoice
+              checkMode={editMode}
+              onSelected={(item) => {
+                onSelectClicked(CharacterAvatarType.Live2D, item)
+              }}
+            ></CreatorChoice>
+
+            <DDLSplitLine></DDLSplitLine>
+
+            <LocalUploads
+              checkMode={editMode}
+              onSelected={(item) => {
+                onSelectClicked(CharacterAvatarType.Live2D, item)
+              }}
+            ></LocalUploads>
+
+            <DDLSplitLine></DDLSplitLine>
+
+            <DdreamFreePkg
+              onSelected={(item) => {
+                onSelectClicked(CharacterAvatarType.Live2D, item)
+              }}
+            ></DdreamFreePkg>
           </div>
         </div>
       </div>
