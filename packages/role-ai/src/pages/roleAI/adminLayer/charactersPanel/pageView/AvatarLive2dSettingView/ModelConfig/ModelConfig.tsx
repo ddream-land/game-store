@@ -25,22 +25,27 @@ function ModelConfig() {
   }
 
   return (
-    <div className={`${classes.modelConfig} w-full flex flex-col mt-16`}>
-      <div className={`${classes.row} w-full flex flex-row justify-between`}>
+    <div className={`${classes.modelConfig} w-full flex flex-col mt-8`}>
+      <div
+        className={`w-full flex flex-row justify-between items-center px-4 h-[62px] bg-[#1C1E22] rounded-[8px] border-1 border-[#232323]`}
+      >
         <div className={`${classes.desc} flex-none`}>{t('live2dFollowCursor')}</div>
-        <div className={`${classes.crtl} flex-none px-4`}>
+        <div className={`${classes.crtl} flex-none`}>
           <Switch
             isSelected={followCursor}
             onValueChange={onFollowCursorChange}
             aria-label="Follow cursor"
             classNames={{
-              wrapper: cn(
-                'bg-gray-300',
-                'data-[selected=true]:bg-gray-100',
-                'group-data-[selected=true]:bg-gray-100'
-              ),
-              thumb: cn('bg-black'),
+              wrapper: cn(''),
+              thumb: cn(''),
             }}
+            thumbIcon={({ isSelected, className }) =>
+              isSelected ? (
+                <div className={`${className} w-[6px] h-[6px] rounded-full bg-[#2E6EE6]`}></div>
+              ) : (
+                <div className={`${className} w-[6px] h-[6px] rounded-full bg-[#CDD0D5]`}></div>
+              )
+            }
           />
         </div>
       </div>

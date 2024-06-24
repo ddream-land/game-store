@@ -20,6 +20,7 @@ import { DDLSplitLine } from '@ddreamland/common'
 import CreatorChoice, { CreatorChoiceRef } from './creatorChoice/CreatorChoice'
 import LocalUploads, { LocalUploadsRef } from './localUploads/LocalUploads'
 import DdreamFreePkg from './ddreamFreePkg/DdreamFreePkg'
+import { Avatar } from '@nextui-org/react'
 
 export default CharacterDetailEditAvatarView
 
@@ -30,18 +31,13 @@ function CharacterDetailEditAvatarView() {
   const { t } = useTranslation('roleAI')
   const live2dInputEl = useRef<HTMLInputElement>(null)
   const [editMode, setEditMode] = useState(false)
-  const [deleteIds, setDeleteIds] = useState<string[]>([])
   const creatorChoiceRef = useRef<CreatorChoiceRef | null>(null)
   const localUploadsRef = useRef<LocalUploadsRef | null>(null)
   const { back } = useNavigateBack()
   const navigate = useNavigate()
 
-  useEffect(
-    function () {
-      setDeleteIds([])
-    },
-    [editMode]
-  )
+  const nuwaAvatar = adminCharaInfo.card.data.extensions.nuwa_avatar
+  const hasLive2d = nuwaAvatar?.type === CharacterAvatarType.Live2D && nuwaAvatar?.url
 
   async function onAddClicked(type: CharacterAvatarType) {
     switch (type) {
@@ -163,12 +159,14 @@ function CharacterDetailEditAvatarView() {
       <BackButton onClick={back}></BackButton>
 
       <NormalButton
-        onClick={() => {}}
+        onClick={() => {
+          onSettingClicked(CharacterAvatarType.Live2D)
+        }}
         className={`${classes.rectBtn} ${
-          editMode && 'hidden'
-        } absolute h-[34px] top-[20px] left-[62px] rounded-[8px]`}
+          !hasLive2d && 'hidden'
+        } absolute h-[34px] top-[20px] left-[62px] rounded-[8px] p-0`}
       >
-        +
+        <Avatar src={'/imgs/setting3.png'} className="w-[24px] h-[24px]"></Avatar>
       </NormalButton>
 
       <div className="absolute text-[#fff] h-[34px] top-[24px] left-1/2 -translate-x-1/2">

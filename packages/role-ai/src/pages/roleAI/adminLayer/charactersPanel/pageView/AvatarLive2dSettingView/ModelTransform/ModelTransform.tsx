@@ -50,9 +50,17 @@ function ModelTransform() {
 
   return (
     <div className={`${classes.modelTransform} w-full flex flex-col`}>
-      <div className={`${classes.row} w-full flex flex-row`}>
-        <div className={`${classes.desc} flex-none`}>{t('live2dScale')}</div>
-        <div className={`${classes.slider} flex-1 px-4`}>
+      <div className={`${classes.row} w-full flex flex-col`}>
+        <div className={`w-full flex flex-row justify-between`}>
+          <div className={`text-[14px] text-[#525866] font-[500] leading-[16px]`}>
+            {t('live2dScale')}
+          </div>
+          <div className={`text-[16px] text-[#525866] font-[500] leading-[16px]`}>
+            {`${scale.toFixed(1)}x`}
+          </div>
+        </div>
+
+        <div className={`${classes.slider} flex-1 mt-2`}>
           <Slider
             size="sm"
             step={5}
@@ -60,21 +68,28 @@ function ModelTransform() {
             minValue={0}
             aria-label="Scale"
             value={(scale - 1) * 50 + 50}
-            className="max-w-md"
+            className="w-full"
             classNames={{
-              track: 'border-s-secondary-100',
-              filler: 'bg-default-300/50',
-              thumb: 'bg-transparent',
+              track: '',
+              filler: '',
+              thumb: 'bg-white',
             }}
             onChange={scaleChange}
           />
         </div>
-        <div className={`${classes.val} flex-none`}>{`${scale.toFixed(1)}x`}</div>
       </div>
 
-      <div className={`${classes.row} w-full flex flex-row mt-16`}>
-        <div className={`${classes.desc} flex-none`}>{t('live2dOffsetX')}</div>
-        <div className={`${classes.slider} flex-1 px-4`}>
+      <div className={`${classes.row} w-full flex flex-col mt-8`}>
+        <div className={`w-full flex flex-row justify-between`}>
+          <div className={`text-[14px] text-[#525866] font-[500] leading-[16px]`}>
+            {t('live2dOffsetX')}
+          </div>
+          <div className={`text-[16px] text-[#525866] font-[500] leading-[16px]`}>
+            {`${offsetX}%`}
+          </div>
+        </div>
+
+        <div className={`${classes.slider} flex-1 mt-2`}>
           <Slider
             size="sm"
             step={1}
@@ -82,22 +97,28 @@ function ModelTransform() {
             minValue={0}
             aria-label="X"
             value={offsetX}
-            className="max-w-md"
+            className="w-full"
             classNames={{
-              track: 'border-s-secondary-100',
-              filler: 'bg-default-300/50',
-              thumb: 'bg-transparent',
+              track: '',
+              filler: '',
+              thumb: 'bg-white',
             }}
             onChange={offsetXChange}
           />
         </div>
-        <div className={`${classes.val} flex-none`}>{`${offsetX}%`}</div>
       </div>
 
-      <div className={`${classes.row} w-full flex flex-row mt-16`}>
-        <div className={`${classes.desc} flex-none`}>{t('live2dOffsetY')}</div>
+      <div className={`${classes.row} w-full flex flex-col mt-8`}>
+        <div className={`w-full flex flex-row justify-between`}>
+          <div className={`text-[14px] text-[#525866] font-[500] leading-[16px]`}>
+            {t('live2dOffsetY')}
+          </div>
+          <div className={`text-[16px] text-[#525866] font-[500] leading-[16px]`}>
+            {`${offsetY}%`}
+          </div>
+        </div>
 
-        <div className={`${classes.slider} flex-1 px-4`}>
+        <div className={`${classes.slider} flex-1 mt-2`}>
           <Slider
             size="sm"
             step={1}
@@ -105,16 +126,15 @@ function ModelTransform() {
             minValue={0}
             aria-label="Y"
             value={offsetY}
-            className="max-w-md"
+            className="w-full"
             classNames={{
-              track: 'border-s-secondary-100',
-              filler: 'bg-default-300/50',
-              thumb: 'bg-transparent',
+              track: '',
+              filler: '',
+              thumb: 'bg-white',
             }}
             onChange={offsetYChange}
           />
         </div>
-        <div className={`${classes.val} flex-none`}>{`${offsetY}%`}</div>
       </div>
     </div>
   )

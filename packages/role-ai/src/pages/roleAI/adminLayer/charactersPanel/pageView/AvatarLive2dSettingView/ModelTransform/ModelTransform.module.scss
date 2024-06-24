@@ -1,31 +1,13 @@
 .modelTransform {
-  border-bottom: solid 1px rgba(0, 0, 0, 1);
-  padding-bottom: 64px;
-
   .row {
-    .desc {
-      width: 62px;
-      font-family: Inter;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 18.88px;
-      letter-spacing: 0.01em;
-    }
     .slider {
       div[data-slot='thumb'] {
         &::after {
-          background-color: black;
+          background-color: #2e6ee6;
+          width: 6px;
+          height: 6px;
         }
       }
-    }
-    .val {
-      font-family: Inter;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 18.88px;
-      letter-spacing: 0.01em;
-      width: 48px;
-      text-align: center;
     }
   }
 }
