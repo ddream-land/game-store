@@ -11,6 +11,7 @@ import { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } fr
 import classes from './CreatorChoice.module.scss'
 import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
+import { DDLSplitLine } from '@ddreamland/common'
 
 type CheckedNuwaAvatarsExtensionListItem = NuwaAvatarsExtensionListItem & {
   checked: boolean
@@ -184,6 +185,8 @@ function CreatorChoice(
           )
         })}
       </div>
+
+      <DDLSplitLine className="my-[24px]"></DDLSplitLine>
     </div>
   )
 }

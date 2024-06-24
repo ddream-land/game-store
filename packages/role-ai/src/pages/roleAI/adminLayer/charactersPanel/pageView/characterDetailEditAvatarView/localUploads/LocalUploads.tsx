@@ -6,6 +6,7 @@ import { NuwaAvatarsExtensionListItem } from '@/core/characterCard/NuwaCharacter
 import { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import classes from './LocalUploads.module.scss'
 import { deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
+import { DDLSplitLine } from '@ddreamland/common'
 
 type CheckedNuwaAvatarsExtensionListItem = NuwaAvatarsExtensionListItem & {
   checked: boolean
@@ -14,6 +15,7 @@ type CheckedNuwaAvatarsExtensionListItem = NuwaAvatarsExtensionListItem & {
 
 export type LocalUploadsRef = {
   delSelection: () => Promise<void>
+  refresh: () => Promise<void>
 }
 
 type LocalUploadsProps = {
@@ -90,6 +92,7 @@ function LocalUploads(
   useImperativeHandle(ref, function () {
     return {
       delSelection,
+      refresh: refreshAvatarList,
     }
   })
 
@@ -153,6 +156,8 @@ function LocalUploads(
           )
         })}
       </div>
+
+      <DDLSplitLine className="my-[24px]"></DDLSplitLine>
     </div>
   )
 }

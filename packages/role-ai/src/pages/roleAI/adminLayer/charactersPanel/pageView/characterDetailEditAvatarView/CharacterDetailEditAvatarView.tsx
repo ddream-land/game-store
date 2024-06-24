@@ -17,8 +17,8 @@ import { createLive2d, deleteLive2d, getAllLive2d } from '@/api/live2d/live2d'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 import { DDLSplitLine } from '@ddreamland/common'
-import CreatorChoice from './creatorChoice/CreatorChoice'
-import LocalUploads from './localUploads/LocalUploads'
+import CreatorChoice, { CreatorChoiceRef } from './creatorChoice/CreatorChoice'
+import LocalUploads, { LocalUploadsRef } from './localUploads/LocalUploads'
 import DdreamFreePkg from './ddreamFreePkg/DdreamFreePkg'
 
 export default CharacterDetailEditAvatarView
@@ -31,6 +31,8 @@ function CharacterDetailEditAvatarView() {
   const live2dInputEl = useRef<HTMLInputElement>(null)
   const [editMode, setEditMode] = useState(false)
   const [deleteIds, setDeleteIds] = useState<string[]>([])
+  const creatorChoiceRef = useRef<CreatorChoiceRef | null>(null)
+  const localUploadsRef = useRef<LocalUploadsRef | null>(null)
   const { back } = useNavigateBack()
   const navigate = useNavigate()
 
@@ -84,7 +86,8 @@ function CharacterDetailEditAvatarView() {
         throw new Error(res.msg)
       }
 
-      // await refreshList()
+      localUploadsRef.current?.refresh()
+
       toast.success(tCommon('uploaded'), {
         id: id,
       })
@@ -133,25 +136,12 @@ function CharacterDetailEditAvatarView() {
     }
   }
 
-  async function onDeleteChecked(id: string, isSelected: boolean) {
-    if (isSelected) {
-      if (!deleteIds.includes(id)) {
-        setDeleteIds([...deleteIds, id])
-      }
-    } else {
-      setDeleteIds(deleteIds.filter((i) => i !== id))
-    }
-  }
-
   async function onDelete() {
     const id = toast.loading(tCommon('loading'))
     try {
-      const len = deleteIds.length
-      for (let i = 0; i < len; i++) {
-        const id = deleteIds[i]
-        await deleteLive2d(id)
-      }
-      // await refreshList()
+      creatorChoiceRef.current?.delSelection()
+      localUploadsRef.current?.delSelection()
+
       toast.success(tCommon('opSuccess'), {
         id: id,
       })
@@ -172,6 +162,15 @@ function CharacterDetailEditAvatarView() {
     >
       <BackButton onClick={back}></BackButton>
 
+      <NormalButton
+        onClick={() => {}}
+        className={`${classes.rectBtn} ${
+          editMode && 'hidden'
+        } absolute h-[34px] top-[20px] left-[62px] rounded-[8px]`}
+      >
+        +
+      </NormalButton>
+
       <div className="absolute text-[#fff] h-[34px] top-[24px] left-1/2 -translate-x-1/2">
         {tCommon('edit')} &nbsp;
         {t('avatar')}
@@ -179,7 +178,7 @@ function CharacterDetailEditAvatarView() {
 
       <NormalButton
         onClick={() => onAddClicked(CharacterAvatarType.Live2D)}
-        className={`${classes.addBtn} ${
+        className={`${classes.rectBtn} ${
           editMode && 'hidden'
         } absolute h-[34px] top-[20px] right-[20px] rounded-[8px]`}
       >
@@ -209,7 +208,7 @@ function CharacterDetailEditAvatarView() {
       </NormalButton>
 
       <NormalButton
-        // onClick={}
+        onClick={onDelete}
         className={`${classes.bigBtn} ${
           !editMode && 'hidden'
         } absolute h-[34px] top-[20px] right-[20px] rounded-[8px] bg-[#CD4646]`}
@@ -225,22 +224,20 @@ function CharacterDetailEditAvatarView() {
             className={`w-full h-full p-[24px] overflow-hidden overflow-y-scroll scrollbar-override flex flex-row flex-wrap justify-between content-start gap-6`}
           >
             <CreatorChoice
+              ref={creatorChoiceRef}
               checkMode={editMode}
               onSelected={(item) => {
                 onSelectClicked(CharacterAvatarType.Live2D, item)
               }}
             ></CreatorChoice>
 
-            <DDLSplitLine></DDLSplitLine>
-
             <LocalUploads
+              ref={localUploadsRef}
               checkMode={editMode}
               onSelected={(item) => {
                 onSelectClicked(CharacterAvatarType.Live2D, item)
               }}
             ></LocalUploads>
-
-            <DDLSplitLine></DDLSplitLine>
 
             <DdreamFreePkg
               onSelected={(item) => {
