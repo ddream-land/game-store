@@ -55,6 +55,7 @@ function Characters({ adminCharacterSelected, chatCharacterSelected, className }
             aria-label="Character datasource"
             size="sm"
             radius="full"
+            disabledKeys={['NFT']}
             className=""
             classNames={{
               base: 'w-full',
