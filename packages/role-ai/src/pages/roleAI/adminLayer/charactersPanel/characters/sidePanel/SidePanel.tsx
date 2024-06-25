@@ -60,14 +60,7 @@ function SidePanel() {
   return (
     <div className={`${classes.sidePanel} flex flex-col justify-between h-full w-[89px]`}>
       <div className={`flex-1 flex flex-col items-center`}>
-        <div
-          className={`${classes.user} cursor-pointer relative mt-[28px]`}
-          style={{
-            background: `url('${userAvatar}')`,
-          }}
-        >
-          <div className={`${classes.flag} absolute bottom-0 -right-1`}></div>
-
+        <div className={`mt-[28px]`}>
           <UserPanel className={`${classes.userPanel}`}></UserPanel>
         </div>
         <div className={`${classes.op} flex flex-col mt-10 gap-6`}>

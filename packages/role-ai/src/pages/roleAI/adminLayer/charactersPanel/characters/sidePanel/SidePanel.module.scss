@@ -1,29 +1,6 @@
 .sidePanel {
   border-right: solid 1px rgba(10, 11, 13, 1);
 
-  .user {
-    width: 46px;
-    height: 46px;
-    border-radius: 23px;
-    border: 1.6px solid rgba(113, 113, 113, 1);
-
-    .userPanel {
-      display: none;
-    }
-
-    &:hover {
-      .userPanel {
-        display: flex;
-      }
-    }
-
-    .flag {
-      width: 16px;
-      height: 16px;
-      background: url('/imgs/user-flag.png');
-    }
-  }
-
   .op {
     .text {
       font-family: Roboto;

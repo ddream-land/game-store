@@ -1,5 +1,19 @@
 import { useTranslation } from 'react-i18next'
 import classes from './UserPanel.module.scss'
+import {
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Popover,
+  PopoverTrigger,
+  useDisclosure,
+} from '@nextui-org/react'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Language } from '@/constant/languages'
+import { Auth } from '@ddreamland/common'
 
 type UserPanelProps = {
   className?: string
@@ -8,56 +22,138 @@ type UserPanelProps = {
 export default function UserPanel({ className }: UserPanelProps) {
   const { t: tCommon } = useTranslation('common')
 
+  const { i18n } = useTranslation()
+  const navigate = useNavigate()
+  const {
+    isOpen: payIsOpen,
+    onOpen: openPay,
+    onOpenChange: onPayOpenChange,
+  } = useDisclosure({ defaultOpen: false })
+  const {
+    isOpen: dropdownIsOpen,
+    onOpen: openDropdown,
+    onClose: closeDropdown,
+  } = useDisclosure({ defaultOpen: false })
+  const [loginIsOpen, setLoginIsOpen] = useState(false)
+  const [isLogouting, setIsLogouting] = useState(false)
+
+  const isChn = i18n.language === Language.zhCN
+  function onLanguageChange(isSelected: boolean) {
+    navigate(`/${isSelected ? Language.zhCN : Language.en}`)
+  }
+
+  function onAvatarClicked() {
+    closeDropdown()
+    openDropdown()
+    return
+    if (Auth.isLogin) {
+      openDropdown()
+    } else {
+      setLoginIsOpen(true)
+    }
+  }
+
+  async function onLogoutClicked() {
+    setIsLogouting(true)
+    try {
+      await Auth.logout()
+    } catch {
+    } finally {
+      setIsLogouting(false)
+      closeDropdown()
+    }
+  }
+
   const userAvatar = `/imgs/default-user.png`
   const username = 'Username'
   const usertype = 'Power user'
   const userExpire = '120 days left'
   const token = 500
 
+  useEffect(function () {
+    window.addEventListener('click', closeDropdown)
+
+    return function () {
+      window.removeEventListener('click', closeDropdown)
+    }
+  }, [])
+
   return (
-    <div
-      className={`${classes.userPanel} ${className} cursor-default absolute top-0 left-[46px] w-[300px] h-[262px] z-10 rounded-[10px] p-[20px] flex flex-col justify-between`}
-    >
-      <div className={`${classes.user} w-full h-[46px] flex flex-row`}>
-        <div
-          className={`${classes.avatar}`}
-          style={{
-            background: `url('${userAvatar}')`,
-          }}
-        ></div>
-        <div className={`ml-[10px] py-[6px] flex-1 overflow-hidden flex flex-col justify-between`}>
-          <div className={`${classes.username} flex flex-row items-center`}>
-            <span className={`${classes.name} truncate`}>{username}</span>
-            <span className={`${classes.flag} flex-none`}></span>
-          </div>
-          <div className={`${classes.info} flex flex-row items-center`}>
-            <span className={`${classes.type}`}>{usertype}</span>
-            <div className={`w-[1px] h-[4px] bg-[#36383E] mx-1`}></div>
-            <span className={`${classes.expire}`}>{` ${userExpire}`}</span>
-          </div>
-        </div>
-      </div>
-      <div
-        className={`${classes.balance} w-full h-[98px] bg-[#5B61FF] px-[14px] py-[10px] flex flex-col justify-between`}
-      >
-        <div className={`${classes.title}`}>{tCommon('balance')}</div>
-        <div className={`${classes.op} flex flex-row justify-between items-end`}>
-          <div>
-            <span className={`${classes.token}`}>{token}</span>
-            <span className={`${classes.icon} ml-2 inline-block w-[14px] h-[14px]`}></span>
-          </div>
-          <div
-            className={`${classes.topUp} w-[72px] h-[24px] rounded-[36px] cursor-pointer text-white flex justify-center items-center`}
+    <div className={`${classes.userPanel} relative cursor-pointer pointer-events-auto`}>
+      <Dropdown isOpen={dropdownIsOpen} placement="right-start" className="bg-[#25252A]">
+        <DropdownTrigger>
+          <Avatar
+            onClick={onAvatarClicked}
+            showFallback
+            src={userAvatar}
+            className="w-[46px] h-[46px] z-0"
+            radius="full"
+          ></Avatar>
+        </DropdownTrigger>
+        <DropdownMenu aria-label="User Profile" className="w-[300px] h-[262px] rounded-xl">
+          <DropdownItem
+            key="profile"
+            textValue="profile"
+            isReadOnly
+            className="w-full cursor-default"
           >
-            {tCommon('topUp')}
-          </div>
-        </div>
-      </div>
-      <div
-        className={`${classes.logout} cursor-pointer w-full h-[40px] rounded-[20px] flex justify-center items-center`}
-      >
-        {tCommon('logout')}
-      </div>
+            <div className={`${classes.user} w-full h-[46px] flex flex-row`}>
+              <Avatar
+                onClick={onAvatarClicked}
+                showFallback
+                src={userAvatar}
+                className="w-[46px] h-[46px]"
+                radius="full"
+              ></Avatar>
+              <div
+                className={`ml-[10px] py-[6px] flex-1 overflow-hidden flex flex-col justify-between`}
+              >
+                <div className={`flex flex-row items-center`}>
+                  <span className={`text-[#fff] text-[16px] font-[500] truncate`}>{username}</span>
+                  <span className={`${classes.flag} flex-none`}></span>
+                </div>
+                <div className={`${classes.info} flex flex-row items-center`}>
+                  <span className={`${classes.type}`}>{usertype}</span>
+                  <div className={`w-[1px] h-[4px] bg-[#36383E] mx-1`}></div>
+                  <span className={`${classes.expire}`}>{` ${userExpire}`}</span>
+                </div>
+              </div>
+            </div>
+          </DropdownItem>
+          <DropdownItem
+            key="wallet"
+            textValue="wallet"
+            isReadOnly
+            className="w-full cursor-default"
+          >
+            <div
+              className={`${classes.balance} w-full h-[98px] bg-[#5B61FF] px-[14px] py-[10px] flex flex-col justify-between`}
+            >
+              <div className={`${classes.title}`}>{tCommon('balance')}</div>
+              <div className={`${classes.op} flex flex-row justify-between items-end`}>
+                <div>
+                  <span className={`${classes.token}`}>{token}</span>
+                  <span className={`${classes.icon} ml-2 inline-block w-[14px] h-[14px]`}></span>
+                </div>
+                <div
+                  className={`${classes.topUp} w-[72px] h-[24px] rounded-[36px] cursor-pointer text-white flex justify-center items-center`}
+                >
+                  {tCommon('topUp')}
+                </div>
+              </div>
+            </div>
+          </DropdownItem>
+          <DropdownItem key="logout" textValue="logout">
+            <div
+              className={`${classes.logout} cursor-pointer w-full h-[40px] rounded-[20px] flex justify-center items-center`}
+            >
+              {tCommon('logout')}
+            </div>
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+
+      <div className={`${classes.flag} w-[16px] h-[16px] absolute bottom-0 -right-1`}></div>
     </div>
   )
 }
