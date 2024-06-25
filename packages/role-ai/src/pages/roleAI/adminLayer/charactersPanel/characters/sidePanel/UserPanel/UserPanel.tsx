@@ -39,17 +39,15 @@ export default function UserPanel({ className }: UserPanelProps) {
     onOpen: openDropdown,
     onClose: closeDropdown,
   } = useDisclosure({ defaultOpen: false })
-  const [loginIsOpen, setLoginIsOpen] = useState(false)
   const [isLogouting, setIsLogouting] = useState(false)
-  const userInfo = useUserInfoContext()
-  const { setUserInfo, refreshUserInfo, Logout } = useSetUserInfoContext()
+  const { Logout } = useSetUserInfoContext()
 
   function onAvatarClicked() {
     closeDropdown()
     if (Auth.isLogin) {
       openDropdown()
     } else {
-      setLoginIsOpen(true)
+      Logout()
     }
   }
 
@@ -64,26 +62,11 @@ export default function UserPanel({ className }: UserPanelProps) {
     }
   }
 
-  function onLogin() {
-    // refreshUserInfo().then(() => {
-    setLoginIsOpen(false)
-    // })
-  }
-
   const userAvatar = ``
   const username = 'Username'
   const usertype = 'Power user'
   const userExpire = '120 days left'
   const token = 500
-
-  useEffect(
-    function () {
-      if (userInfo.uid <= 0) {
-        setLoginIsOpen(true)
-      }
-    },
-    [userInfo]
-  )
 
   useEffect(function () {
     window.addEventListener('click', closeDropdown)
@@ -182,17 +165,6 @@ export default function UserPanel({ className }: UserPanelProps) {
         isOpen={payIsOpen}
         onOpenChange={onPayOpenChange}
         lang={i18n.language as 'en' | 'zh-CN'}
-      />
-
-      <LoginModal
-        isOpen={loginIsOpen}
-        locale={i18n.language as 'en' | 'zh-CN'}
-        onLogin={() => {
-          onLogin()
-        }}
-        onClose={() => {
-          setLoginIsOpen(false)
-        }}
       />
 
       <div className={`${classes.flag} w-[16px] h-[16px] absolute bottom-0 -right-1`}></div>

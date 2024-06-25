@@ -8,25 +8,28 @@ import { ChatHistoryContextProvider } from './ChatHistoryContextProvider'
 import { TTSContextProvider } from './TTSContextProvider'
 import { Live2dExtensionContextProvider } from './Live2dExtensionContextProvider'
 import { AdminPanelStateContextProvider } from './AdminPanelStateContextProvider'
+import { UserInfoContextProvider } from './UserInfoContextProvider'
 
 export function RoleAIContextProvider({ children }: { children: ReactNode }) {
   return (
-    <Live2dExtensionContextProvider>
-      <CharacterInfoListContextProvider>
-        <CurrentChatCharacterIdContextProvider>
-          <CurrentAdminCharacterIdContextProvider>
-            <CurrentChatCharacterInfoContextProvider>
-              <CurrentAdminCharacterInfoContextProvider>
-                <ChatHistoryContextProvider>
-                  <TTSContextProvider>
-                    <AdminPanelStateContextProvider>{children}</AdminPanelStateContextProvider>
-                  </TTSContextProvider>
-                </ChatHistoryContextProvider>
-              </CurrentAdminCharacterInfoContextProvider>
-            </CurrentChatCharacterInfoContextProvider>
-          </CurrentAdminCharacterIdContextProvider>
-        </CurrentChatCharacterIdContextProvider>
-      </CharacterInfoListContextProvider>
-    </Live2dExtensionContextProvider>
+    <UserInfoContextProvider>
+      <Live2dExtensionContextProvider>
+        <CharacterInfoListContextProvider>
+          <CurrentChatCharacterIdContextProvider>
+            <CurrentAdminCharacterIdContextProvider>
+              <CurrentChatCharacterInfoContextProvider>
+                <CurrentAdminCharacterInfoContextProvider>
+                  <ChatHistoryContextProvider>
+                    <TTSContextProvider>
+                      <AdminPanelStateContextProvider>{children}</AdminPanelStateContextProvider>
+                    </TTSContextProvider>
+                  </ChatHistoryContextProvider>
+                </CurrentAdminCharacterInfoContextProvider>
+              </CurrentChatCharacterInfoContextProvider>
+            </CurrentAdminCharacterIdContextProvider>
+          </CurrentChatCharacterIdContextProvider>
+        </CharacterInfoListContextProvider>
+      </Live2dExtensionContextProvider>
+    </UserInfoContextProvider>
   )
 }

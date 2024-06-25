@@ -1,12 +1,11 @@
 import { getUserInfo } from '@/api/user/user'
-import { KEEP_ROLE_PANEL_OPEN } from '@/constant/env'
 import { UserInfo } from '@/core/User'
 import { Auth } from '@ddreamland/common'
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 const UserInfoStateContext = createContext<UserInfo>({
   email: '',
-  uid: 0,
+  uid: -1,
   wallet: '',
   name: '',
   avatar: '',

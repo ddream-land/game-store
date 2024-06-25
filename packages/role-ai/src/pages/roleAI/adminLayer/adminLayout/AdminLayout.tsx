@@ -1,7 +1,7 @@
 import classes from './AdminLayout.module.scss'
-import { DDLSidebar } from '@ddreamland/common'
+import { DDLSidebar, LoginModal } from '@ddreamland/common'
 import { useMouseHoverOp } from './useMouseHoverOp'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Characters from '../charactersPanel/characters/Characters'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useSetCurrentChatCharacterId } from '../../context/CurrentChatCharacterIdContextProvider'
@@ -11,6 +11,8 @@ import {
   useAdminPanelState,
   useSetAdminPanelStateContext,
 } from '../../context/AdminPanelStateContextProvider'
+import { useSetUserInfoContext, useUserInfoContext } from '../../context/UserInfoContextProvider'
+import { useTranslation } from 'react-i18next'
 
 export interface AdminLayoutProps {
   readonly children?: React.ReactNode
@@ -28,6 +30,9 @@ function AdminLayout({ children }: AdminLayoutProps) {
   const navigate = useNavigate()
   const setCurrentChatId = useSetCurrentChatCharacterId()
   const setCurrentAdminId = useSetCurrentAdminCharacterId()
+  const [loginIsOpen, setLoginIsOpen] = useState(false)
+  const userInfo = useUserInfoContext()
+  const { i18n } = useTranslation()
 
   function onAdminCharacterSelected(id: string) {
     setCurrentAdminId(id)
@@ -37,6 +42,21 @@ function AdminLayout({ children }: AdminLayoutProps) {
   function onChatCharacterSelected(id: string) {
     setCurrentChatId(id)
   }
+
+  function onLogin() {
+    // refreshUserInfo().then(() => {
+    setLoginIsOpen(false)
+    // })
+  }
+
+  useEffect(
+    function () {
+      if (userInfo.uid <= 0) {
+        setLoginIsOpen(true)
+      }
+    },
+    [userInfo]
+  )
 
   return (
     <div
@@ -88,6 +108,17 @@ function AdminLayout({ children }: AdminLayoutProps) {
           </div>
         </div>
       </div>
+
+      <LoginModal
+        isOpen={loginIsOpen}
+        locale={i18n.language as 'en' | 'zh-CN'}
+        onLogin={() => {
+          onLogin()
+        }}
+        onClose={() => {
+          setLoginIsOpen(false)
+        }}
+      />
     </div>
   )
 }
