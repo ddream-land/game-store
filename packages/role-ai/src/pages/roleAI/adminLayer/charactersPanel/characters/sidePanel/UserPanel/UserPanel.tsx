@@ -94,7 +94,12 @@ export default function UserPanel({ className }: UserPanelProps) {
   }, [])
 
   return (
-    <div className={`${classes.userPanel} relative cursor-pointer pointer-events-auto`}>
+    <div
+      onClick={(e) => {
+        e.stopPropagation()
+      }}
+      className={`${classes.userPanel} relative cursor-pointer pointer-events-auto`}
+    >
       <Dropdown isOpen={dropdownIsOpen} placement="right-start" className="bg-[#25252A]">
         <DropdownTrigger>
           <Avatar
