@@ -10,7 +10,7 @@ function SelectPrompt() {
   return (
     <div className={`${classes.selectPrompt} w-full h-full flex flex-col items-center`}>
       <div className={`${classes.img}`}></div>
-      <DDLSplitLine className=""></DDLSplitLine>
+      <DDLSplitLine line1Color="#0e111b" line2Color="#22242d"></DDLSplitLine>
       <div
         className={`${classes.btn} mt-4 w-full h-[41px] bg-[#3A71FF] rounded-[12px] flex justify-center items-center`}
       >
