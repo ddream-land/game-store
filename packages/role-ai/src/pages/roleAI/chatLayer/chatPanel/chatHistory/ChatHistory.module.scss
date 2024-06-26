@@ -1,8 +1,9 @@
 .chatHistory {
-  -webkit-mask-image: linear-gradient(transparent 0%, transparent 10%, black 50%, black 100%);
-  mask-image: linear-gradient(transparent 0%, transparent 10%, black 50%, black 100%);
+  -webkit-mask-image: linear-gradient(transparent 0, transparent 80px, black 200px, black 100%);
+  mask-image: linear-gradient(transparent 0, transparent 80px, black 200px, black 100%);
 
   .msgs {
+    margin-top: 180px;
     .msg {
       margin-top: 18px;
 

@@ -25,7 +25,7 @@ export default function ChatHistory() {
       ref={chatContainer}
       className={`${classes.chatHistory} w-full h-full overflow-y-auto scrollbar-override transition-all flex`}
     >
-      <div className={`${classes.msgs} w-full mt-auto`}>
+      <div className={`${classes.msgs} w-full`}>
         {chatHistory
           .filter(function (msg) {
             return msg.role !== ChatRole.System
