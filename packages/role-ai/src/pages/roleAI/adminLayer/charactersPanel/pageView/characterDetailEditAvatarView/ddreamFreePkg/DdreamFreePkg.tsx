@@ -72,7 +72,7 @@ function DdreamFreePkg({ onSelected }: DdreamFreePkgProps) {
                 onSelected && onSelected(avatar)
               }}
               key={index}
-              className="w-full h-[62px] bg-[#1C1E22] border-1 border-[#2C2C32] rounded-[8px] flex flex-row items-center px-[18px] mt-[14px] cursor-pointer"
+              className="w-full h-[62px] bg-[#1C1E22] border-1 border-[#2C2C32] hover:border-[#2E6EE6] rounded-[8px] flex flex-row items-center px-[18px] mt-[14px] cursor-pointer"
             >
               <Avatar
                 src="/imgs/user2.png"
