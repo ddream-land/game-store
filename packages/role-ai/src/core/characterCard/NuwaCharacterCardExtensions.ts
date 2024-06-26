@@ -22,13 +22,17 @@ export interface NuwaVoiceExtensionConfig extends NuwaExtensionConfigBase {
   sex: string
   name: string
   language: string
+  autoPlay: boolean
 }
 
 export type NuwaVoiceExtension = {
   nuwa_voice?: NuwaVoiceExtensionConfig
 }
 
-export type NuwaVoicesExtensionListItem = Omit<NuwaVoiceExtensionConfig, 'version' | 'disable'>
+export type NuwaVoicesExtensionListItem = Omit<
+  NuwaVoiceExtensionConfig,
+  'version' | 'disable' | 'autoPlay'
+>
 
 export interface NuwaVoicesExtensionConfig extends NuwaExtensionConfigBase {
   list: NuwaVoicesExtensionListItem[]
