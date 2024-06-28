@@ -7,6 +7,7 @@ import { createCard } from '@/api/characterCard/characterCard'
 import { useSetCharacterInfoList } from '@/pages/roleAI/context/CharacterInfoListContextProvider'
 import { isString } from '@/libs/isTypes'
 import UserPanel from './UserPanel/UserPanel'
+import { useNavigate } from 'react-router-dom'
 
 export default SidePanel
 
@@ -14,6 +15,7 @@ function SidePanel() {
   const { t: tCommon } = useTranslation('common')
   const { t: tRoleAI } = useTranslation('roleAI')
   const { refreshCharacterInfoList } = useSetCharacterInfoList()
+  const navigate = useNavigate()
 
   const userAvatar = `/imgs/default-user.png`
 
@@ -96,8 +98,12 @@ function SidePanel() {
       </div>
       <div className={`flex-none px-[10px]`}>
         <DDLSplitLine className=""></DDLSplitLine>
+
         <div className={`flex flex-col justify-center items-center py-[28px]`}>
           <div
+            onClick={() => {
+              navigate(`settings`)
+            }}
             className={`${classes.setting} cursor-pointer flex flex-col justify-center items-center`}
           >
             <div className={`${classes.icon} w-[26px] h-[26px] `}></div>

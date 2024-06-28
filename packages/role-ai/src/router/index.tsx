@@ -10,6 +10,8 @@ import CharacterDetailEditToneView from '@/pages/roleAI/adminLayer/charactersPan
 import OnlyLive2D from '@/pages/onlyLive2D/OnlyLive2D'
 import AvatarLive2dSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/AvatarLive2dSettingView/AvatarLive2dSettingView'
 // import CharacterNameSettingView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/characterNameSettingView/CharacterNameSettingView'
+import SettingsView from '@/pages/roleAI/adminLayer/charactersPanel/pageView/settingsView/SettingsView'
+import { SETTINGS_BG_SUFFIX } from './constants'
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,24 @@ const router = createBrowserRouter([
               },
               {
                 path: '/:language/detail/editCover',
+                element: (
+                  <PageView>
+                    <CharacterDetailEditCoverView></CharacterDetailEditCoverView>
+                  </PageView>
+                ),
+              },
+            ],
+          },
+          {
+            path: '/:language/settings',
+            element: (
+              <PageView>
+                <SettingsView></SettingsView>
+              </PageView>
+            ),
+            children: [
+              {
+                path: `/:language/${SETTINGS_BG_SUFFIX}`,
                 element: (
                   <PageView>
                     <CharacterDetailEditCoverView></CharacterDetailEditCoverView>

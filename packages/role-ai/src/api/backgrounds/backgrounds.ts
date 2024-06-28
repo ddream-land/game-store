@@ -42,6 +42,25 @@ export async function deleteBackground(id: string) {
   })
 }
 
-export function backgroundUrl(bg: string) {
-  return `https://st.nirvanaworld.cn/backgrounds/${bg}`
+export async function setDefaultBackground(id: string) {
+  return await request<DtoBase>({
+    url: `/api/backgrounds/default/set`,
+    method: 'post',
+    data: {
+      id: id,
+    },
+    headers: { 'Content-Type': 'application/json' },
+  })
 }
+
+export async function getDefaultBackground() {
+  return await request<DataDto<string>>({
+    url: `/api/backgrounds/default/get`,
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
+
+// export function backgroundUrl(bg: string) {
+//   return `https://st.nirvanaworld.cn/backgrounds/${bg}`
+// }

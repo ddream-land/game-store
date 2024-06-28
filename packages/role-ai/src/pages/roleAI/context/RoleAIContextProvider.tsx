@@ -9,26 +9,29 @@ import { TTSContextProvider } from './TTSContextProvider'
 import { Live2dExtensionContextProvider } from './Live2dExtensionContextProvider'
 import { AdminPanelStateContextProvider } from './AdminPanelStateContextProvider'
 import { UserInfoContextProvider } from './UserInfoContextProvider'
+import { DefaultBackgroundContextProvider } from './DefaultBackgroundContextProvider'
 
 export function RoleAIContextProvider({ children }: { children: ReactNode }) {
   return (
     <UserInfoContextProvider>
       <Live2dExtensionContextProvider>
-        <CharacterInfoListContextProvider>
-          <CurrentChatCharacterIdContextProvider>
-            <CurrentAdminCharacterIdContextProvider>
-              <CurrentChatCharacterInfoContextProvider>
-                <CurrentAdminCharacterInfoContextProvider>
-                  <ChatHistoryContextProvider>
-                    <TTSContextProvider>
-                      <AdminPanelStateContextProvider>{children}</AdminPanelStateContextProvider>
-                    </TTSContextProvider>
-                  </ChatHistoryContextProvider>
-                </CurrentAdminCharacterInfoContextProvider>
-              </CurrentChatCharacterInfoContextProvider>
-            </CurrentAdminCharacterIdContextProvider>
-          </CurrentChatCharacterIdContextProvider>
-        </CharacterInfoListContextProvider>
+        <DefaultBackgroundContextProvider>
+          <CharacterInfoListContextProvider>
+            <CurrentChatCharacterIdContextProvider>
+              <CurrentAdminCharacterIdContextProvider>
+                <CurrentChatCharacterInfoContextProvider>
+                  <CurrentAdminCharacterInfoContextProvider>
+                    <ChatHistoryContextProvider>
+                      <TTSContextProvider>
+                        <AdminPanelStateContextProvider>{children}</AdminPanelStateContextProvider>
+                      </TTSContextProvider>
+                    </ChatHistoryContextProvider>
+                  </CurrentAdminCharacterInfoContextProvider>
+                </CurrentChatCharacterInfoContextProvider>
+              </CurrentAdminCharacterIdContextProvider>
+            </CurrentChatCharacterIdContextProvider>
+          </CharacterInfoListContextProvider>
+        </DefaultBackgroundContextProvider>
       </Live2dExtensionContextProvider>
     </UserInfoContextProvider>
   )

@@ -2,13 +2,13 @@ import classes from './CharacterDetailEditCoverView.module.scss'
 import BackButton from '@/components/backButton/BackButton'
 import NormalButton from '@/components/NormalButton/NormalButton'
 import { useTranslation } from 'react-i18next'
-import { useCurrentAdminCharaInfoChecker } from '../useCurrentAdminCharaInfoChecker'
-import { ChangeEvent, useEffect, useRef, useState, MouseEvent } from 'react'
+import { ChangeEvent, useEffect, useRef, useState, MouseEvent, useContext } from 'react'
 import { useNavigateBack } from '@/router/useNavigateBack'
 import { Background } from '@/core/Background'
 import {
   deleteBackground,
   getAllBackgrounds,
+  setDefaultBackground,
   uploadBackground,
 } from '@/api/backgrounds/backgrounds'
 import toast from 'react-hot-toast'
@@ -22,19 +22,24 @@ import { CharacterCardV2 } from '@/core/characterCard/characterCardV2'
 import { useCurrentAdminCharacterInfo } from '@/pages/roleAI/context/CurrentAdminCharacterInfoContextProvider'
 import { DDLSplitLine } from '@ddreamland/common'
 import { Checkbox } from '@nextui-org/react'
+import { useLocation } from 'react-router-dom'
+import { SETTINGS_BG_SUFFIX } from '@/router/constants'
+import { useRefreshDefaultBackground } from '@/pages/roleAI/context/DefaultBackgroundContextProvider'
 
 export default CharacterDetailEditCoverView
 
 function CharacterDetailEditCoverView() {
-  const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
+  const { adminCharaInfo } = useCurrentAdminCharacterInfo()
   const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')
   const { back } = useNavigateBack()
   const imgInputEl = useRef<HTMLInputElement>(null)
   const [imgs, setImgs] = useState<Background[]>([])
-
   const [editMode, setEditMode] = useState(false)
+
+  const location = useLocation()
+  const refreshDefaultBg = useRefreshDefaultBackground()
 
   function onAddImageClicked() {
     imgInputEl.current?.click()
@@ -108,7 +113,10 @@ function CharacterDetailEditCoverView() {
     setImgs(bgs)
   }
 
-  async function onBackgroundClicked(bg: Background) {
+  async function setCharacterCardBg(bg: Background) {
+    if (!adminCharaInfo) {
+      return
+    }
     const id = toast.loading(tCommon('loading'))
     try {
       const nuwaBgExtension: NuwaBackgroundExtension = {
@@ -128,7 +136,6 @@ function CharacterDetailEditCoverView() {
           },
         },
       }
-
       await uploadCurrentAdminCharaInfo(newCard)
       toast.success(tCommon('opSuccess'), {
         id: id,
@@ -138,6 +145,31 @@ function CharacterDetailEditCoverView() {
       toast.error(isString(msg) ? msg : tCommon('opFailed'), {
         id: id,
       })
+    }
+  }
+
+  async function setDefaultBg(bg: Background) {
+    const id = toast.loading(tCommon('loading'))
+    try {
+      await setDefaultBackground(bg.id)
+      toast.success(tCommon('opSuccess'), {
+        id: id,
+      })
+
+      await refreshDefaultBg()
+    } catch (err: any) {
+      const msg = err?.message
+      toast.error(isString(msg) ? msg : tCommon('opFailed'), {
+        id: id,
+      })
+    }
+  }
+
+  async function onBackgroundClicked(bg: Background) {
+    if (location.pathname.endsWith(SETTINGS_BG_SUFFIX)) {
+      await setDefaultBg(bg)
+    } else {
+      await setCharacterCardBg(bg)
     }
   }
 
@@ -233,7 +265,7 @@ function CharacterDetailEditCoverView() {
                 >
                   <div
                     className={`${
-                      adminCharaInfo.card.data.extensions.nuwa_bg?.url === img.url
+                      adminCharaInfo?.card.data.extensions.nuwa_bg?.url === img.url
                         ? classes.current
                         : ''
                     } w-[216px] h-[140px] rounded-[12px] overflow-hidden`}
@@ -243,7 +275,7 @@ function CharacterDetailEditCoverView() {
 
                   <span
                     className={`${classes.imgName} ${
-                      adminCharaInfo.card.data.extensions.nuwa_bg?.url === img.url
+                      adminCharaInfo?.card.data.extensions.nuwa_bg?.url === img.url
                         ? classes.currentName
                         : ''
                     } max-w-[216px] mt-[10px] px-[10px] py-[4px] rounded-[12px] truncate`}

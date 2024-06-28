@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Language } from '@/constant/languages'
-import { Auth, DDLPay, LoginModal } from '@ddreamland/common'
+import { Auth, DDLPay } from '@ddreamland/common'
 import {
   useSetUserInfoContext,
   useUserInfoContext,

@@ -24,6 +24,7 @@ function CharacterDetailEditToneView() {
   const { adminCharaInfo } = useCurrentAdminCharaInfoChecker()
   const { uploadCurrentAdminCharaInfo } = useCurrentAdminCharacterInfo()
   const { t: tCommon } = useTranslation('common')
+  const { t } = useTranslation('roleAI')
   const { back } = useNavigateBack()
   const [editMode, setEditMode] = useState(false)
   const creatorChoiceRef = useRef<CreatorChoiceRef | null>(null)
@@ -100,6 +101,11 @@ function CharacterDetailEditToneView() {
       className={`${classes.characterDetailEditToneView} w-full h-full relative pointer-events-auto flex flex-col bg-[#121315] rounded-[12px]`}
     >
       <BackButton onClick={back}></BackButton>
+
+      <div className="absolute text-[#fff] h-[34px] top-[24px] left-1/2 -translate-x-1/2">
+        {tCommon('edit')} &nbsp;
+        {tCommon('voice')}
+      </div>
 
       <NormalButton
         onClick={onSave}

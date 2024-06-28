@@ -3,10 +3,12 @@ import { CSSProperties, ReactNode, useEffect, useState } from 'react'
 import { useCurrentChatCharacterInfo } from './context/CurrentChatCharacterInfoContextProvider'
 import { useLive2dExtension } from './context/Live2dExtensionContextProvider'
 import { NuwaExtensionVersion } from '@/core/characterCard/NuwaCharacterCardExtensions'
+import { useDefaultBackground } from './context/DefaultBackgroundContextProvider'
 
 const DEFAULT_MAIN_BG = '/default-bg.jpg'
 
 export default function Main({ children }: { children: ReactNode }) {
+  const defaultBg = useDefaultBackground()
   const [mainBgUrl, setMainBgUrl] = useState(DEFAULT_MAIN_BG)
   const { chatCharaInfo } = useCurrentChatCharacterInfo()
 
@@ -18,6 +20,9 @@ export default function Main({ children }: { children: ReactNode }) {
     function () {
       const nuwaBg = chatCharaInfo?.card?.data?.extensions?.nuwa_bg
       let bgUrl = DEFAULT_MAIN_BG
+      if (defaultBg) {
+        bgUrl = defaultBg
+      }
       if (nuwaBg && !nuwaBg.disable) {
         switch (nuwaBg.version) {
           case NuwaExtensionVersion.V1: {
@@ -34,7 +39,7 @@ export default function Main({ children }: { children: ReactNode }) {
         setMainBgUrl(bgUrl)
       }
     },
-    [chatCharaInfo]
+    [chatCharaInfo, defaultBg]
   )
 
   return (

@@ -27,5 +27,9 @@
   "chatting": "Chatting",
   "logout": "Log Out",
   "balance": "Balance",
-  "topUp": "Top-up"
+  "topUp": "Top-up",
+  "community": "Community",
+  "cleared": "Cleared",
+  "clear": "Clear",
+  "clearCache": "Clear Cache"
 }
