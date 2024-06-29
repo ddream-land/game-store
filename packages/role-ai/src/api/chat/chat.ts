@@ -26,3 +26,15 @@ export async function newChat(roleId: string) {
 
   return res
 }
+
+export async function delHistory(humanMsgId: string, nextAIMsgId: string) {
+  const res = await request<DtoBase>({
+    url: `/api/backends/chat-completions/delete`,
+    method: 'POST',
+    data: {
+      msg_ids: [humanMsgId, nextAIMsgId],
+    },
+  })
+
+  return res
+}

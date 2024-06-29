@@ -4,14 +4,30 @@ import {
   useChatHistory,
   useSetChatHistory,
 } from '@/pages/roleAI/context/ChatHistoryContextProvider'
+import MsgMenu from '../MsgControl/MsgMenu'
+import { Image } from '@nextui-org/react'
+import { MouseEvent } from 'react'
+import MsgControl from '../MsgControl/MsgControl'
 
 export default AssistantMsg
 
 type AssistantMsgProps = Readonly<{
   msg: NuwaChatMessage
+  menuVisible: boolean
+  showMenuBtn?: boolean
+  onMenuBtnClicked: (e: MouseEvent) => void
+  onEditClicked: (e: MouseEvent) => void
+  onDelClicked: (e: MouseEvent) => void
 }>
 
-function AssistantMsg({ msg }: AssistantMsgProps) {
+function AssistantMsg({
+  msg,
+  menuVisible,
+  showMenuBtn,
+  onMenuBtnClicked,
+  onEditClicked,
+  onDelClicked,
+}: AssistantMsgProps) {
   const setChatMsg = useSetChatHistory()
   const { chatHistory } = useChatHistory()
 
@@ -80,26 +96,38 @@ function AssistantMsg({ msg }: AssistantMsgProps) {
   }
 
   return (
-    <div className={`${classes.assistMsg} w-full flex flex-row relative`}>
-      <div className={`${classes.content} w-full`}>{msg.content}</div>
+    <div className={`${classes.assistMsg} mt-[48px] w-full flex flex-row relative`}>
+      <div className="w-5/6 group relative">
+        <div className={`${classes.content} w-full`}>{msg.content}</div>
 
-      <div className={`${classes.switchMsg} ${showSwitch ? '' : 'hidden'} absolute flex flex-row`}>
         <div
-          onClick={onLeftClicked}
-          className={`${classes.arrow} ${
-            leftEnable ? '' : classes.disable
-          } cursor-pointer h-full flex justify-center items-center flex-1`}
+          className={`${classes.switchMsg} ${showSwitch ? '' : 'hidden'} absolute flex flex-row`}
         >
-          &lt;
+          <div
+            onClick={onLeftClicked}
+            className={`${classes.arrow} ${
+              leftEnable ? '' : classes.disable
+            } cursor-pointer h-full flex justify-center items-center flex-1`}
+          >
+            &lt;
+          </div>
+          <div
+            onClick={onRightClicked}
+            className={`${classes.arrow} ${
+              rightEnable ? '' : classes.disable
+            } cursor-pointer h-full flex justify-center items-center flex-1`}
+          >
+            &gt;
+          </div>
         </div>
-        <div
-          onClick={onRightClicked}
-          className={`${classes.arrow} ${
-            rightEnable ? '' : classes.disable
-          } cursor-pointer h-full flex justify-center items-center flex-1`}
-        >
-          &gt;
-        </div>
+
+        <MsgControl
+          menuVisible={menuVisible}
+          showMenuBtn={showMenuBtn}
+          onMenuBtnClicked={onMenuBtnClicked}
+          onEditClicked={onEditClicked}
+          onDelClicked={onDelClicked}
+        ></MsgControl>
       </div>
     </div>
   )

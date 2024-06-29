@@ -77,9 +77,23 @@ function SettingsView() {
               </div>
             </div>
 
-            {/* <div className="w-full text-[#EEEFF1] text-[16px] font-[400] mt-[30px]">
-              {t('community')}
-            </div> */}
+            <div className="w-full text-[#EEEFF1] text-[16px] font-[400] mt-[30px]">
+              {tCommon('community')}
+            </div>
+
+            <div className="w-full flex justify-between items-center gap-4 mt-[24px]">
+              <Button className="flex-1 h-[46px] rounded-[8px] bg-[#333333] flex justify-center items-center">
+                <Image src="/imgs/logo-x.png" className="w-[28px] h-[28px]"></Image>
+              </Button>
+              <Button className="flex-1 h-[46px] rounded-[8px] bg-[#5A64EA] flex justify-center items-center">
+                <Image src="/imgs/logo-discord.png" className="w-[28px] h-[28px]"></Image>
+              </Button>
+              <Button className="flex-1 h-[46px] rounded-[8px] bg-[#5D7AB0] flex justify-center items-center">
+                <Image src="/imgs/logo-telegram.png" className="w-[28px] h-[28px]"></Image>
+              </Button>
+            </div>
+
+            <DDLSplitLine className="flex-none mt-[24px]"></DDLSplitLine>
           </div>
 
           <div className="w-full h-[62px] bg-[#1C1E22] rounded-[8px] border-1 border-[#232323] flex flex-row items-center justify-between px-[18px]">
