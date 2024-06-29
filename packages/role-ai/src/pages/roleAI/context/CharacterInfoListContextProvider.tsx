@@ -2,6 +2,7 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import { CharacterCardInfo } from '@/core/CharacterCardInfo'
 import { useLocalStorage } from '@/libs/useLocalStorage'
 import { getAllCards } from '@/api/characterCard/characterCard'
+import { useUserInfoContext } from './UserInfoContextProvider'
 
 export const LOCAL_STORAGE_CARD_KEY = 'files'
 
@@ -12,16 +13,29 @@ const SetCharacterInfoListContext = createContext<
 
 export function CharacterInfoListContextProvider({ children }: { children: ReactNode }) {
   const [characterInfoList, setCharacterInfoList] = useState<CharacterCardInfo[]>([])
+  const userInfo = useUserInfoContext()
 
   // const [characterCardInfoList, setCharacterCardInfoList] = useLocalStorage<CharacterCardInfo[]>(
   //   LOCAL_STORAGE_CARD_KEY,
   //   []
   // )
 
+  async function refreshCharacterInfoList() {
+    setCharacterInfoList([])
+    const cards = await getAllCards()
+    setCharacterInfoList(cards)
+  }
+
+  useEffect(
+    function () {
+      refreshCharacterInfoList()
+    },
+    [userInfo]
+  )
+
   useEffect(function () {
     ;(async function () {
-      const cards = await getAllCards()
-      setCharacterInfoList(cards)
+      await refreshCharacterInfoList()
     })()
   }, [])
 

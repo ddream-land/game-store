@@ -13,6 +13,7 @@ import { useSetTTSText } from '@/pages/roleAI/context/TTSContextProvider'
 export default function InputArea() {
   const { t: tCommon } = useTranslation('common')
   const { t } = useTranslation('roleAI')
+  const navigate = useNavigate()
 
   const textareaEl = useRef<HTMLTextAreaElement>(null)
   const { chatHistory } = useChatHistory()
@@ -33,7 +34,7 @@ export default function InputArea() {
 
   const { chatCharaInfo } = useCurrentChatCharacterInfo()
   if (!chatCharaInfo) {
-    return
+    navigate(`/`)
   }
 
   useEffect(

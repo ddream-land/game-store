@@ -51,9 +51,9 @@ function AdminLayout({ children }: AdminLayoutProps) {
 
   useEffect(
     function () {
-      // if (userInfo.uid <= 0) {
-      //   setLoginIsOpen(true)
-      // }
+      if (userInfo.uid <= 0) {
+        setLoginIsOpen(true)
+      }
     },
     [userInfo]
   )

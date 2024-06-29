@@ -19,6 +19,7 @@ import {
   useSetUserInfoContext,
   useUserInfoContext,
 } from '@/pages/roleAI/context/UserInfoContextProvider'
+import { useAdminPanelState } from '@/pages/roleAI/context/AdminPanelStateContextProvider'
 
 type UserPanelProps = {
   className?: string
@@ -41,6 +42,7 @@ export default function UserPanel({ className }: UserPanelProps) {
   } = useDisclosure({ defaultOpen: false })
   const [isLogouting, setIsLogouting] = useState(false)
   const { Logout } = useSetUserInfoContext()
+  const { minify } = useAdminPanelState()
 
   function onAvatarClicked() {
     closeDropdown()
@@ -67,6 +69,15 @@ export default function UserPanel({ className }: UserPanelProps) {
   const usertype = 'Power user'
   const userExpire = '120 days left'
   const token = 500
+
+  useEffect(
+    function () {
+      if (minify) {
+        closeDropdown()
+      }
+    },
+    [minify]
+  )
 
   useEffect(function () {
     window.addEventListener('click', closeDropdown)
