@@ -15,6 +15,8 @@ export default AssistantMsg
 type AssistantMsgProps = Readonly<{
   msg: NuwaChatMessage
   menuVisible: boolean
+  showPlayVoiceBtn?: boolean
+  showRegenerateBtn?: boolean
   showMenuBtn?: boolean
   onMenuBtnClicked: (e: MouseEvent) => void
   onEditClicked: (e: MouseEvent) => void
@@ -22,12 +24,16 @@ type AssistantMsgProps = Readonly<{
   onEditSaveClicked: (e: MouseEvent, content: string) => void
   onDelClicked: (e: MouseEvent) => void
   onMouseLeave?: (e: MouseEvent) => void
+  onPlayVoiceBtnClicked?: (e: MouseEvent) => void
+  onRegenerateBtnClicked?: (e: MouseEvent) => void
   editMode?: boolean
 }>
 
 function AssistantMsg({
   msg,
   menuVisible,
+  showPlayVoiceBtn,
+  showRegenerateBtn,
   showMenuBtn,
   onMenuBtnClicked,
   onEditClicked,
@@ -35,6 +41,8 @@ function AssistantMsg({
   onEditSaveClicked,
   onDelClicked,
   onMouseLeave,
+  onPlayVoiceBtnClicked,
+  onRegenerateBtnClicked,
   editMode,
 }: AssistantMsgProps) {
   const setChatMsg = useSetChatHistory()
@@ -131,7 +139,7 @@ function AssistantMsg({
           fullWidth
           maxRows={25}
           variant="bordered"
-          defaultValue={editText}
+          value={editText}
           onValueChange={setEditText}
           className={`${
             !editMode && 'hidden'
@@ -166,11 +174,15 @@ function AssistantMsg({
 
         <MsgControl
           menuVisible={menuVisible}
+          showPlayVoiceBtn={showPlayVoiceBtn}
+          showRegenerateBtn={showRegenerateBtn}
           showMenuBtn={showMenuBtn}
           onMenuBtnClicked={onMenuBtnClicked}
           onEditClicked={onEditClicked}
           onDelClicked={onDelClicked}
           onMouseLeave={onMouseLeave}
+          onPlayVoiceBtnClicked={onPlayVoiceBtnClicked}
+          onRegenerateBtnClicked={onRegenerateBtnClicked}
           className={`${editMode && '!hidden'}`}
         ></MsgControl>
 

@@ -58,7 +58,7 @@ function UserMsg({
           fullWidth
           maxRows={25}
           variant="bordered"
-          defaultValue={editText}
+          value={editText}
           onValueChange={setEditText}
           className={`${
             editMode ? '' : 'hidden'

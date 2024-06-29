@@ -12,12 +12,14 @@ import { delHistory, updateChatMsg } from '@/api/chat/chat'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { isString } from '@/libs/isTypes'
+import { useChatMessageOperate } from '../useChatMessageOperate'
 
 export default function ChatHistory() {
   const { chatHistory } = useChatHistory()
   const setChatHistory = useSetChatHistory()
   const { t: tCommon } = useTranslation('common')
   const chatContainer = useRef<HTMLDivElement>(null)
+  const { regenerateChatMsg } = useChatMessageOperate()
 
   const [currentOpenMenuId, setCurrentOpenMenuId] = useState<string | undefined>()
   const [currentEditingId, setCurrentEditingId] = useState<string | undefined>()
@@ -123,7 +125,6 @@ export default function ChatHistory() {
 
   useEffect(function () {
     window.addEventListener('click', closeMenu)
-
     return function () {
       window.removeEventListener('click', closeMenu)
     }
@@ -175,6 +176,8 @@ export default function ChatHistory() {
                     msg={msg}
                     menuVisible={currentOpenMenuId === msg.id}
                     editMode={currentEditingId === msg.id}
+                    showPlayVoiceBtn={true}
+                    showRegenerateBtn={index === chatHistory.length - 1}
                     showMenuBtn={index !== 0}
                     onMenuBtnClicked={(e) => {
                       menuClicked(e, msg)
@@ -190,6 +193,10 @@ export default function ChatHistory() {
                     }}
                     onEditSaveClicked={(e, content) => {
                       saveEditClicked(e, msg, content)
+                    }}
+                    onPlayVoiceBtnClicked={(e) => {}}
+                    onRegenerateBtnClicked={(e) => {
+                      regenerateChatMsg()
                     }}
                     // onMouseLeave={(e) => {
                     //   closeMenu()
