@@ -5,9 +5,10 @@ import {
   useSetChatHistory,
 } from '@/pages/roleAI/context/ChatHistoryContextProvider'
 import MsgMenu from '../MsgControl/MsgMenu'
-import { Image } from '@nextui-org/react'
-import { MouseEvent } from 'react'
+import { Image, Textarea } from '@nextui-org/react'
+import { MouseEvent, useEffect, useState } from 'react'
 import MsgControl from '../MsgControl/MsgControl'
+import EditControl from '../MsgControl/EditControl'
 
 export default AssistantMsg
 
@@ -17,7 +18,11 @@ type AssistantMsgProps = Readonly<{
   showMenuBtn?: boolean
   onMenuBtnClicked: (e: MouseEvent) => void
   onEditClicked: (e: MouseEvent) => void
+  onEditCancelClicked: (e: MouseEvent) => void
+  onEditSaveClicked: (e: MouseEvent, content: string) => void
   onDelClicked: (e: MouseEvent) => void
+  onMouseLeave?: (e: MouseEvent) => void
+  editMode?: boolean
 }>
 
 function AssistantMsg({
@@ -26,7 +31,11 @@ function AssistantMsg({
   showMenuBtn,
   onMenuBtnClicked,
   onEditClicked,
+  onEditCancelClicked,
+  onEditSaveClicked,
   onDelClicked,
+  onMouseLeave,
+  editMode,
 }: AssistantMsgProps) {
   const setChatMsg = useSetChatHistory()
   const { chatHistory } = useChatHistory()
@@ -44,6 +53,19 @@ function AssistantMsg({
       rightEnable = true
     }
   }
+
+  const [editText, setEditText] = useState(msg.content)
+
+  useEffect(
+    function () {
+      if (editMode) {
+        setEditText(msg.content)
+      } else {
+        setEditText('')
+      }
+    },
+    [editMode]
+  )
 
   async function onLeftClicked() {
     if (!showSwitch || !leftEnable) {
@@ -98,10 +120,31 @@ function AssistantMsg({
   return (
     <div className={`${classes.assistMsg} mt-[48px] w-full flex flex-row relative`}>
       <div className="w-5/6 group relative">
-        <div className={`${classes.content} w-full`}>{msg.content}</div>
+        <div
+          className={`${
+            editMode && 'hidden'
+          } w-full px-[30px] py-[26px] bg-gradient-to-br from-[#6948ea] to-[#9f53da] text-[#fff] text-[12px] font-[400] leading-[18px] text-left whitespace-pre-wrap rounded-[18px] rounded-bl-none shadow-[0_4px_12px_0_rgba(0,0,0,0.1)]`}
+        >
+          {msg.content}
+        </div>
+        <Textarea
+          fullWidth
+          maxRows={25}
+          variant="bordered"
+          defaultValue={editText}
+          onValueChange={setEditText}
+          className={`${
+            !editMode && 'hidden'
+          } p-[18px] bg-gradient-to-br from-[#6948ea] to-[#9f53da] text-[#fff] text-[12px] font-[400] leading-[18px] text-left whitespace-pre-wrap rounded-[18px] rounded-br-none shadow-[0_4px_12px_0_rgba(0,0,0,0.1)]`}
+          classNames={{
+            input: 'scrollbar-override',
+          }}
+        />
 
         <div
-          className={`${classes.switchMsg} ${showSwitch ? '' : 'hidden'} absolute flex flex-row`}
+          className={`${classes.switchMsg} ${!showSwitch && 'hidden'} ${
+            editMode && 'hidden'
+          } absolute flex flex-row`}
         >
           <div
             onClick={onLeftClicked}
@@ -127,7 +170,15 @@ function AssistantMsg({
           onMenuBtnClicked={onMenuBtnClicked}
           onEditClicked={onEditClicked}
           onDelClicked={onDelClicked}
+          onMouseLeave={onMouseLeave}
+          className={`${editMode && '!hidden'}`}
         ></MsgControl>
+
+        <EditControl
+          visible={!!editMode}
+          onSaveClicked={(e) => onEditSaveClicked(e, editText)}
+          onCancelClicked={onEditCancelClicked}
+        ></EditControl>
       </div>
     </div>
   )

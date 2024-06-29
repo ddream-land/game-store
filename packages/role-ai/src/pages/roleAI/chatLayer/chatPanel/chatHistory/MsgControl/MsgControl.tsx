@@ -13,6 +13,7 @@ type MsgControlProps = Readonly<{
   className?: string
   onEditClicked: (e: MouseEvent) => void
   onDelClicked: (e: MouseEvent) => void
+  onMouseLeave?: (e: MouseEvent) => void
 }>
 
 function MsgControl({
@@ -24,12 +25,14 @@ function MsgControl({
   className,
   onEditClicked,
   onDelClicked,
+  onMouseLeave,
 }: MsgControlProps) {
   return (
     <div
+      onMouseLeave={onMouseLeave}
       className={` ${
         className ?? ''
-      } absolute hidden group-hover:flex flex-row right-[0px] bottom-[-25px] h-[25px]`}
+      } absolute hidden group-hover:flex flex-row justify-end right-[0px] left-0 bottom-[-25px] h-[25px]`}
     >
       <div
         onClick={onMenuBtnClicked}

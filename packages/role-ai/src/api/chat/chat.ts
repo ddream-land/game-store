@@ -38,3 +38,16 @@ export async function delHistory(humanMsgId: string, nextAIMsgId: string) {
 
   return res
 }
+
+export async function updateChatMsg(msgId: string, newContent: string) {
+  const res = await request<DtoBase>({
+    url: `/api/backends/chat-completions/edit`,
+    method: 'POST',
+    data: {
+      msg_id: msgId,
+      update_content: newContent,
+    },
+  })
+
+  return res
+}
