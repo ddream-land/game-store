@@ -7,20 +7,17 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useSetCurrentChatCharacterId } from '../../context/CurrentChatCharacterIdContextProvider'
 import MinimizedOverview from '../charactersPanel/minimizedOverview/MinimizedOverview'
 import { useSetCurrentAdminCharacterId } from '../../context/CurrentAdminCharacterIdContextProvider'
-import {
-  useAdminPanelState,
-  useSetAdminPanelStateContext,
-} from '../../context/AdminPanelStateContextProvider'
+// import { useAdminPanelState } from '../../context/AdminPanelStateContextProvider'
 import { useSetUserInfoContext, useUserInfoContext } from '../../context/UserInfoContextProvider'
 import { useTranslation } from 'react-i18next'
+import { useAppSelector } from '@/hooks/useAppSelector'
 
 export interface AdminLayoutProps {
   readonly children?: React.ReactNode
 }
 
 function AdminLayout({ children }: AdminLayoutProps) {
-  const adminPanelState = useAdminPanelState()
-  const setAdminPanelState = useSetAdminPanelStateContext()
+  const adminPanelState = useAppSelector((state) => state.adminPanel)
 
   const { mouseOnPanel, mouseOutofPanel } = useMouseHoverOp(0)
   const [sidebarOpened, setSidebarOpened] = useState(false)

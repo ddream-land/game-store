@@ -5,7 +5,7 @@ import { DDLSplitLine } from '@ddreamland/common'
 import { Image, Button } from '@nextui-org/react'
 import { MouseEvent, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useDefaultBackground } from '@/pages/roleAI/context/DefaultBackgroundContextProvider'
+import { useAppSelector } from '@/hooks/useAppSelector'
 
 export default SettingsView
 
@@ -14,7 +14,7 @@ function SettingsView() {
   const { t } = useTranslation('roleAI')
   const { back } = useNavigateBack()
   const navigate = useNavigate()
-  const defaultBg = useDefaultBackground()
+  const { defaultBg } = useAppSelector((state) => state.defaultBackground)
 
   const [clear, setClear] = useState({
     loading: false,

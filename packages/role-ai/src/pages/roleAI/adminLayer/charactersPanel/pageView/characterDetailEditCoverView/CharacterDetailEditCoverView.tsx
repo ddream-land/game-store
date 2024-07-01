@@ -24,7 +24,8 @@ import { DDLSplitLine } from '@ddreamland/common'
 import { Checkbox } from '@nextui-org/react'
 import { useLocation } from 'react-router-dom'
 import { SETTINGS_BG_SUFFIX } from '@/router/constants'
-import { useRefreshDefaultBackground } from '@/pages/roleAI/context/DefaultBackgroundContextProvider'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { reqDefaultBg } from '@/store/slices/defaultBackground'
 
 export default CharacterDetailEditCoverView
 
@@ -37,9 +38,9 @@ function CharacterDetailEditCoverView() {
   const imgInputEl = useRef<HTMLInputElement>(null)
   const [imgs, setImgs] = useState<Background[]>([])
   const [editMode, setEditMode] = useState(false)
+  const dispatch = useAppDispatch()
 
   const location = useLocation()
-  const refreshDefaultBg = useRefreshDefaultBackground()
 
   function onAddImageClicked() {
     imgInputEl.current?.click()
@@ -156,7 +157,9 @@ function CharacterDetailEditCoverView() {
         id: id,
       })
 
-      await refreshDefaultBg()
+      dispatch(reqDefaultBg())
+
+      // await refreshDefaultBg()
     } catch (err: any) {
       const msg = err?.message
       toast.error(isString(msg) ? msg : tCommon('opFailed'), {

@@ -7,15 +7,15 @@ import { CurrentAdminCharacterInfoContextProvider } from './CurrentAdminCharacte
 import { ChatHistoryContextProvider } from './ChatHistoryContextProvider'
 import { TTSContextProvider } from './TTSContextProvider'
 import { Live2dExtensionContextProvider } from './Live2dExtensionContextProvider'
-import { AdminPanelStateContextProvider } from './AdminPanelStateContextProvider'
+// import { AdminPanelStateContextProvider } from './AdminPanelStateContextProvider'
 import { UserInfoContextProvider } from './UserInfoContextProvider'
-import { DefaultBackgroundContextProvider } from './DefaultBackgroundContextProvider'
+// import { DefaultBackgroundContextProvider } from './DefaultBackgroundContextProvider'
 
 export function RoleAIContextProvider({ children }: { children: ReactNode }) {
   return (
     <UserInfoContextProvider>
       <Live2dExtensionContextProvider>
-        <DefaultBackgroundContextProvider>
+        {/* <DefaultBackgroundContextProvider> */}
           <CharacterInfoListContextProvider>
             <CurrentChatCharacterIdContextProvider>
               <CurrentAdminCharacterIdContextProvider>
@@ -23,7 +23,9 @@ export function RoleAIContextProvider({ children }: { children: ReactNode }) {
                   <CurrentAdminCharacterInfoContextProvider>
                     <ChatHistoryContextProvider>
                       <TTSContextProvider>
-                        <AdminPanelStateContextProvider>{children}</AdminPanelStateContextProvider>
+                        {/* <AdminPanelStateContextProvider> */}
+                        {children}
+                        {/* </AdminPanelStateContextProvider> */}
                       </TTSContextProvider>
                     </ChatHistoryContextProvider>
                   </CurrentAdminCharacterInfoContextProvider>
@@ -31,7 +33,7 @@ export function RoleAIContextProvider({ children }: { children: ReactNode }) {
               </CurrentAdminCharacterIdContextProvider>
             </CurrentChatCharacterIdContextProvider>
           </CharacterInfoListContextProvider>
-        </DefaultBackgroundContextProvider>
+        {/* </DefaultBackgroundContextProvider> */}
       </Live2dExtensionContextProvider>
     </UserInfoContextProvider>
   )

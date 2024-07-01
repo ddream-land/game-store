@@ -19,7 +19,8 @@ import {
   useSetUserInfoContext,
   useUserInfoContext,
 } from '@/pages/roleAI/context/UserInfoContextProvider'
-import { useAdminPanelState } from '@/pages/roleAI/context/AdminPanelStateContextProvider'
+// import { useAdminPanelState } from '@/pages/roleAI/context/AdminPanelStateContextProvider'
+import { useAppSelector } from '@/hooks/useAppSelector'
 
 type UserPanelProps = {
   className?: string
@@ -42,7 +43,8 @@ export default function UserPanel({ className }: UserPanelProps) {
   } = useDisclosure({ defaultOpen: false })
   const [isLogouting, setIsLogouting] = useState(false)
   const { Logout } = useSetUserInfoContext()
-  const { minify } = useAdminPanelState()
+  // const { minify } = useAdminPanelState()
+  const { minify } = useAppSelector((state) => state.adminPanel)
 
   function onAvatarClicked() {
     closeDropdown()

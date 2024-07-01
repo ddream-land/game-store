@@ -3,12 +3,13 @@ import { CSSProperties, ReactNode, useEffect, useState } from 'react'
 import { useCurrentChatCharacterInfo } from './context/CurrentChatCharacterInfoContextProvider'
 import { useLive2dExtension } from './context/Live2dExtensionContextProvider'
 import { NuwaExtensionVersion } from '@/core/characterCard/NuwaCharacterCardExtensions'
-import { useDefaultBackground } from './context/DefaultBackgroundContextProvider'
+import { useAppSelector } from '@/hooks/useAppSelector'
+import { stat } from 'fs'
 
 const DEFAULT_MAIN_BG = '/default-bg.jpg'
 
 export default function Main({ children }: { children: ReactNode }) {
-  const defaultBg = useDefaultBackground()
+  const { defaultBg } = useAppSelector((state) => state.defaultBackground)
   const [mainBgUrl, setMainBgUrl] = useState(DEFAULT_MAIN_BG)
   const { chatCharaInfo } = useCurrentChatCharacterInfo()
 

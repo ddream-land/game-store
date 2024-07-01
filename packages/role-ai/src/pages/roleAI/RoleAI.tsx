@@ -6,8 +6,17 @@ import Notifications from './notifications/Notifications'
 import Live2dLayer from './live2dLayer/Live2dLayer'
 import ChatLayer from './chatLayer/ChatLayer'
 import AdminLayer from './adminLayer/AdminLayer'
+import { useEffect } from 'react'
+import { reqDefaultBg } from '@/store/slices/defaultBackground'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
 
 export default function RoleAI() {
+  const dispatch = useAppDispatch()
+
+  useEffect(function () {
+    dispatch(reqDefaultBg())
+  }, [])
+
   return (
     <>
       <RoleAIContextProvider>

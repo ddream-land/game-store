@@ -1,16 +1,19 @@
-import { useSetAdminPanelStateContext } from '../../context/AdminPanelStateContextProvider'
 import { KEEP_ROLE_PANEL_OPEN } from '@/constant/env'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { setMinify } from '@/store/slices/adminPanelSlice'
 
 let MINIFY_PANEL_TIMER_SIGNAL: number | undefined
 
 export function useMouseHoverOp(minifyTimeout: number = 2000) {
-  const setAdminPanelState = useSetAdminPanelStateContext()
+  const dispatch = useAppDispatch()
+
+  function setMinifyVal(val: boolean) {
+    dispatch(setMinify(val))
+  }
 
   function mouseOnPanel() {
     MINIFY_PANEL_TIMER_SIGNAL && clearTimeout(MINIFY_PANEL_TIMER_SIGNAL)
-    setAdminPanelState({
-      minify: false,
-    })
+    setMinifyVal(false)
   }
 
   function mouseOutofPanel() {
@@ -19,9 +22,7 @@ export function useMouseHoverOp(minifyTimeout: number = 2000) {
       if (KEEP_ROLE_PANEL_OPEN) {
         return
       }
-      setAdminPanelState({
-        minify: true,
-      })
+      setMinifyVal(true)
     }, minifyTimeout)
   }
 
