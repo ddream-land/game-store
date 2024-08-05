@@ -1,0 +1,13 @@
+.modelTransform {
+  .row {
+    .slider {
+      div[data-slot='thumb'] {
+        &::after {
+          background-color: #2e6ee6;
+          width: 6px;
+          height: 6px;
+        }
+      }
+    }
+  }
+}

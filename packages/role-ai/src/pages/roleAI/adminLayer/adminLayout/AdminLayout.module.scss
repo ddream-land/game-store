@@ -1,0 +1,34 @@
+.adminLayout {
+  &.mask {
+    backdrop-filter: blur(10px);
+    pointer-events: auto;
+  }
+
+  .panel {
+    width: 611px;
+    padding: 50px;
+    // background-color: rgba(100, 100, 100, 0.3);
+    transition: width 0.2s;
+
+    &.minify {
+      width: 500px;
+    }
+
+    .siderbar {
+      min-height: 78px;
+    }
+
+    .characters {
+      // 100% - 78px(sidebar height) - 20px(gap size)
+      max-height: calc(100% - 98px);
+      height: 800px;
+      transition: all 0.3s;
+      background: rgba(18, 19, 21, 1);
+      border-radius: 16px;
+
+      &.minify {
+        height: 165px;
+      }
+    }
+  }
+}

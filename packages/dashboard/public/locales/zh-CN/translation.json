@@ -1,0 +1,12 @@
+{
+  "test": "测试",
+  "gameStore": "游戏中心",
+  "play": "开始",
+  "profile": "个人空间",
+  "balance": "余额",
+  "wallets": "钱包",
+  "dreamToken": "Dream Token",
+  "topUp": "充值",
+  "myCollection": "我的收藏",
+  "logout": "退出登录"
+}

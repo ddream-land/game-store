@@ -1,0 +1,56 @@
+.controlDialog {
+  width: 180px;
+  height: 176px;
+  border-radius: 12px;
+  border: solid 2px rgba(36, 36, 36, 1);
+
+  bottom: 76px;
+  right: 0px;
+  background: rgba(18, 19, 21, 1);
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
+
+  .content {
+    padding: 0 24px;
+
+    .btn {
+      width: 100%;
+      height: 56px;
+      color: rgba(255, 255, 255, 1);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+
+      &.disable {
+        cursor: not-allowed;
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+
+      &.re {
+        .icon {
+          background-image: url('/imgs/regen-icon.png');
+        }
+      }
+      &.new {
+      }
+      &.con {
+        .icon {
+          background-image: url('/imgs/play.png');
+        }
+      }
+      &.clo {
+        .icon {
+          background-image: url('/imgs/end.png');
+        }
+      }
+    }
+  }
+}

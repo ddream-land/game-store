@@ -1,0 +1,290 @@
+.ddlloading {
+  @keyframes s4_t {
+    0% {
+      transform: translate(178px, 118px) rotate(0deg) translate(-178px, -118px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6666% {
+      transform: translate(382px, 178.14px) rotate(90deg) translate(-178px, -118px);
+    }
+    25% {
+      transform: translate(382px, 178.14px) rotate(90deg) translate(-178px, -118px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6666% {
+      transform: translate(321.713px, 382px) rotate(180deg) translate(-178px, -118px);
+    }
+    50% {
+      transform: translate(321.713px, 382px) rotate(180deg) translate(-178px, -118px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6666% {
+      transform: translate(118px, 321.86px) rotate(270deg) translate(-178px, -118px);
+    }
+    75% {
+      transform: translate(118px, 321.86px) rotate(270deg) translate(-178px, -118px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6666% {
+      transform: translate(178.14px, 118px) rotate(360deg) translate(-178px, -118px);
+    }
+    100% {
+      transform: translate(178.14px, 118px) rotate(360deg) translate(-178px, -118px);
+    }
+  }
+  @keyframes s4_f {
+    0% {
+      fill: #2ed0ff;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6667% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    25% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6667% {
+      fill: #e92e4a;
+    }
+    50% {
+      fill: #e92e4a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6667% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    75% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6667% {
+      fill: #2ed0ff;
+    }
+    100% {
+      fill: #2ed0ff;
+    }
+  }
+  @keyframes s3_t {
+    0% {
+      transform: translate(118px, 322px) rotate(0deg) translate(-118px, -322px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6666% {
+      transform: translate(178px, 118px) rotate(90deg) translate(-118px, -322px);
+    }
+    25% {
+      transform: translate(178px, 118px) rotate(90deg) translate(-118px, -322px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6666% {
+      transform: translate(381.713px, 177.86px) rotate(180deg) translate(-118px, -322px);
+    }
+    50% {
+      transform: translate(381.713px, 177.86px) rotate(180deg) translate(-118px, -322px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6666% {
+      transform: translate(321.853px, 382px) rotate(270deg) translate(-118px, -322px);
+    }
+    75% {
+      transform: translate(321.853px, 382px) rotate(270deg) translate(-118px, -322px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6666% {
+      transform: translate(118.28px, 322.14px) rotate(360deg) translate(-118px, -322px);
+    }
+    100% {
+      transform: translate(118.28px, 322.14px) rotate(360deg) translate(-118px, -322px);
+    }
+  }
+  @keyframes s3_f {
+    0% {
+      fill: #2ed0ff;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6667% {
+      fill: #ff7022;
+    }
+    25% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6667% {
+      fill: #e92e4a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    50% {
+      fill: #e92e4a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6667% {
+      fill: #f3ce3a;
+    }
+    75% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6667% {
+      fill: #2ed0ff;
+    }
+    100% {
+      fill: #2ed0ff;
+    }
+  }
+  @keyframes s2_t {
+    0% {
+      transform: translate(322px, 382px) rotate(0deg) translate(-322px, -382px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6666% {
+      transform: translate(118px, 322px) rotate(90deg) translate(-322px, -382px);
+    }
+    25% {
+      transform: translate(118px, 322px) rotate(90deg) translate(-322px, -382px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6666% {
+      transform: translate(177.86px, 118px) rotate(180deg) translate(-322px, -382px);
+    }
+    50% {
+      transform: translate(177.86px, 118px) rotate(180deg) translate(-322px, -382px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6666% {
+      transform: translate(381.713px, 177.86px) rotate(270deg) translate(-322px, -382px);
+    }
+    75% {
+      transform: translate(381.713px, 177.86px) rotate(270deg) translate(-322px, -382px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6666% {
+      transform: translate(321.853px, 382px) rotate(360deg) translate(-322px, -382px);
+    }
+    100% {
+      transform: translate(321.853px, 382px) rotate(360deg) translate(-322px, -382px);
+    }
+  }
+  @keyframes s2_f {
+    0% {
+      fill: #2ed0ff;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6667% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    25% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6667% {
+      fill: #e92e4a;
+    }
+    50% {
+      fill: #e92e4a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6667% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    75% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6667% {
+      fill: #2ed0ff;
+    }
+    100% {
+      fill: #2ed0ff;
+    }
+  }
+  @keyframes s1_t {
+    0% {
+      transform: translate(382px, 178px) rotate(0deg) translate(-382px, -178px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6666% {
+      transform: translate(321.853px, 382px) rotate(90deg) translate(-382px, -178px);
+    }
+    25% {
+      transform: translate(321.853px, 382px) rotate(90deg) translate(-382px, -178px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6666% {
+      transform: translate(118px, 322px) rotate(180deg) translate(-382px, -178px);
+    }
+    50% {
+      transform: translate(118px, 322px) rotate(180deg) translate(-382px, -178px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6666% {
+      transform: translate(178px, 118px) rotate(270deg) translate(-382px, -178px);
+    }
+    75% {
+      transform: translate(178px, 118px) rotate(270deg) translate(-382px, -178px);
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6666% {
+      transform: translate(381.713px, 178px) rotate(360deg) translate(-382px, -178px);
+    }
+    100% {
+      transform: translate(381.713px, 178px) rotate(360deg) translate(-382px, -178px);
+    }
+  }
+  @keyframes s1_f {
+    0% {
+      fill: #2ed0ff;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    16.6667% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.379489, 0.411856);
+    }
+    25% {
+      fill: #ff7022;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    41.6667% {
+      fill: #e92e4a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    50% {
+      fill: #e92e4a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    66.6667% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0.341666, 0.643823, 0.676756, 1);
+    }
+    75% {
+      fill: #f3ce3a;
+      animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    91.6667% {
+      fill: #2ed0ff;
+    }
+    100% {
+      fill: #2ed0ff;
+    }
+  }
+
+  .s4 {
+    animation: 2.4s linear infinite both s4_t, 2.4s linear infinite both s4_f;
+  }
+
+  .s3 {
+    animation: 2.4s linear infinite both s3_t, 2.4s linear infinite both s3_f;
+  }
+
+  .s2 {
+    animation: 2.4s linear infinite both s2_t, 2.4s linear infinite both s2_f;
+  }
+
+  .s1 {
+    animation: 2.4s linear infinite both s1_t, 2.4s linear infinite both s1_f;
+  }
+}

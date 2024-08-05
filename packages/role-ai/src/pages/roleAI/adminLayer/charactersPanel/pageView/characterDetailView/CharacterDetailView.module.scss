@@ -1,0 +1,46 @@
+.characterDetailView {
+  .shadow {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    overflow: hidden;
+  }
+
+  .lifeImg {
+    height: 349px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .lifeDetail {
+    top: 270px;
+    transition: top 0.3s;
+
+    &.full {
+      top: 0px;
+
+      .info {
+        height: calc(349px);
+        padding-top: 90px;
+        background: rgba(18, 19, 21, 0.8);
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+      }
+    }
+
+    .info {
+      height: 240px;
+      background: #121315;
+    }
+
+    .tabs {
+      background-color: rgba(28, 30, 34, 1);
+      border-radius: 16px;
+      margin-top: -16px;
+    }
+  }
+}

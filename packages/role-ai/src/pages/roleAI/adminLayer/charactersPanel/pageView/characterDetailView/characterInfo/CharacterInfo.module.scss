@@ -1,0 +1,60 @@
+.characterInfo {
+  color: rgba(255, 255, 255, 1);
+
+  .name {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .nft {
+    background-image: url('/imgs/nft.png');
+  }
+
+  .tags {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 10px;
+    color: rgba(99, 138, 85, 1);
+  }
+
+  .desc {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: rgba(142, 143, 143, 1);
+  }
+
+  .op {
+    .btn {
+      width: 103px;
+      height: 52px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(37, 38, 39, 0.8) !important;
+      color: rgba(255, 255, 255, 1) !important;
+      font-size: 10px !important;
+      font-weight: 400 !important;
+      line-height: 10px !important;
+      text-align: center !important;
+      display: flex;
+      flex-direction: column !important;
+
+      .bg {
+        background-image: url('/imgs/e-bg.png');
+      }
+      .avatar {
+        background-image: url('/imgs/e-avatar.png');
+      }
+      .oc {
+        background-image: url('/imgs/e-oc.png');
+      }
+      .voice {
+        background-image: url('/imgs/e-voice.png');
+      }
+    }
+  }
+}

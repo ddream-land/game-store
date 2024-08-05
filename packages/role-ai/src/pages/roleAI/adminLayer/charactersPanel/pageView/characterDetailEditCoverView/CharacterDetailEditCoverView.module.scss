@@ -1,0 +1,28 @@
+.characterDetailEditCoverView {
+  .addBtn {
+    width: 34px !important;
+    min-width: unset !important;
+  }
+
+  .bigBtn {
+    width: 78px !important;
+    min-width: unset !important;
+  }
+
+  .imgName {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: center;
+    color: rgb(160, 161, 161);
+  }
+
+  .current {
+    border: 3px solid #5b60fc;
+  }
+
+  .currentName {
+    background: #5b60fc;
+    color: #fff;
+  }
+}

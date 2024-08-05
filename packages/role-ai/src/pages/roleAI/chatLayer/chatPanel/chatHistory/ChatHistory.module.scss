@@ -1,0 +1,39 @@
+.chatHistory {
+  -webkit-mask-image: linear-gradient(transparent 0, transparent 80px, black 200px, black 100%);
+  mask-image: linear-gradient(transparent 0, transparent 80px, black 200px, black 100%);
+
+  .msgs {
+    .msg {
+      margin-top: 18px;
+
+      .content {
+        white-space: pre-wrap;
+        padding: 18px;
+        max-width: 80%;
+
+        &.sys {
+        }
+
+        &.user {
+          border-radius: 18px 0px 18px 18px;
+          background: rgba(0, 0, 0, 0.7);
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 15px;
+          text-align: left;
+          color: rgba(255, 255, 255, 1);
+        }
+
+        &.asst {
+          border-radius: 24px 24px 24px 0px;
+          background: rgba(255, 255, 255, 0.7);
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 15px;
+          text-align: left;
+          color: rgba(0, 0, 0, 1);
+        }
+      }
+    }
+  }
+}

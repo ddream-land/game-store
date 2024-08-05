@@ -1,0 +1,12 @@
+{
+  "test": "test",
+  "gameStore": "Game Store",
+  "play": "Play",
+  "profile": "Profile",
+  "balance": "Balance",
+  "wallets": "Wallets",
+  "dreamToken": "Dream Token",
+  "topUp": "Top-up",
+  "myCollection": "My Collection",
+  "logout": "Log Out"
+}

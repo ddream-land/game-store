@@ -1,0 +1,19 @@
+.pageView {
+  border-radius: 40px;
+  // background-color: rgba(255, 255, 255, 1);
+
+  &.animate {
+    @keyframes open-animate {
+      from {
+        transform: translateX(-10%);
+        opacity: 0;
+      }
+      to {
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    animation: open-animate 0.2s ease-in-out;
+  }
+}

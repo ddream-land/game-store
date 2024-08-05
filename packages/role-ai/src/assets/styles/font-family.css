@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/roboto-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'PingFangSC';
+  src: url('/fonts/PingFangSC-Regular.woff2') format('woff2');
+}

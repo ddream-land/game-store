@@ -1,0 +1,29 @@
+.tabsArea {
+  padding: 16px;
+
+  .tabs {
+    .tab {
+      height: 42px;
+      padding: 0 12px;
+      color: rgba(93, 198, 111, 1);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 14px;
+      text-align: center;
+
+      &.current {
+        font-weight: 500;
+        color: rgb(96, 97, 100);
+      }
+    }
+  }
+
+  .content {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    color: rgba(164, 165, 167, 1);
+    padding: 20px 20px;
+  }
+}

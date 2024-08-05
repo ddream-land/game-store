@@ -1,0 +1,77 @@
+.characterList {
+  .sum {
+    height: 12px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    color: rgba(0, 0, 0, 1);
+    text-align: right;
+  }
+
+  .list {
+    padding-right: 10px;
+
+    .item {
+      .nftFlag {
+        background-image: url('/imgs/nft-flag.png');
+      }
+
+      &:hover {
+        border-color: rgba(46, 110, 230, 1);
+
+        .life-info {
+          .name {
+            color: rgba(255, 255, 255, 1);
+          }
+          .desc {
+            color: rgba(255, 255, 255, 0.61);
+          }
+          .tags {
+            .tag {
+            }
+          }
+        }
+      }
+
+      .avatar {
+        img {
+          object-fit: cover;
+        }
+      }
+
+      .lifeInfo {
+        .name {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          text-align: left;
+          color: rgba(255, 255, 255, 1);
+        }
+        .desc {
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 14px;
+          text-align: left;
+          color: rgba(107, 108, 112, 1);
+        }
+        .tagsAndOp {
+          .tag {
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 10px;
+            text-align: center;
+            color: #638a55;
+          }
+
+          .chatBtnContainer {
+            .chatBtn {
+              .chattingIcon {
+                background-image: url('/imgs/chat.png');
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

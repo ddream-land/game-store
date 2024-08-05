@@ -1,0 +1,45 @@
+.levelOverview {
+  filter: grayscale(1);
+
+  .info {
+    .name {
+      margin-top: 2px;
+
+      .level {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        text-align: left;
+        color: white;
+      }
+
+      .xp {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+        color: white;
+      }
+    }
+
+    .progress {
+      margin-top: 10px;
+      height: 4px;
+
+      .addLight {
+        &::after {
+          content: '';
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          right: 0;
+          background: radial-gradient(
+            circle at center,
+            rgba(255, 255, 255, 1) 0,
+            rgba(255, 255, 255, 0.6) 50%,
+            transparent 100%
+          );
+        }
+      }
+    }
+  }
+}
